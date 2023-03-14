@@ -8,17 +8,15 @@ IMG_SIZE = (256, 256)
 
 
 class OxfordIIITPetSeg(OxfordIIITPet):
-    def __init__(
-            self,
-            root='./data',
-            split="trainval",
-            download=True):
+    def __init__(self, root, split, download=True):
         super().__init__(root, split, 'segmentation', download=download)
+
+        self.multi_channel = True if split == 'trainval' else False
 
         self.transform1 = transforms.Compose([transforms.PILToTensor()])
         self.transform2 = transforms.Compose([
             transforms.ToPILImage(),
-            transforms.Resize(IMG_SIZE, transforms.InterpolationMode.NEAREST),
+            transforms.Resize(IMG_SIZE),
             transforms.ToTensor()
         ])
 
@@ -47,8 +45,18 @@ class OxfordIIITPetSeg(OxfordIIITPet):
         data = torch.nn.functional.pad(data, pad, mode='constant', value=0)
         mask = torch.nn.functional.pad(mask, pad, mode='constant', value=3)
 
-        # resize the image and mask
+        # resize the image and mask, and remap the label from 123 to 012
         data = self.transform2(data)
-        mask = self.transform3(mask).to(torch.float32)
+        mask = self.transform3(mask) - 1
 
-        return data, mask
+        if self.multi_channel:
+            # make the mask into multichannel
+            mask_out = torch.zeros((3, *IMG_SIZE))
+            mask = mask.squeeze(0)
+            mask_out[(0, *torch.where(mask == 0))] = 1
+            mask_out[(1, *torch.where(mask == 1))] = 1
+            mask_out[(2, *torch.where(mask == 2))] = 1
+        else:
+            mask_out = mask.to(torch.float32)
+
+        return data, mask_out

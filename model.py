@@ -1,7 +1,11 @@
 import torch
 
 from torch import nn
-from torchvision.models.resnet import BasicBlock
+from torchvision.models.resnet import Bottleneck
+
+
+class MyBottleNeck(Bottleneck):
+    expansion: int = 1
 
 
 class ResUNet(nn.Module):
@@ -17,9 +21,12 @@ class ResUNet(nn.Module):
         self.decoder_block1 = self.make_block(256, 128, stride=1)
         self.decoder_block2 = self.make_block(128, 64, stride=1)
         self.decoder_block3 = self.make_block(64, 32, stride=1)
-        self.decoder_block4 = self.make_block(32, 1, stride=1)
+        self.decoder_block4 = self.make_block(32, 3, stride=1)
 
-        self.cov_out = nn.Conv2d(1, 1, 3, 1, 1)
+        self.cov_out = nn.Sequential(
+            nn.Conv2d(3, 3, 1, 1, 0),
+            nn.Softmax(dim=1)
+        )
 
     @staticmethod
     def make_block(in_channel, out_channel, stride=2):
@@ -29,8 +36,10 @@ class ResUNet(nn.Module):
         )
 
         block = nn.Sequential(
-            BasicBlock(in_channel, out_channel, stride, skip_connection),
-            BasicBlock(out_channel, out_channel)
+            MyBottleNeck(in_channel, out_channel, stride, skip_connection),
+            MyBottleNeck(out_channel, out_channel),
+            MyBottleNeck(out_channel, out_channel),
+            MyBottleNeck(out_channel, out_channel)
         )
 
         return block

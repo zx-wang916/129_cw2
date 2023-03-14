@@ -12,7 +12,7 @@ matplotlib.use('TkAgg')
 
 BATCH_SIZE = 16
 DEVICE = torch.device('cpu')
-MODEL_PATH = 'model/supervised/net_2.pth'
+MODEL_PATH = 'model/supervised/net_8.pth'
 
 test_set = OxfordIIITPetSeg('./data', split='test', download=True)
 test_loader = DataLoader(test_set, BATCH_SIZE, True)
@@ -29,7 +29,7 @@ for data, mask in test_loader:
 
     _, ax = plt.subplots(1, 2)
     ax[0].imshow(data[0].permute(1, 2, 0))
-    ax[1].imshow(out[0, 0].data.numpy() * 255, cmap='gray')
+    ax[1].imshow(out[0, 0].data.numpy(), cmap='gray')
     plt.show()
 
     break

@@ -15,11 +15,17 @@ class OxfordIIITPetSeg(OxfordIIITPet):
             download=True):
         super().__init__(root, split, 'segmentation', download=download)
 
-        self.transform1 = transforms.Compose([transforms.ToTensor()])
+        self.transform1 = transforms.Compose([transforms.PILToTensor()])
         self.transform2 = transforms.Compose([
             transforms.ToPILImage(),
-            transforms.Resize(IMG_SIZE),
+            transforms.Resize(IMG_SIZE, transforms.InterpolationMode.NEAREST),
             transforms.ToTensor()
+        ])
+
+        self.transform3 = transforms.Compose([
+            transforms.ToPILImage(),
+            transforms.Resize(IMG_SIZE, transforms.InterpolationMode.NEAREST),
+            transforms.PILToTensor()
         ])
 
     def __getitem__(self, item):
@@ -39,12 +45,10 @@ class OxfordIIITPetSeg(OxfordIIITPet):
             pad = (0, 0, diff // 2, diff - diff // 2)
 
         data = torch.nn.functional.pad(data, pad, mode='constant', value=0)
-        mask = torch.nn.functional.pad(mask, pad, mode='constant', value=2 / 255)
+        mask = torch.nn.functional.pad(mask, pad, mode='constant', value=3)
 
         # resize the image and mask
         data = self.transform2(data)
-        mask = self.transform2(mask) * 255
-
-        print(torch.unique(mask))
+        mask = self.transform3(mask).to(torch.float32)
 
         return data, mask

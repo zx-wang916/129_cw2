@@ -19,6 +19,8 @@ class ResUNet(nn.Module):
         self.decoder_block3 = self.make_block(64, 32, stride=1)
         self.decoder_block4 = self.make_block(32, 1, stride=1)
 
+        self.cov_out = nn.Conv2d(1, 1, 3, 1, 1)
+
     @staticmethod
     def make_block(in_channel, out_channel, stride=2):
         skip_connection = nn.Sequential(
@@ -51,4 +53,5 @@ class ResUNet(nn.Module):
         dec4 = self.up_sample(dec3 + enc1)
         dec4 = self.decoder_block4(dec4)
 
-        return dec4
+        out = self.cov_out(dec4)
+        return out

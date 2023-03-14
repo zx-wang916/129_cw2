@@ -42,4 +42,4 @@ for epoch in range(EPOCH):
 
     print('epoch: %d | loss: %.3f' % (epoch, float(np.mean(loss_history))))
 
-    torch.save(net.cpu().state_dict(), 'model/supervised/net_%d.pth' % epoch)
+    torch.save(net.state_dict(), 'model/supervised/net_%d.pth' % epoch)

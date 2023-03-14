@@ -37,8 +37,6 @@ class ResUNet(nn.Module):
 
         block = nn.Sequential(
             MyBottleNeck(in_channel, out_channel, stride, skip_connection),
-            MyBottleNeck(out_channel, out_channel),
-            MyBottleNeck(out_channel, out_channel),
             MyBottleNeck(out_channel, out_channel)
         )
 

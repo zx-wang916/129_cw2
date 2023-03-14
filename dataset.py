@@ -64,7 +64,7 @@ IMG_SIZE = (256, 256)
 #         return data, mask_out
 #
 
-class OxfordIIITPetSeg1(VisionDataset):
+class OxfordIIITPetSeg(VisionDataset):
     def __init__(self, root, train=True, labeled_ratio=0.5):
         super().__init__(root)
 

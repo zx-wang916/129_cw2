@@ -2,7 +2,7 @@ import torch
 import numpy as np
 
 from torch.utils.data import DataLoader
-from dataset import OxfordIIITPetSeg1
+from dataset import OxfordIIITPetSeg
 from model import ResUNet
 from utils import create_dir, dice_loss
 from tqdm import tqdm
@@ -22,10 +22,10 @@ def train_supervised():
     PATH = '.'
 
     # preparing dataset
-    train_set = OxfordIIITPetSeg1(PATH + '/data', train=True, labeled_ratio=LABELED_RATIO)
+    train_set = OxfordIIITPetSeg(PATH + '/data', train=True, labeled_ratio=LABELED_RATIO)
     train_loader = DataLoader(train_set, BATCH_SIZE, True, num_workers=NUM_WORKERS)
-    test_set = OxfordIIITPetSeg1(PATH + '/data', train=False)
-    test_loader = DataLoader(test_set, BATCH_SIZE, True, num_workers=NUM_WORKERS)
+    val_set = OxfordIIITPetSeg(PATH + '/data', train=False)
+    val_loader = DataLoader(val_set, BATCH_SIZE, True, num_workers=NUM_WORKERS)
 
     # initialize network
     net = ResUNet()
@@ -64,14 +64,14 @@ def train_supervised():
 
         torch.save(net.state_dict(), PATH + '/model/supervised/net_%d.pth' % epoch)
 
-        # ####################################### test model #######################################
+        # ####################################### validate model #######################################
 
         # performance metrics
         PA = PA_TOTAL = 0
         IOU = IOU_TOTAL = 0
 
         with torch.no_grad():
-            for data, mask in tqdm(test_loader, desc='testing progress', leave=False):
+            for data, mask in tqdm(val_loader, desc='validation progress', leave=False):
                 data, mask = data.to(DEVICE), mask.to(DEVICE)
 
                 # network predict

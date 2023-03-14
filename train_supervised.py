@@ -5,6 +5,7 @@ from torch.utils.data import DataLoader
 from dataset import OxfordIIITPetSeg
 from model import ResUNet
 from utils import create_dir
+from tqdm import tqdm
 
 create_dir()
 
@@ -34,9 +35,10 @@ print('start training!')
 for epoch in range(EPOCH):
 
     # ####################################### train model #######################################
-
     loss_history = []
-    for data, mask in train_loader:
+
+    # for data, mask in train_loader:
+    for data, mask in tqdm(train_loader, desc='training progress'):
         # separate the data into labeled and unlabeled parts
         data, mask = data.to(DEVICE), mask.to(DEVICE)
         idx_labeled = int(BATCH_SIZE * SUPERVISED_RATIO)
@@ -66,7 +68,7 @@ for epoch in range(EPOCH):
     IOU = IOU_TOTAL = 0
 
     with torch.no_grad():
-        for data, mask in test_loader:
+        for data, mask in tqdm(test_loader, desc='testing progress'):
             data, mask = data.to(DEVICE), mask.to(DEVICE)
 
             # network predict

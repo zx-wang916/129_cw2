@@ -33,6 +33,8 @@ optim = torch.optim.Adam(net.parameters(), lr=LR)
 print('start training!')
 for epoch in range(EPOCH):
 
+    # ####################################### train model #######################################
+
     loss_history = []
     for data, mask in train_loader:
         # separate the data into labeled and unlabeled parts
@@ -53,11 +55,16 @@ for epoch in range(EPOCH):
 
         loss_history.append(loss.cpu().data.numpy())
 
-    # print loss and save model parameter
     print('epoch: %d | loss: %.3f' % (epoch, float(np.mean(loss_history))))
+
     torch.save(net.state_dict(), PATH + '/model/supervised/net_%d.pth' % epoch)
 
-    # test model
+    # ####################################### test model #######################################
+
+    # performance metrics
+    PA = PA_TOTAL = 0
+    IOU = IOU_TOTAL = 0
+
     with torch.no_grad():
         for data, mask in test_loader:
             data, mask = data.to(DEVICE), mask.to(DEVICE)
@@ -65,5 +72,21 @@ for epoch in range(EPOCH):
             # network predict
             out = net(data)
 
-            pass
+            out[out >= 0.5] = 1
+            out[out < -0.5] = -1
+            out[abs(out) != 1] = 0
 
+            # compute the pixel accuracy metric
+            PA += torch.sum(out == mask)
+            PA_TOTAL += np.cumprod(mask.shape)[-1]
+
+            # compute the IOU metric
+            out[out != 1] = 0
+            mask[mask != 1] = 0
+            region_intersection = torch.sum(out == mask, dim=(1, 2, 3))
+            region_union = torch.sum(out + mask > 0, dim=(1, 2, 3))
+
+            IOU += torch.sum(region_intersection / region_union)
+            IOU_TOTAL += len(mask)
+
+    print('epoch: %d | PA: %.3f | IOU: %.3f' % (epoch, PA / PA_TOTAL, IOU / IOU_TOTAL))

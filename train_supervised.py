@@ -14,8 +14,8 @@ def train_supervised():
     # hyper-parameters
     BATCH_SIZE = 32
     LABELED_RATIO = 0.2
-    LR = 1e-3
-    EPOCH = 100
+    LR = 5e-3
+    EPOCH = 200
     DEVICE = torch.device('cuda:4')
     # DEVICE = torch.device('cpu')
     NUM_WORKERS = 8

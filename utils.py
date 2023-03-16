@@ -17,14 +17,13 @@ def create_dir():
         os.mkdir('model/semi')
 
 
-def dice_loss(out, target):
-    loss = 2 * torch.sum(out * target) + 1
-    loss /= torch.sum(out) + torch.sum(target) + 1
-    loss = 1 - loss
+def dice_loss(pred, mask, ep=1e-8):
+    # metrics for evaluating the segmentation performance
+    intersection = 2 * torch.sum(pred * mask) + ep
+    union = torch.sum(pred) + torch.sum(mask) + ep
+    loss = 1 - intersection / union
     return loss
 
-
-# metrics for evaluating the segmentation performance
 
 def compute_region(pred, target):
     # compute the TP, FP, TN, FN region area
@@ -49,11 +48,7 @@ def metric_IOU(TP, FP, TN, FN):
     return TP / (FP + TP + FN + 1e-10)
 
 
-def get_current_consistency_weight(epoch):
-    # Consistency ramp-up from https://arxiv.org/abs/1610.02242
-    consistency = 5
-    rampup_length = 50
-
+def get_current_consistency_weight(epoch, consistency=50, rampup_length=100):
     if rampup_length == 0:
         weight = 1.0
     else:
@@ -61,3 +56,8 @@ def get_current_consistency_weight(epoch):
         phase = 1.0 - epoch / rampup_length
         weight = float(np.exp(-5.0 * phase * phase))
     return consistency * weight
+
+
+if __name__ == '__main__':
+    for i in range(200):
+        print(get_current_consistency_weight(i))

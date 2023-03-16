@@ -15,7 +15,7 @@ def train_supervised():
     BATCH_SIZE = 32
     LABELED_RATIO = 0.2
     LR = 1e-3
-    EPOCH = 200
+    EPOCH = 400
     ALPHA = 0.999
     CONSISTENCY_WEIGHT = 1
     DEVICE = torch.device('cuda:5')
@@ -36,7 +36,8 @@ def train_supervised():
     net_teacher = net_teacher.to(DEVICE)
 
     # define loss and optimizer
-    criterion_seg = dice_loss
+    # criterion_seg = dice_loss
+    criterion_seg = torch.nn.MSELoss()
     criterion_con = torch.nn.MSELoss()
     optim = torch.optim.Adam(net_student.parameters(), lr=LR)
 

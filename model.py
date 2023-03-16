@@ -5,6 +5,7 @@ from torchvision.models.resnet import Bottleneck
 
 
 class MyBottleNeck(Bottleneck):
+    # it is just the original Bottleneck class, without channel expansion
     expansion: int = 1
 
 

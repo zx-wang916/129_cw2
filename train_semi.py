@@ -12,14 +12,14 @@ create_dir()
 
 def train_supervised():
     # hyper-parameters
-    BATCH_SIZE = 32
-    TRAIN_VAL_RATIO = 0.9
-    LABELED_RATIO = 1 / 12
-    LR = 1e-4
+    BATCH_SIZE = 64
+    TRAIN_VAL_RATIO = 0.8
+    LABELED_RATIO = 0.1
+    LR = 1e-3
     EPOCH = 300
-    ALPHA = 0.999
+    ALPHA = 0.99
     CONSISTENCY_WEIGHT = 1
-    DEVICE = torch.device('cuda:7')
+    DEVICE = torch.device('cuda:5')
     # DEVICE = torch.device('cpu')
     NUM_WORKERS = 8
     WORKSPACE_PATH = '.'
@@ -32,11 +32,12 @@ def train_supervised():
     train_loader = DataLoader(train_set, BATCH_SIZE, True, num_workers=NUM_WORKERS)
     val_loader = DataLoader(val_set, BATCH_SIZE, True, num_workers=NUM_WORKERS)
 
-    # initialize network
-    net_student = ResUNet(dropout=True)
+    # initialize student-teacher network
+    net_student = ResUNet()
     net_student = net_student.to(DEVICE)
-    net_teacher = ResUNet(dropout=True)
+    net_teacher = ResUNet()
     net_teacher = net_teacher.to(DEVICE)
+    net_teacher.requires_grad_(False)
 
     # define loss
     criterion_seg = dice_loss
@@ -49,7 +50,8 @@ def train_supervised():
     for epoch in range(EPOCH):
 
         # ####################################### train model #######################################
-        loss_history = []
+        loss_seg_history = []
+        loss_con_history = []
 
         for data, mask, is_labeled in tqdm(train_loader, desc='training progress', leave=False):
 
@@ -65,16 +67,19 @@ def train_supervised():
             if len(data_labeled) > 0:
                 out = net_student(data_labeled)
                 loss_seg = criterion_seg(out, mask_labeled) / len(data_labeled)
+                loss_seg_history.append(loss_seg.cpu().data.numpy())
 
             # compute consistency loss
+            consistency_weight = get_consistency_weight(epoch)
             loss_con = 0
             if len(data_unlabeled) > 0:
                 out_stu = net_student.noisy_forward(data_unlabeled)
                 out_tea = net_teacher.noisy_forward(data_unlabeled)
                 loss_con = criterion_con(out_stu, out_tea) / len(data_unlabeled)
+                loss_con_history.append(loss_con.cpu().data.numpy() * consistency_weight)
 
             # combine the segmentation loss and the consistency loss
-            loss = loss_seg + get_consistency_weight(epoch) * loss_con
+            loss = loss_seg + consistency_weight * loss_con
 
             # backward propagation and parameter update
             optim.zero_grad()
@@ -92,9 +97,8 @@ def train_supervised():
 
             net_teacher.load_state_dict(param_teacher)
 
-            loss_history.append(loss.cpu().data.numpy())
-
-        print('epoch: %d | train | dice loss: %.3f' % (epoch, float(np.mean(loss_history))))
+        print('epoch: %d | train | dice loss: %.4f | consistency loss: %.4f' % (
+            epoch, float(np.mean(loss_seg_history)), float(np.mean(loss_con_history))))
 
         torch.save(net_student.state_dict(), WORKSPACE_PATH + '/model/semi/net_%d.pth' % epoch)
 

@@ -12,12 +12,12 @@ create_dir()
 
 def train_supervised():
     # hyper-parameters
-    BATCH_SIZE = 32
-    TRAIN_VAL_RATIO = 0.9
-    LABELED_RATIO = 1 / 12
+    BATCH_SIZE = 64
+    TRAIN_VAL_RATIO = 0.8
+    LABELED_RATIO = 0.1
     LR = 1e-3
     EPOCH = 200
-    DEVICE = torch.device('cuda:5')
+    DEVICE = torch.device('cuda:7')
     # DEVICE = torch.device('cpu')
     NUM_WORKERS = 8
     WORKSPACE_PATH = '.'

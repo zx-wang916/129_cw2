@@ -2,7 +2,6 @@ import torch
 import random
 
 from torch import nn
-from torchvision import transforms
 from torchvision.transforms import functional as F
 from torchvision.models.resnet import Bottleneck
 
@@ -13,9 +12,8 @@ class MyBottleNeck(Bottleneck):
 
 
 class ResUNet(nn.Module):
-    def __init__(self, dropout=False):
+    def __init__(self):
         super().__init__()
-        self.dropout = dropout
 
         self.encoder_block1 = self.make_block(3, 32)
         self.encoder_block2 = self.make_block(32, 64)
@@ -39,17 +37,10 @@ class ResUNet(nn.Module):
             nn.BatchNorm2d(out_channel)
         )
 
-        if self.dropout:
-            block = nn.Sequential(
-                MyBottleNeck(in_channel, out_channel, stride, skip_connection),
-                MyBottleNeck(out_channel, out_channel),
-                nn.Dropout2d(p=0.5)
-            )
-        else:
-            block = nn.Sequential(
-                MyBottleNeck(in_channel, out_channel, stride, skip_connection),
-                MyBottleNeck(out_channel, out_channel),
-            )
+        block = nn.Sequential(
+            MyBottleNeck(in_channel, out_channel, stride, skip_connection),
+            MyBottleNeck(out_channel, out_channel)
+        )
 
         return block
 
@@ -76,17 +67,8 @@ class ResUNet(nn.Module):
         out = self.cov_out(dec4)
         return out
 
-    def noisy_forward(self, x, std=0.01):
+    def noisy_forward(self, x, std_ratio=0.1):
         # add noise to the input
-        noise = torch.normal(0, std, x.shape).to(x.device)
-        x += noise
-
-        # random rotate the input
-        deg = random.randint(0, 180)
-        x = F.rotate(x, deg)
-
-        # rotate the output reversely
-        out = self.forward(x)
-        out = F.rotate(out, -deg)
-
+        noise = torch.normal(0, x.std() * std_ratio, x.shape).to(x.device)
+        out = self.forward(x + noise)
         return out

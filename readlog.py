@@ -2,7 +2,6 @@ import numpy as np
 
 
 def read_log(filename):
-
     with open(filename, 'r', encoding='utf8') as f:
         dice = []
         pa = []
@@ -30,6 +29,15 @@ def read_log(filename):
         print(iou_max_idx, dice[iou_max_idx], pa[iou_max_idx], iou[iou_max_idx])
 
 
+def clear_progress(filename):
+    with open(filename, 'r', encoding='utf8') as f:
+        for line in f.readlines():
+            if line.startswith('epoch'):
+                print(line)
+
+
 if __name__ == '__main__':
-    read_log('log/log_sup.txt')
-    read_log('log/log_semi.txt')
+    # read_log('log/sup.txt')
+    # read_log('log/semi.txt')
+    # clear_progress('log/sup.txt')
+    clear_progress('log/semi.txt')

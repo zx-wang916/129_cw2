@@ -4,7 +4,7 @@ import numpy as np
 from torch.utils.data import DataLoader
 from dataset import OxfordIIITPetSeg
 from model import ResUNet
-from utils import create_dir, dice_loss, compute_region, metric_dice, metric_IOU, metric_pa, get_current_consistency_weight
+from utils import create_dir, dice_loss, compute_region, metric_dice, metric_IOU, metric_pa, get_consistency_weight
 from tqdm import tqdm
 
 create_dir()
@@ -13,32 +13,36 @@ create_dir()
 def train_supervised():
     # hyper-parameters
     BATCH_SIZE = 32
-    LABELED_RATIO = 0.2
-    LR = 1e-3
-    EPOCH = 400
+    TRAIN_VAL_RATIO = 0.9
+    LABELED_RATIO = 1 / 12
+    LR = 1e-4
+    EPOCH = 300
     ALPHA = 0.999
     CONSISTENCY_WEIGHT = 1
-    DEVICE = torch.device('cuda:5')
+    DEVICE = torch.device('cuda:7')
     # DEVICE = torch.device('cpu')
     NUM_WORKERS = 8
-    PATH = '.'
+    WORKSPACE_PATH = '.'
 
-    # preparing dataset
-    train_set = OxfordIIITPetSeg(PATH + '/data', train=True, labeled_ratio=LABELED_RATIO)
+    # prepare train and validation dataset
+    train_set, val_set = OxfordIIITPetSeg.split_train_val(
+        WORKSPACE_PATH + '/data', TRAIN_VAL_RATIO, LABELED_RATIO)
+
+    # prepare dataloader
     train_loader = DataLoader(train_set, BATCH_SIZE, True, num_workers=NUM_WORKERS)
-    val_set = OxfordIIITPetSeg(PATH + '/data', train=False)
     val_loader = DataLoader(val_set, BATCH_SIZE, True, num_workers=NUM_WORKERS)
 
     # initialize network
-    net_student = ResUNet()
+    net_student = ResUNet(dropout=True)
     net_student = net_student.to(DEVICE)
-    net_teacher = ResUNet()
+    net_teacher = ResUNet(dropout=True)
     net_teacher = net_teacher.to(DEVICE)
 
-    # define loss and optimizer
-    # criterion_seg = dice_loss
-    criterion_seg = torch.nn.MSELoss()
+    # define loss
+    criterion_seg = dice_loss
     criterion_con = torch.nn.MSELoss()
+
+    # define optimizer
     optim = torch.optim.Adam(net_student.parameters(), lr=LR)
 
     print('start training!')
@@ -47,7 +51,6 @@ def train_supervised():
         # ####################################### train model #######################################
         loss_history = []
 
-        # for data, mask in train_loader:
         for data, mask, is_labeled in tqdm(train_loader, desc='training progress', leave=False):
 
             # separate the data and mask into labeled and unlabeled parts
@@ -58,18 +61,20 @@ def train_supervised():
             data_unlabeled = data[torch.where(is_labeled == 0)]
 
             # compute segmentation loss
-            out = net_student(data_labeled)
-            loss_seg = criterion_seg(out, mask_labeled) / len(data_labeled)
+            loss_seg = 0
+            if len(data_labeled) > 0:
+                out = net_student(data_labeled)
+                loss_seg = criterion_seg(out, mask_labeled) / len(data_labeled)
 
             # compute consistency loss
-            noise_stu = torch.normal(0, 0.01, data_unlabeled.shape).to(DEVICE)
-            noise_tea = torch.normal(0, 0.01, data_unlabeled.shape).to(DEVICE)
-            out_stu = net_student(data_unlabeled + noise_stu)
-            out_tea = net_teacher(data_unlabeled + noise_tea)
-            loss_con = criterion_con(out_stu, out_tea) / len(data_unlabeled)
+            loss_con = 0
+            if len(data_unlabeled) > 0:
+                out_stu = net_student.noisy_forward(data_unlabeled)
+                out_tea = net_teacher.noisy_forward(data_unlabeled)
+                loss_con = criterion_con(out_stu, out_tea) / len(data_unlabeled)
 
             # combine the segmentation loss and the consistency loss
-            loss = loss_seg + get_current_consistency_weight(epoch) * loss_con
+            loss = loss_seg + get_consistency_weight(epoch) * loss_con
 
             # backward propagation and parameter update
             optim.zero_grad()
@@ -87,11 +92,11 @@ def train_supervised():
 
             net_teacher.load_state_dict(param_teacher)
 
-            loss_history.append(loss_seg.cpu().data.numpy())
+            loss_history.append(loss.cpu().data.numpy())
 
         print('epoch: %d | train | dice loss: %.3f' % (epoch, float(np.mean(loss_history))))
 
-        torch.save(net_student.state_dict(), PATH + '/model/semi/net_%d.pth' % epoch)
+        torch.save(net_student.state_dict(), WORKSPACE_PATH + '/model/semi/net_%d.pth' % epoch)
 
         # ####################################### validate model #######################################
 

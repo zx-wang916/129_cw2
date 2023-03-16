@@ -31,5 +31,5 @@ def read_log(filename):
 
 
 if __name__ == '__main__':
-    read_log('log_sup.txt')
-    read_log('log_semi.txt')
+    read_log('log/log_sup.txt')
+    read_log('log/log_semi.txt')

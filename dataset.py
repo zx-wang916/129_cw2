@@ -10,20 +10,90 @@ IMG_SIZE = (256, 256)
 
 
 class OxfordIIITPetSeg(VisionDataset):
-    def __init__(self, root, train=True, labeled_ratio=0.5):
-        super().__init__(root)
 
-        # download the dataset
+    @classmethod
+    def split_train_val(cls, root, train_ratio=0.9, labeled_ratio=0.2):
+        # check if the dataset is downloaded
         _ = OxfordIIITPet(root, download=True)
 
+        # load image file path
+        data, mask = cls.load_data_path(root, True)
+
+        # shuffle the dataset
+        idx_shuffle = np.arange(len(data))
+        np.random.shuffle(idx_shuffle)
+        data = data[idx_shuffle]
+        mask = mask[idx_shuffle]
+
+        # split the data
+        idx_train = int(len(data) * train_ratio)
+        train_data = data[:idx_train]
+        train_mask = mask[:idx_train]
+        val_data = data[idx_train:]
+        val_mask = mask[idx_train:]
+
+        # initialize the train set
+        train_set = OxfordIIITPetSeg(root, True, labeled_ratio)
+        train_set.data = train_data
+        train_set.mask = train_mask
+        train_set.divide_dataset()
+
+        # initialize the validation set
+        val_set = OxfordIIITPetSeg(root, False)
+        val_set.data = val_data
+        val_set.mask = val_mask
+
+        return train_set, val_set
+
+    @classmethod
+    def split_test(cls, root):
+        # check if the dataset is downloaded
+        _ = OxfordIIITPet(root, download=True)
+
+        # load image file path
+        data, mask = cls.load_data_path(root, True)
+
+        # shuffle the dataset
+        idx_shuffle = np.arange(len(data))
+        np.random.shuffle(idx_shuffle)
+        data = data[idx_shuffle]
+        mask = mask[idx_shuffle]
+
+        # initialize the test set
+        test_set = OxfordIIITPetSeg(root, False)
+        test_set.data = data
+        test_set.mask = mask
+
+        return test_set
+
+    @staticmethod
+    def load_data_path(root, train):
+        data = []
+        mask = []
+
+        if train:
+            file_name = 'trainval.txt'
+        else:
+            file_name = 'test.txt'
+
+        with open(root + '/oxford-iiit-pet/annotations/' + file_name) as file:
+            for line in file:
+                image_filename, label, *_ = line.strip().split()
+                mask.append(root + '/oxford-iiit-pet/annotations/trimaps/' + image_filename + '.png')
+                data.append(root + '/oxford-iiit-pet/images/' + image_filename + '.jpg')
+
+        data = np.array(data, dtype=object)
+        mask = np.array(mask, dtype=object)
+        return data, mask
+
+    def __init__(self, root, train=True, labeled_ratio=0.2):
+        super().__init__(root)
         self.train = train
+        self.labeled_ratio = labeled_ratio
 
         self.data = None
         self.mask = None
         self.unlabeled = None
-
-        self.load_data_path(root, train)
-        self.divide_dataset(labeled_ratio)
 
         self.transform1 = transforms.Compose([transforms.PILToTensor()])
         self.transform2 = transforms.Compose([
@@ -38,39 +108,12 @@ class OxfordIIITPetSeg(VisionDataset):
             transforms.PILToTensor()
         ])
 
-    def load_data_path(self, root, train):
-        self.data = []
-        self.mask = []
-
-        if train:
-            file_name = 'trainval.txt'
-        else:
-            file_name = 'test.txt'
-
-        with open(root + '/oxford-iiit-pet/annotations/' + file_name) as file:
-            for line in file:
-                image_filename, label, *_ = line.strip().split()
-                self.mask.append(root + '/oxford-iiit-pet/annotations/trimaps/' + image_filename + '.png')
-                self.data.append(root + '/oxford-iiit-pet/images/' + image_filename + '.jpg')
-
-        self.data = np.array(self.data, dtype=object)
-        self.mask = np.array(self.mask, dtype=object)
-
-    def divide_dataset(self, labeled_ratio):
-
-        # shuffle the dataset
-        idx_shuffle = np.arange(len(self.data))
-        np.random.shuffle(idx_shuffle)
-
-        self.data = self.data[idx_shuffle]
-        self.mask = self.mask[idx_shuffle]
-
-        if self.train:
-            # divide the dataset
-            idx_labeled = int(len(self.data) * labeled_ratio)
-            self.unlabeled = self.data[idx_labeled:]
-            self.data = self.data[:idx_labeled]
-            self.mask = self.mask[:idx_labeled]
+    def divide_dataset(self):
+        # divide the dataset into labeled and unlabeled parts
+        idx_labeled = int(len(self.data) * self.labeled_ratio)
+        self.unlabeled = self.data[idx_labeled:]
+        self.data = self.data[:idx_labeled]
+        self.mask = self.mask[:idx_labeled]
 
     def __len__(self):
         if self.train:

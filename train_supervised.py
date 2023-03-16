@@ -13,18 +13,21 @@ create_dir()
 def train_supervised():
     # hyper-parameters
     BATCH_SIZE = 32
-    LABELED_RATIO = 0.2
-    LR = 5e-3
+    TRAIN_VAL_RATIO = 0.9
+    LABELED_RATIO = 1 / 12
+    LR = 1e-3
     EPOCH = 200
-    DEVICE = torch.device('cuda:4')
+    DEVICE = torch.device('cuda:5')
     # DEVICE = torch.device('cpu')
     NUM_WORKERS = 8
-    PATH = '.'
+    WORKSPACE_PATH = '.'
 
-    # preparing dataset
-    train_set = OxfordIIITPetSeg(PATH + '/data', train=True, labeled_ratio=LABELED_RATIO)
+    # prepare train and validation dataset
+    train_set, val_set = OxfordIIITPetSeg.split_train_val(
+        WORKSPACE_PATH + '/data', TRAIN_VAL_RATIO, LABELED_RATIO)
+
+    # prepare dataloader
     train_loader = DataLoader(train_set, BATCH_SIZE, True, num_workers=NUM_WORKERS)
-    val_set = OxfordIIITPetSeg(PATH + '/data', train=False)
     val_loader = DataLoader(val_set, BATCH_SIZE, True, num_workers=NUM_WORKERS)
 
     # initialize network
@@ -63,7 +66,7 @@ def train_supervised():
 
         print('epoch: %d | train | dice loss: %.3f' % (epoch, float(np.mean(loss_history))))
 
-        torch.save(net.state_dict(), PATH + '/model/supervised/net_%d.pth' % epoch)
+        torch.save(net.state_dict(), WORKSPACE_PATH + '/model/supervised/net_%d.pth' % epoch)
 
         # ####################################### validate model #######################################
 

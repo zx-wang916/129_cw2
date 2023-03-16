@@ -1,6 +1,9 @@
 import torch
+import random
 
 from torch import nn
+from torchvision import transforms
+from torchvision.transforms import functional as F
 from torchvision.models.resnet import Bottleneck
 
 
@@ -10,8 +13,9 @@ class MyBottleNeck(Bottleneck):
 
 
 class ResUNet(nn.Module):
-    def __init__(self):
+    def __init__(self, dropout=False):
         super().__init__()
+        self.dropout = dropout
 
         self.encoder_block1 = self.make_block(3, 32)
         self.encoder_block2 = self.make_block(32, 64)
@@ -29,26 +33,34 @@ class ResUNet(nn.Module):
             nn.Softmax(dim=1)
         )
 
-    @staticmethod
-    def make_block(in_channel, out_channel, stride=2):
+    def make_block(self, in_channel, out_channel, stride=2):
         skip_connection = nn.Sequential(
             nn.Conv2d(in_channel, out_channel, kernel_size=1, stride=stride, bias=False),
-            nn.BatchNorm2d(out_channel),
+            nn.BatchNorm2d(out_channel)
         )
 
-        block = nn.Sequential(
-            MyBottleNeck(in_channel, out_channel, stride, skip_connection),
-            MyBottleNeck(out_channel, out_channel)
-        )
+        if self.dropout:
+            block = nn.Sequential(
+                MyBottleNeck(in_channel, out_channel, stride, skip_connection),
+                MyBottleNeck(out_channel, out_channel),
+                nn.Dropout2d(p=0.5)
+            )
+        else:
+            block = nn.Sequential(
+                MyBottleNeck(in_channel, out_channel, stride, skip_connection),
+                MyBottleNeck(out_channel, out_channel),
+            )
 
         return block
 
     def forward(self, x):
+        # encoder part
         enc1 = self.encoder_block1(x)
         enc2 = self.encoder_block2(enc1)
         enc3 = self.encoder_block3(enc2)
         enc4 = self.encoder_block4(enc3)
 
+        # decoder part
         dec1 = self.up_sample(enc4)
         dec1 = self.decoder_block1(dec1)
 
@@ -62,4 +74,19 @@ class ResUNet(nn.Module):
         dec4 = self.decoder_block4(dec4)
 
         out = self.cov_out(dec4)
+        return out
+
+    def noisy_forward(self, x, std=0.01):
+        # add noise to the input
+        noise = torch.normal(0, std, x.shape).to(x.device)
+        x += noise
+
+        # random rotate the input
+        deg = random.randint(0, 180)
+        x = F.rotate(x, deg)
+
+        # rotate the output reversely
+        out = self.forward(x)
+        out = F.rotate(out, -deg)
+
         return out

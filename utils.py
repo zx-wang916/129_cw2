@@ -48,7 +48,7 @@ def metric_IOU(TP, FP, TN, FN):
     return TP / (FP + TP + FN + 1e-10)
 
 
-def get_current_consistency_weight(epoch, consistency=50, rampup_length=100):
+def get_consistency_weight(epoch, consistency=50, rampup_length=100):
     if rampup_length == 0:
         weight = 1.0
     else:
@@ -60,4 +60,4 @@ def get_current_consistency_weight(epoch, consistency=50, rampup_length=100):
 
 if __name__ == '__main__':
     for i in range(200):
-        print(get_current_consistency_weight(i))
+        print(get_consistency_weight(i))

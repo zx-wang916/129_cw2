@@ -1,6 +1,7 @@
 import os
 import torch
 import numpy as np
+import argparse
 
 
 def create_dir():
@@ -15,6 +16,19 @@ def create_dir():
 
     if not os.path.isdir('model/semi'):
         os.mkdir('model/semi')
+
+
+def parse_arg():
+    parser = argparse.ArgumentParser()
+    parser.add_argument('-b', '--batch_size', type=int, default=64, required=False)
+    parser.add_argument('-l', '--labeled_ratio', type=float, default=0.1, required=False)
+    parser.add_argument('-t', '--train_val_ratio', type=float, default=0.8, required=False)
+    parser.add_argument('-lr', '--lr', type=float, default=1e-3, required=False)
+    parser.add_argument('-e', '--epoch', type=int, default=200, required=False)
+    parser.add_argument('-a', '--alpha', type=float, default=0.99, required=False)
+    parser.add_argument('-d', '--device', type=str, default='cpu', required=False)
+    parser.add_argument('-n', '--num_worker', type=int, default=8, required=False)
+    return parser.parse_args()
 
 
 def dice_loss(pred, mask, ep=1e-8):
@@ -48,7 +62,7 @@ def metric_iou(TP, FP, TN, FN):
     return TP / (FP + TP + FN + 1e-10)
 
 
-def get_consistency_weight(epoch, consistency=100, rampup_length=100):
+def get_consistency_weight(epoch, consistency=1000, rampup_length=100):
     if rampup_length == 0:
         weight = 1.0
     else:

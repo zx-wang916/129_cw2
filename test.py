@@ -8,37 +8,27 @@ from torch.utils.data import DataLoader
 from dataset import OxfordIIITPetSeg
 from model import ResUNet
 from utils import create_dir, compute_region, metric_dice, metric_iou, metric_pa
-matplotlib.use('TkAgg')
-
 
 create_dir()
 
 
-def test(net_path):
-    # hyper-parameters
-    BATCH_SIZE = 32
-    DEVICE = torch.device('cuda:4')
-    PATH = '.'
-
+def test(net_path, batch_size=32, device='cpu'):
     # preparing dataset
-    test_set = OxfordIIITPetSeg.split_test(PATH + '/data')
-    test_loader = DataLoader(test_set, BATCH_SIZE, True, num_workers=8)
+    test_set = OxfordIIITPetSeg.split_test('./data')
+    test_loader = DataLoader(test_set, batch_size, True, num_workers=8)
 
     # initialize network
-    net = ResUNet()
-    net = net.to(DEVICE)
-    net.load_state_dict(torch.load(net_path, map_location=DEVICE))
+    net = ResUNet().to(device)
+    net.load_state_dict(torch.load(net_path, map_location=device))
 
     # performance metrics
     pa = pa_total = 0
     iou = iou_total = 0
     dice = dice_total = 0
 
-    net.eval()
     with torch.no_grad():
         for data, mask in tqdm(test_loader, desc='testing progress', leave=False):
-            data, mask = data.to(DEVICE), mask.to(DEVICE)
-            continue
+            data, mask = data.to(device), mask.to(device)
 
             # network predict
             out = net(data)
@@ -66,11 +56,8 @@ def test(net_path):
 
 
 def visualization(net_path, num_sample=4, device=torch.device('cpu')):
-    # hyper-parameters
-    PATH = '.'
-
     # preparing dataset
-    test_set = OxfordIIITPetSeg.split_test(PATH + '/data')
+    test_set = OxfordIIITPetSeg.split_test('./data')
 
     # use subplots to present the image
     _, ax = plt.subplots(3, num_sample)
@@ -103,10 +90,12 @@ def visualization(net_path, num_sample=4, device=torch.device('cpu')):
 if __name__ == '__main__':
     # # test best supervised model
     # print('best supervised model')
-    # test('./model/supervised/net_174.pth')
+    # test('./model/supervised/net_132.pth', 128, 'cuda:4')
     #
     # # test best semi-supervised model
     # print('best semi-supervised model')
-    # test('./model/semi/net_269.pth')
+    # test('./model/semi/net_189.pth', 128, 'cuda:4')
 
-    visualization('./model/supervised/net_174.pth', 4)
+    matplotlib.use('TkAgg')
+    visualization('./model/supervised/net_132.pth', 4)
+    # visualization('./model/semi/net_189.pth', 4)

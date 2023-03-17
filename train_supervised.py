@@ -4,7 +4,7 @@ import numpy as np
 from torch.utils.data import DataLoader
 from dataset import OxfordIIITPetSeg
 from model import ResUNet
-from utils import create_dir, dice_loss, compute_region, metric_dice, metric_IOU, metric_pa
+from utils import create_dir, dice_loss, compute_region, metric_dice, metric_iou, metric_pa
 from tqdm import tqdm
 
 create_dir()
@@ -94,7 +94,7 @@ def train_supervised():
                     pa += torch.sum(metric_pa(*region))
                     pa_total += len(mask)
 
-                    iou += torch.sum(metric_IOU(*region))
+                    iou += torch.sum(metric_iou(*region))
                     iou_total += len(mask)
 
                     dice += torch.sum(metric_dice(*region))

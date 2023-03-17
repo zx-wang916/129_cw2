@@ -4,7 +4,7 @@ import numpy as np
 from torch.utils.data import DataLoader
 from dataset import OxfordIIITPetSeg
 from model import ResUNet
-from utils import create_dir, dice_loss, compute_region, metric_dice, metric_IOU, metric_pa, get_consistency_weight
+from utils import create_dir, dice_loss, compute_region, metric_dice, metric_iou, metric_pa, get_consistency_weight
 from tqdm import tqdm
 
 create_dir()
@@ -18,7 +18,6 @@ def train_supervised():
     LR = 1e-3
     EPOCH = 300
     ALPHA = 0.99
-    CONSISTENCY_WEIGHT = 1
     DEVICE = torch.device('cuda:5')
     # DEVICE = torch.device('cpu')
     NUM_WORKERS = 8
@@ -40,7 +39,8 @@ def train_supervised():
     net_teacher.requires_grad_(False)
 
     # define loss
-    criterion_seg = dice_loss
+    criterion_dice = dice_loss
+    criterion_ce = torch.nn.CrossEntropyLoss()
     criterion_con = torch.nn.MSELoss()
 
     # define optimizer
@@ -65,8 +65,16 @@ def train_supervised():
             # compute segmentation loss
             loss_seg = 0
             if len(data_labeled) > 0:
+                # predict
                 out = net_student(data_labeled)
-                loss_seg = criterion_seg(out, mask_labeled) / len(data_labeled)
+
+                # compute dice loss
+                loss_seg = criterion_dice(out, mask_labeled)
+
+                # compute cross-entropy loss
+                loss_seg = loss_seg + criterion_ce(out, mask_labeled)
+
+                loss_seg = loss_seg / len(data_labeled)
                 loss_seg_history.append(loss_seg.cpu().data.numpy())
 
             # compute consistency loss
@@ -123,14 +131,18 @@ def train_supervised():
                     out_class_i[torch.where(out == i)] = 1
                     mask_class_i = mask[:, i]
 
+                    # compute TP, TN, FP, FN
                     region = compute_region(out_class_i, mask_class_i)
 
+                    # compute pixel accuracy
                     pa += torch.sum(metric_pa(*region))
                     pa_total += len(mask)
 
-                    iou += torch.sum(metric_IOU(*region))
+                    # compute IOU
+                    iou += torch.sum(metric_iou(*region))
                     iou_total += len(mask)
 
+                    # compute dice
                     dice += torch.sum(metric_dice(*region))
                     dice_total += len(mask)
 

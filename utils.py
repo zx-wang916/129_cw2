@@ -44,11 +44,11 @@ def metric_pa(TP, FP, TN, FN):
     return (TP + TN) / (TP + FP + TN + FN + 1e-10)
 
 
-def metric_IOU(TP, FP, TN, FN):
+def metric_iou(TP, FP, TN, FN):
     return TP / (FP + TP + FN + 1e-10)
 
 
-def get_consistency_weight(epoch, consistency=50, rampup_length=10):
+def get_consistency_weight(epoch, consistency=100, rampup_length=100):
     if rampup_length == 0:
         weight = 1.0
     else:

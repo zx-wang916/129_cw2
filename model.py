@@ -67,8 +67,8 @@ class ResUNet(nn.Module):
         out = self.cov_out(dec4)
         return out
 
-    def noisy_forward(self, x, std_ratio=0.1):
+    def noisy_forward(self, x):
         # add noise to the input
-        noise = torch.normal(0, x.std() * std_ratio, x.shape).to(x.device)
+        noise = torch.clamp(torch.randn_like(x) * 0.1, -0.2, 0.2).to(x.device)
         out = self.forward(x + noise)
         return out

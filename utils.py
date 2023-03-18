@@ -17,17 +17,21 @@ def create_dir():
     if not os.path.isdir('model/semi'):
         os.mkdir('model/semi')
 
+    if not os.path.isdir('model/cla'):
+        os.mkdir('model/cla')
+
 
 def parse_arg():
     parser = argparse.ArgumentParser()
     parser.add_argument('-b', '--batch_size', type=int, default=64, required=False)
     parser.add_argument('-l', '--labeled_ratio', type=float, default=0.1, required=False)
     parser.add_argument('-t', '--train_val_ratio', type=float, default=0.8, required=False)
+    parser.add_argument('-c', '--cla_weight', type=float, default=1, required=False)
     parser.add_argument('-lr', '--lr', type=float, default=1e-3, required=False)
     parser.add_argument('-e', '--epoch', type=int, default=200, required=False)
     parser.add_argument('-a', '--alpha', type=float, default=0.99, required=False)
     parser.add_argument('-d', '--device', type=str, default='cpu', required=False)
-    parser.add_argument('-n', '--num_worker', type=int, default=8, required=False)
+    parser.add_argument('-n', '--num_worker', type=int, default=16, required=False)
     return parser.parse_args()
 
 

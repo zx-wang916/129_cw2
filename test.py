@@ -5,7 +5,7 @@ import matplotlib
 from matplotlib import pyplot as plt
 from tqdm import tqdm
 from torch.utils.data import DataLoader
-from dataset import OxfordIIITPetSeg
+from dataset import get_test_dataset
 from model import ResUNet
 from utils import create_dir, compute_region, metric_dice, metric_iou, metric_pa
 
@@ -14,7 +14,7 @@ create_dir()
 
 def test(net_path, batch_size=32, device='cpu'):
     # preparing dataset
-    test_set = OxfordIIITPetSeg.split_test('./data')
+    test_set = get_test_dataset('./data')
     test_loader = DataLoader(test_set, batch_size, True, num_workers=8)
 
     # initialize network
@@ -88,14 +88,14 @@ def visualization(net_path, num_sample=4, device=torch.device('cpu')):
 
 
 if __name__ == '__main__':
-    # # test best supervised model
-    # print('best supervised model')
-    # test('./model/supervised/net_132.pth', 128, 'cuda:4')
-    #
-    # # test best semi-supervised model
-    # print('best semi-supervised model')
-    # test('./model/semi/net_189.pth', 128, 'cuda:4')
+    # test best supervised model
+    print('best supervised model')
+    test('./model/supervised/net_132.pth', 128, 'cuda:4')
 
-    matplotlib.use('TkAgg')
-    visualization('./model/supervised/net_132.pth', 4)
+    # test best semi-supervised model
+    print('best semi-supervised model')
+    test('./model/semi/net_189.pth', 128, 'cuda:4')
+
+    # matplotlib.use('TkAgg')
+    # visualization('./model/supervised/net_132.pth', 4)
     # visualization('./model/semi/net_189.pth', 4)

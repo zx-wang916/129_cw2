@@ -1,75 +1,103 @@
 import torch
-import random
 
 from torch import nn
-from torchvision.transforms import functional as F
-from torchvision.models.resnet import Bottleneck
+from torchvision.models.resnet import resnet34
 
 
-class MyBottleNeck(Bottleneck):
-    # it is just the original Bottleneck class, without channel expansion
-    expansion: int = 1
+class DecoderBlock(nn.Module):
+    def __init__(self, in_channel, out_channel, stride=2):
+        super().__init__()
+
+        width = out_channel // 4
+        self.conv = nn.Sequential(
+            nn.Conv2d(in_channel, width, 1, bias=False),
+            nn.BatchNorm2d(width),
+            nn.ReLU(),
+
+            nn.ConvTranspose2d(width, width, 3, stride, 1, 1),
+            nn.BatchNorm2d(width),
+            nn.ReLU(),
+
+            nn.Conv2d(width, out_channel, 1, bias=False),
+            nn.BatchNorm2d(out_channel),
+            nn.ReLU()
+        )
+
+        self.relu = nn.ReLU()
+        self.downsample = nn.ConvTranspose2d(in_channel, out_channel, 3, 2, 1, 1, bias=False)
+
+    def forward(self, x):
+        identity = self.downsample(x)
+        out = self.conv(x)
+
+        out = out + identity
+        out = self.relu(out)
+        return out
 
 
 class ResUNet(nn.Module):
     def __init__(self):
         super().__init__()
+        encoder = resnet34()
+        # encoder.load_state_dict(torch.load('./model/encoder_pretrained.pth'))
 
-        self.encoder_block1 = self.make_block(3, 32)
-        self.encoder_block2 = self.make_block(32, 64)
-        self.encoder_block3 = self.make_block(64, 128)
-        self.encoder_block4 = self.make_block(128, 256)
+        self.head = nn.Sequential(
+            encoder.conv1,
+            encoder.bn1,
+            encoder.relu,
+            encoder.maxpool,
+        )
+        self.encoder_block1 = encoder.layer1
+        self.encoder_block2 = encoder.layer2
+        self.encoder_block3 = encoder.layer3
+        self.encoder_block4 = encoder.layer4
 
-        self.up_sample = nn.Upsample(scale_factor=2, mode='bilinear')
-        self.decoder_block1 = self.make_block(256, 128, stride=1)
-        self.decoder_block2 = self.make_block(128, 64, stride=1)
-        self.decoder_block3 = self.make_block(64, 32, stride=1)
-        self.decoder_block4 = self.make_block(32, 3, stride=1)
+        self.decoder_block1 = DecoderBlock(512, 256)
+        self.decoder_block2 = DecoderBlock(256, 128)
+        self.decoder_block3 = DecoderBlock(128, 64)
+        self.decoder_block4 = DecoderBlock(64, 32)
 
-        self.cov_out = nn.Sequential(
-            nn.Conv2d(3, 3, 1, 1, 0),
+        self.seg_out = nn.Sequential(
+            nn.ConvTranspose2d(32, 32, 3, 2, 1, 1),
+            nn.ReLU(),
+            nn.Conv2d(32, 32, 3, 1, 1),
+            nn.ReLU(),
+            nn.Conv2d(32, 3, 3, 1, 1),
             nn.Softmax(dim=1)
         )
 
-    def make_block(self, in_channel, out_channel, stride=2):
-        skip_connection = nn.Sequential(
-            nn.Conv2d(in_channel, out_channel, kernel_size=1, stride=stride, bias=False),
-            nn.BatchNorm2d(out_channel)
+        self.cla_out = nn.Sequential(
+            nn.AdaptiveAvgPool2d((1, 1)),
+            nn.Flatten(),
+            nn.Linear(512, 37),
+            nn.Softmax(dim=1)
         )
 
-        block = nn.Sequential(
-            MyBottleNeck(in_channel, out_channel, stride, skip_connection),
-            MyBottleNeck(out_channel, out_channel),
-            MyBottleNeck(out_channel, out_channel)
-        )
-
-        return block
-
-    def forward(self, x):
+    def backbone_forward(self, x):
         # encoder part
-        enc1 = self.encoder_block1(x)
+        head = self.head(x)
+        enc1 = self.encoder_block1(head)
         enc2 = self.encoder_block2(enc1)
         enc3 = self.encoder_block3(enc2)
         enc4 = self.encoder_block4(enc3)
 
         # decoder part
-        dec1 = self.up_sample(enc4)
-        dec1 = self.decoder_block1(dec1)
+        dec1 = self.decoder_block1(enc4)
+        dec2 = self.decoder_block2(dec1 + enc3)
+        dec3 = self.decoder_block3(dec2 + enc2)
+        dec4 = self.decoder_block4(dec3 + enc1)
 
-        dec2 = self.up_sample(dec1 + enc3)
-        dec2 = self.decoder_block2(dec2)
+        return dec4, enc4
 
-        dec3 = self.up_sample(dec2 + enc2)
-        dec3 = self.decoder_block3(dec3)
-
-        dec4 = self.up_sample(dec3 + enc1)
-        dec4 = self.decoder_block4(dec4)
-
-        out = self.cov_out(dec4)
-        return out
+    def forward(self, x):
+        out, _ = self.backbone_forward(x)
+        return self.seg_out(out)
 
     def noisy_forward(self, x):
         # add noise to the input
         noise = torch.clamp(torch.randn_like(x) * 0.1, -0.2, 0.2).to(x.device)
-        out = self.forward(x + noise)
-        return out
+        return self.forward(x + noise)
+
+    def seg_cla_forward(self, x):
+        dec_out, enc_out = self.backbone_forward(x)
+        return self.seg_out(dec_out), self.cla_out(enc_out)

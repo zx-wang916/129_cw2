@@ -2,7 +2,7 @@ import torch
 import numpy as np
 
 from torch.utils.data import DataLoader
-from dataset import get_train_val_dataset
+from dataset import get_seg_cla_dataset
 from model import ResUNet
 from utils import create_dir, parse_arg, get_consistency_weight
 from utils import dice_loss, compute_region, metric_dice, metric_iou, metric_pa
@@ -13,7 +13,7 @@ create_dir()
 
 def train_semi(args):
     # prepare train and validation dataset
-    train_set, val_set = get_train_val_dataset('./data', args.train_val_ratio, args.labeled_ratio)
+    train_set, val_set = get_seg_cla_dataset('./data', args.train_val_ratio, args.labeled_ratio)
 
     # prepare dataloader
     train_loader = DataLoader(train_set, args.batch_size, True, num_workers=args.num_worker)
@@ -25,7 +25,7 @@ def train_semi(args):
     net_teacher = ResUNet()
     net_teacher = net_teacher.to(args.device)
     net_teacher.requires_grad_(False)
-    
+
     # define loss
     criterion_dice = dice_loss
     criterion_ce = torch.nn.CrossEntropyLoss()
@@ -40,44 +40,44 @@ def train_semi(args):
         # ####################################### train model #######################################
         loss_seg_history = []
         loss_con_history = []
+        loss_cla_history = []
 
-        for data, mask, is_labeled in tqdm(train_loader, desc='training progress', leave=False):
-            data, mask = data.to(args.device), mask.to(args.device)
+        for data, mask, label, is_labeled in tqdm(train_loader, desc='training progress', leave=False):
+            data, mask, label = data.to(args.device), mask.to(args.device), label.to(args.device)
 
             # separate the data and mask into labeled and unlabeled parts
             idx_labeled = torch.where(is_labeled == 1)
             idx_unlabeled = torch.where(is_labeled == 0)
-            data_labeled = data[idx_labeled]
-            mask_labeled = mask[idx_labeled]
-            data_unlabeled = data[idx_unlabeled]
+
+            # compute network prediction
+            out_seg, out_cla = net_student.seg_cla_forward(data)
 
             # compute segmentation loss
             loss_seg = 0
             if len(idx_labeled) > 0:
-                # predict
-                out = net_student(data_labeled)
-
-                # compute dice loss
-                loss_seg = criterion_dice(out, mask_labeled)
-
-                # compute cross-entropy loss
-                loss_seg = loss_seg + criterion_ce(out, mask_labeled)
-
+                # compute segmentation loss
+                loss_seg = criterion_dice(out_seg[idx_labeled], mask[idx_labeled])
+                loss_seg = loss_seg + criterion_ce(out_seg[idx_labeled], mask[idx_labeled])
                 loss_seg = loss_seg / len(idx_labeled)
                 loss_seg_history.append(loss_seg.cpu().data.numpy())
+
+            # compute classification loss
+            loss_cla = criterion_ce(out_cla, label)
+            loss_cla = loss_cla / len(data)
+            loss_cla_history.append(loss_cla.cpu().data.numpy() * args.cla_weight)
 
             # compute consistency loss
             consistency_weight = get_consistency_weight(epoch)
             loss_con = 0
             if len(idx_unlabeled) > 0:
-                out_stu = net_student.noisy_forward(data_unlabeled)
-                out_tea = net_teacher.noisy_forward(data_unlabeled)
+                out_stu = out_seg[idx_unlabeled]
+                out_tea = net_teacher.noisy_forward(data[idx_unlabeled])
 
                 loss_con = criterion_con(out_stu, out_tea) / len(idx_unlabeled)
                 loss_con_history.append(loss_con.cpu().data.numpy() * consistency_weight)
 
             # combine the segmentation loss and the consistency loss
-            loss = loss_seg + consistency_weight * loss_con
+            loss = loss_seg + args.cla_weight * loss_cla + consistency_weight * loss_con
 
             # backward propagation and parameter update
             optim.zero_grad()
@@ -95,11 +95,14 @@ def train_semi(args):
 
             net_teacher.load_state_dict(param_teacher)
 
-        print('epoch: %d/%d | train | dice loss: %.4f | consistency loss: %.4f' % (
-            epoch, args.epoch, float(np.mean(loss_seg_history)), float(np.mean(loss_con_history))))
+        loss_seg_history = float(np.mean(loss_seg_history))
+        loss_cla_history = float(np.mean(loss_cla_history))
+        loss_con_history = float(np.mean(loss_con_history))
+        print('epoch: %d/%d | train | dice: %.4f | classification: %.4f | consistency: %.4f' % (
+            epoch, args.epoch, loss_seg_history, loss_cla_history, loss_con_history))
 
         if epoch > 100:
-            torch.save(net_student.state_dict(), './model/semi/net_%d.pth' % epoch)
+            torch.save(net_student.state_dict(), './model/cla/net_%d.pth' % epoch)
 
         # ####################################### validate model #######################################
 
@@ -107,19 +110,26 @@ def train_semi(args):
         pa = pa_total = 0
         iou = iou_total = 0
         dice = dice_total = 0
+        acc = acc_total = 0
 
         with torch.no_grad():
-            for data, mask in tqdm(val_loader, desc='validation progress', leave=False):
-                data, mask = data.to(args.device), mask.to(args.device)
+            for data, mask, label in tqdm(val_loader, desc='validation progress', leave=False):
+                data = data.to(args.device)
+                mask = mask.to(args.device)
+                label = label.to(args.device)
 
                 # network predict
-                out = net_student(data)
-                out = torch.argmax(out, dim=1)
+                out_seg, out_cla = net_student.seg_cla_forward(data)
+                out_seg = torch.argmax(out_seg, dim=1)
+
+                out_cla = torch.argmax(out_cla, dim=1)
+                acc += torch.sum(out_cla == label)
+                acc_total += len(label)
 
                 for i in range(3):
                     # compute binary mask for segmentation of each class
-                    out_class_i = torch.zeros_like(out)
-                    out_class_i[torch.where(out == i)] = 1
+                    out_class_i = torch.zeros_like(out_seg)
+                    out_class_i[torch.where(out_seg == i)] = 1
                     mask_class_i = mask[:, i]
 
                     # compute TP, TN, FP, FN
@@ -137,8 +147,8 @@ def train_semi(args):
                     dice += torch.sum(metric_dice(*region))
                     dice_total += len(mask)
 
-        print('epoch: %d/%d | val | DICE: %.3f | PA: %.3f | IOU: %.3f' % (
-            epoch, args.epoch, dice / dice_total, pa / pa_total, iou / iou_total))
+        print('epoch: %d/%d | val | DICE: %.3f | PA: %.3f | IOU: %.3f | ACC: %.3f' % (
+            epoch, args.epoch, dice / dice_total, pa / pa_total, iou / iou_total, acc / acc_total))
 
 
 if __name__ == '__main__':

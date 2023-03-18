@@ -9,91 +9,119 @@ from torchvision.transforms import transforms
 IMG_SIZE = (256, 256)
 
 
+def get_train_val_dataset(root, train_ratio=0.9, labeled_ratio=0.2):
+    # load and shuffle the raw data
+    data, mask, _ = _load_shuffle(root, True)
+
+    # split the data
+    train_data, train_mask, _, val_data, val_mask, _ = _split_train_val(data, mask, None, train_ratio)
+
+    # initialize the train set
+    train_set = OxfordIIITPetSeg(root, True, False, labeled_ratio, data=train_data, mask=train_mask)
+
+    # initialize the validation set
+    val_set = OxfordIIITPetSeg(root, False, False, data=val_data, mask=val_mask)
+
+    return train_set, val_set
+
+
+def get_test_dataset(root, cla=False):
+    # load and shuffle the raw data
+    data, mask, label = _load_shuffle(root, False)
+    return OxfordIIITPetSeg(root, False, cla, data=data, mask=mask, label=label)
+
+
+def get_seg_cla_dataset(root, train_ratio=0.9, labeled_ratio=0.2):
+    # load and shuffle the raw data
+    data, mask, label = _load_shuffle(root, True)
+
+    # split the data
+    train_data, train_mask, train_label, val_data, val_mask, val_label = \
+        _split_train_val(data, mask, label, train_ratio)
+
+    # initialize the train set
+    train_set = OxfordIIITPetSeg(
+        root, True, True, labeled_ratio, data=train_data, mask=train_mask, label=train_label)
+
+    # initialize the validation set
+    val_set = OxfordIIITPetSeg(
+        root, False, True, data=val_data, mask=val_mask, label=val_label)
+
+    return train_set, val_set
+
+
+def _split_train_val(data, mask, label, train_ratio):
+    # split the data
+    idx_train = int(len(data) * train_ratio)
+    train_data = data[:idx_train]
+    val_data = data[idx_train:]
+    train_mask = mask[:idx_train]
+    val_mask = mask[idx_train:]
+
+    if label is None:
+        return train_data, train_mask, None, val_data, val_mask, None
+
+    else:
+        train_label = label[:idx_train]
+        val_label = label[idx_train:]
+        return train_data, train_mask, train_label, val_data, val_mask, val_label
+
+
+def _load_shuffle(root, train):
+    # check if the dataset is downloaded
+    _ = OxfordIIITPet(root, download=True)
+
+    # load image file path
+    data, mask, label = _load_data_path(root, train)
+
+    # shuffle the dataset
+    idx_shuffle = np.arange(len(data))
+    np.random.shuffle(idx_shuffle)
+    data = data[idx_shuffle]
+    mask = mask[idx_shuffle]
+    label = label[idx_shuffle]
+    return data, mask, label
+
+
+def _load_data_path(root, train):
+    data = []
+    mask = []
+    label = []
+
+    if train:
+        file_name = 'trainval.txt'
+    else:
+        file_name = 'test.txt'
+
+    with open(root + '/oxford-iiit-pet/annotations/' + file_name) as file:
+        for line in file:
+            image_filename, lab, *_ = line.strip().split()
+            mask.append(root + '/oxford-iiit-pet/annotations/trimaps/' + image_filename + '.png')
+            data.append(root + '/oxford-iiit-pet/images/' + image_filename + '.jpg')
+            label.append(int(lab) - 1)
+
+    data = np.array(data, dtype=object)
+    mask = np.array(mask, dtype=object)
+    label = np.array(label, dtype=object)
+    return data, mask, label
+
+
 class OxfordIIITPetSeg(VisionDataset):
-
-    @classmethod
-    def split_train_val(cls, root, train_ratio=0.9, labeled_ratio=0.2):
-        # check if the dataset is downloaded
-        _ = OxfordIIITPet(root, download=True)
-
-        # load image file path
-        data, mask = cls.load_data_path(root, True)
-
-        # shuffle the dataset
-        idx_shuffle = np.arange(len(data))
-        np.random.shuffle(idx_shuffle)
-        data = data[idx_shuffle]
-        mask = mask[idx_shuffle]
-
-        # split the data
-        idx_train = int(len(data) * train_ratio)
-        train_data = data[:idx_train]
-        train_mask = mask[:idx_train]
-        val_data = data[idx_train:]
-        val_mask = mask[idx_train:]
-
-        # initialize the train set
-        train_set = OxfordIIITPetSeg(root, True, labeled_ratio)
-        train_set.data = train_data
-        train_set.mask = train_mask
-        train_set.divide_dataset()
-
-        # initialize the validation set
-        val_set = OxfordIIITPetSeg(root, False)
-        val_set.data = val_data
-        val_set.mask = val_mask
-
-        return train_set, val_set
-
-    @classmethod
-    def split_test(cls, root):
-        # check if the dataset is downloaded
-        _ = OxfordIIITPet(root, download=True)
-
-        # load image file path
-        data, mask = cls.load_data_path(root, True)
-
-        # shuffle the dataset
-        idx_shuffle = np.arange(len(data))
-        np.random.shuffle(idx_shuffle)
-        data = data[idx_shuffle]
-        mask = mask[idx_shuffle]
-
-        # initialize the test set
-        test_set = OxfordIIITPetSeg(root, False)
-        test_set.data = data
-        test_set.mask = mask
-
-        return test_set
-
-    @staticmethod
-    def load_data_path(root, train):
-        data = []
-        mask = []
-
-        if train:
-            file_name = 'trainval.txt'
-        else:
-            file_name = 'test.txt'
-
-        with open(root + '/oxford-iiit-pet/annotations/' + file_name) as file:
-            for line in file:
-                image_filename, label, *_ = line.strip().split()
-                mask.append(root + '/oxford-iiit-pet/annotations/trimaps/' + image_filename + '.png')
-                data.append(root + '/oxford-iiit-pet/images/' + image_filename + '.jpg')
-
-        data = np.array(data, dtype=object)
-        mask = np.array(mask, dtype=object)
-        return data, mask
-
-    def __init__(self, root, train=True, labeled_ratio=0.2):
+    def __init__(self, root, train=True, cla=False, labeled_ratio=0.2, **kwargs):
         super().__init__(root)
         self.train = train
+        self.cla = cla
         self.labeled_ratio = labeled_ratio
 
-        self.data = None
-        self.mask = None
-        self.unlabeled = None
+        self.data = kwargs['data']
+        self.mask = kwargs['mask']
+        self.data_unlabeled = None
+
+        if cla:
+            self.label = kwargs['label']
+
+        if train:
+            self.divide_dataset()
 
         self.transform1 = transforms.Compose([transforms.PILToTensor()])
         self.transform2 = transforms.Compose([
@@ -111,13 +139,16 @@ class OxfordIIITPetSeg(VisionDataset):
     def divide_dataset(self):
         # divide the dataset into labeled and unlabeled parts
         idx_labeled = int(len(self.data) * self.labeled_ratio)
-        self.unlabeled = self.data[idx_labeled:]
+        self.data_unlabeled = self.data[idx_labeled:]
         self.data = self.data[:idx_labeled]
         self.mask = self.mask[:idx_labeled]
 
+        # if self.cla:
+        #     self.label = self.label[:idx_labeled]
+
     def __len__(self):
         if self.train:
-            return len(self.data) + len(self.unlabeled)
+            return len(self.data) + len(self.data_unlabeled)
         else:
             return len(self.data)
 
@@ -133,64 +164,56 @@ class OxfordIIITPetSeg(VisionDataset):
             image = Image.open(self.data[idx]).convert("RGB")
             mask = Image.open(self.mask[idx]).convert("L")
 
-            # transform to Tensor before padding
-            image = self.transform1(image)
-            mask = self.transform1(mask)
-
-            # pad the image to square image
-            image = self.pad_to_square_image(image, 0)
-            mask = self.pad_to_square_image(mask, 3)
-
-            # resize the image and mask
-            image = self.transform2(image)
-            mask = self.transform3(mask)
-
-            # make the mask into multichannel
-            mask_out = torch.zeros((3, *IMG_SIZE))
-            mask = mask.squeeze(0)
-            mask_out[(0, *torch.where(mask == 1))] = 1
-            mask_out[(1, *torch.where(mask == 2))] = 1
-            mask_out[(2, *torch.where(mask == 3))] = 1
-
-            return image, mask_out, 1
+            if self.cla:
+                return *self.transform_data(image, mask), self.label[idx], 1
+            else:
+                return *self.transform_data(image, mask), 1
 
         else:
-            # return unlabeled data
-            idx -= len(self.data)
+            # sample unlabeled data
+            unlabeled = Image.open(self.data_unlabeled[idx - len(self.data)]).convert("RGB")
 
-            # randomly sample unlabeled data
-            unlabeled = Image.open(self.unlabeled[idx]).convert("RGB")
-            unlabeled = self.transform1(unlabeled)
-            unlabeled = self.pad_to_square_image(unlabeled, 0)
-            unlabeled = self.transform2(unlabeled)
-
-            return unlabeled, torch.empty_like(unlabeled), 0
+            if self.cla:
+                return *self.transform_data(unlabeled, None), self.label[idx], 0
+            else:
+                return *self.transform_data(unlabeled, None), 0
 
     def getitem_test(self, idx):
         # sample labeled data with index
         image = Image.open(self.data[idx]).convert("RGB")
         mask = Image.open(self.mask[idx]).convert("L")
 
+        if not self.cla:
+            return self.transform_data(image, mask)
+        else:
+            return *self.transform_data(image, mask), self.label[idx]
+
+    def transform_data(self, image, mask):
         # transform to Tensor before padding
         image = self.transform1(image)
-        mask = self.transform1(mask)
 
         # pad the image to square image
         image = self.pad_to_square_image(image, 0)
-        mask = self.pad_to_square_image(mask, 3)
 
-        # resize the image and mask
+        # resize the image
         image = self.transform2(image)
-        mask = self.transform3(mask)
 
-        # make the mask into multichannel
-        mask_out = torch.zeros((3, *IMG_SIZE))
-        mask = mask.squeeze(0)
-        mask_out[(0, *torch.where(mask == 1))] = 1
-        mask_out[(1, *torch.where(mask == 2))] = 1
-        mask_out[(2, *torch.where(mask == 3))] = 1
+        if mask is None:
+            return image, torch.empty_like(image)
 
-        return image, mask_out
+        else:
+            # transform mask
+            mask = self.transform1(mask)
+            mask = self.pad_to_square_image(mask, 3)
+            mask = self.transform3(mask)
+
+            # make the mask multichannel
+            mask_out = torch.zeros((3, *IMG_SIZE))
+            mask = mask.squeeze(0)
+            mask_out[(0, *torch.where(mask == 1))] = 1
+            mask_out[(1, *torch.where(mask == 2))] = 1
+            mask_out[(2, *torch.where(mask == 3))] = 1
+            return image, mask_out
 
     @staticmethod
     def pad_to_square_image(img, pad_value):

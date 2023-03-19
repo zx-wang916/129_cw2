@@ -5,7 +5,7 @@ from torch.utils.data import DataLoader
 from dataset import get_train_val_dataset
 from model import ResUNet
 from utils import create_dir, parse_arg
-from utils import dice_loss, compute_region, metric_dice, metric_iou, metric_pa
+from utils import dice_loss, compute_metric
 from tqdm import tqdm
 
 create_dir()
@@ -24,6 +24,7 @@ def train_supervised(args):
     net = net.to(args.device)
 
     # define loss and optimizer
+    # criterion = torch.nn.MSELoss()
     criterion = dice_loss
     optim = torch.optim.Adam(net.parameters(), lr=args.lr)
 
@@ -31,6 +32,11 @@ def train_supervised(args):
     for epoch in range(args.epoch):
 
         # ####################################### train model #######################################
+
+        # training performance metrics
+        pa = pa_total = 0
+        iou = iou_total = 0
+        dice = dice_total = 0
         loss_history = []
 
         # for data, mask in train_loader:
@@ -57,15 +63,23 @@ def train_supervised(args):
 
             loss_history.append(loss.cpu().data.numpy())
 
-        print('epoch: %d/%d | train | dice loss: %.3f' % (
-            epoch, args.epoch, float(np.mean(loss_history))))
+            out = torch.argmax(out, dim=1)
+            result = compute_metric(out, mask_labeled)
+            pa += result[0]
+            pa_total += len(mask_labeled)
+            iou += result[1]
+            iou_total += len(mask_labeled)
+            dice += result[2]
+            dice_total += len(mask_labeled)
 
-        if epoch > 100:
-            torch.save(net.state_dict(), './model/supervised/net_%d.pth' % epoch)
+        print('epoch: %d/%d | train | DICE: %.3f | PA: %.3f | IOU: %.3f | loss: %.3f' % (
+            epoch, args.epoch, dice / dice_total, pa / pa_total, iou / iou_total, float(np.mean(loss_history))))
+
+        torch.save(net.state_dict(), './model/supervised/net_%d.pth' % epoch)
 
         # ####################################### validate model #######################################
 
-        # performance metrics
+        # validation performance metrics
         pa = pa_total = 0
         iou = iou_total = 0
         dice = dice_total = 0
@@ -78,27 +92,30 @@ def train_supervised(args):
                 out = net(data)
                 out = torch.argmax(out, dim=1)
 
-                for i in range(3):
-                    # compute binary mask for segmentation of each class
-                    out_class_i = torch.zeros_like(out)
-                    out_class_i[torch.where(out == i)] = 1
-                    mask_class_i = mask[:, i]
+                result = compute_metric(out, mask)
+                pa += result[0]
+                pa_total += len(mask)
+                iou += result[1]
+                iou_total += len(mask)
+                dice += result[2]
+                dice_total += len(mask)
 
-                    region = compute_region(out_class_i, mask_class_i)
-
-                    pa += torch.sum(metric_pa(*region))
-                    pa_total += len(mask)
-
-                    iou += torch.sum(metric_iou(*region))
-                    iou_total += len(mask)
-
-                    dice += torch.sum(metric_dice(*region))
-                    dice_total += len(mask)
-
-        print('epoch: %d/%d | val | DICE: %.3f | PA: %.3f | IOU: %.3f' % (
+        print('epoch: %d/%d |  val  | DICE: %.3f | PA: %.3f | IOU: %.3f' % (
             epoch, args.epoch, dice / dice_total, pa / pa_total, iou / iou_total))
 
 
 if __name__ == '__main__':
     args = parse_arg()
     train_supervised(args)
+
+    # import matplotlib.pyplot as plt
+    # import matplotlib
+    #
+    # matplotlib.use('TkAgg')
+    #
+    # for i in torch.where(is_labeled == 1)[0]:
+    #     if is_labeled[i] == 1:
+    #         _, ax = plt.subplots(1, 2)
+    #         ax[0].imshow(data[i].permute((1, 2, 0)))
+    #         ax[1].imshow(mask[i].permute((1, 2, 0)))
+    #         plt.show()

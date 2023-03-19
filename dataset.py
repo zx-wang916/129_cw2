@@ -1,5 +1,6 @@
 import torch
 import numpy as np
+import random
 
 from PIL import Image
 from torchvision.datasets import OxfordIIITPet, VisionDataset
@@ -7,6 +8,8 @@ from torchvision.transforms import transforms
 
 
 IMG_SIZE = (256, 256)
+FILL_IMAGE = 0
+FILL_MASK = 3
 
 
 def get_train_val_dataset(root, train_ratio=0.9, labeled_ratio=0.2):
@@ -54,8 +57,8 @@ def _split_train_val(data, mask, label, train_ratio):
     # split the data
     idx_train = int(len(data) * train_ratio)
     train_data = data[:idx_train]
-    val_data = data[idx_train:]
     train_mask = mask[:idx_train]
+    val_data = data[idx_train:]
     val_mask = mask[idx_train:]
 
     if label is None:
@@ -123,17 +126,14 @@ class OxfordIIITPetSeg(VisionDataset):
         if train:
             self.divide_dataset()
 
-        self.transform1 = transforms.Compose([transforms.PILToTensor()])
-        self.transform2 = transforms.Compose([
+        self.tr_pil_to_tensor = transforms.PILToTensor()
+        self.tr_to_tensor = transforms.ToTensor()
+        self.tr_to_pil = transforms.ToPILImage()
+        self.tr_augmentation = transforms.Compose([
             transforms.ToPILImage(),
-            transforms.Resize(IMG_SIZE, transforms.InterpolationMode.BILINEAR),
-            transforms.ToTensor()
-        ])
-
-        self.transform3 = transforms.Compose([
-            transforms.ToPILImage(),
-            transforms.Resize(IMG_SIZE, transforms.InterpolationMode.NEAREST),
-            transforms.PILToTensor()
+            transforms.RandomHorizontalFlip(),
+            transforms.RandomRotation(90, fill=FILL_MASK),
+            transforms.RandomResizedCrop(IMG_SIZE)
         ])
 
     def divide_dataset(self):
@@ -142,9 +142,6 @@ class OxfordIIITPetSeg(VisionDataset):
         self.data_unlabeled = self.data[idx_labeled:]
         self.data = self.data[:idx_labeled]
         self.mask = self.mask[:idx_labeled]
-
-        # if self.cla:
-        #     self.label = self.label[:idx_labeled]
 
     def __len__(self):
         if self.train:
@@ -190,22 +187,31 @@ class OxfordIIITPetSeg(VisionDataset):
 
     def transform_data(self, image, mask):
         # transform to Tensor before padding
-        image = self.transform1(image)
+        image = self.tr_pil_to_tensor(image)
 
         # pad the image to square image
-        image = self.pad_to_square_image(image, 0)
-
-        # resize the image
-        image = self.transform2(image)
+        image = self.pad_to_square_image(image, FILL_IMAGE)
 
         if mask is None:
+            # resize the image
+            image = self.tr_augmentation(image)
+            image = self.tr_to_tensor(image)
             return image, torch.empty_like(image)
 
         else:
             # transform mask
-            mask = self.transform1(mask)
-            mask = self.pad_to_square_image(mask, 3)
-            mask = self.transform3(mask)
+            mask = self.tr_pil_to_tensor(mask)
+            mask = self.pad_to_square_image(mask, FILL_MASK)
+
+            # resize the image and mask
+            seed = random.randint(0, 114514)
+            torch.manual_seed(seed)
+            image = self.tr_augmentation(image)
+            torch.manual_seed(seed)
+            mask = self.tr_augmentation(mask)
+
+            image = self.tr_to_tensor(image)
+            mask = self.tr_pil_to_tensor(mask)
 
             # make the mask multichannel
             mask_out = torch.zeros((3, *IMG_SIZE))
@@ -228,3 +234,17 @@ class OxfordIIITPetSeg(VisionDataset):
             pad = (0, 0, diff // 2, diff - diff // 2)
 
         return torch.nn.functional.pad(img, pad, mode='constant', value=pad_value)
+
+    def augmentation(self, image, mask=None):
+
+
+        def transform(img, flip, ang, scale, ratio):
+            img = self.tr_to_pil(img)
+            img = img.hflip()
+
+        # if random.uniform(0, 1) > 0.5:
+
+        ang = random.uniform(0, 90)
+        image_rotated = image.rotate(ang, resample=Image.BILINEAR)
+
+        mask_rotated = mask.rotate(angle, resample=Image.NEAREST)

@@ -31,7 +31,7 @@ def parse_arg():
     parser.add_argument('-e', '--epoch', type=int, default=200, required=False)
     parser.add_argument('-a', '--alpha', type=float, default=0.99, required=False)
     parser.add_argument('-d', '--device', type=str, default='cpu', required=False)
-    parser.add_argument('-n', '--num_worker', type=int, default=16, required=False)
+    parser.add_argument('-n', '--num_worker', type=int, default=8, required=False)
     return parser.parse_args()
 
 
@@ -41,6 +41,24 @@ def dice_loss(pred, mask, ep=1e-8):
     union = torch.sum(pred) + torch.sum(mask) + ep
     loss = 1 - intersection / union
     return loss
+
+
+def compute_metric(pred, mask):
+    pa = iou = dice = 0
+
+    for i in range(3):
+        # compute binary mask for segmentation of each class
+        out_class_i = torch.zeros_like(pred)
+        out_class_i[torch.where(pred == i)] = 1
+        mask_class_i = mask[:, i]
+
+        region = compute_region(out_class_i, mask_class_i)
+
+        pa += torch.sum(metric_pa(*region))
+        iou += torch.sum(metric_iou(*region))
+        dice += torch.sum(metric_dice(*region))
+
+    return pa / 3, iou / 3, dice / 3
 
 
 def compute_region(pred, target):

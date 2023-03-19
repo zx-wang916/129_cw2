@@ -5,7 +5,7 @@ import matplotlib
 from matplotlib import pyplot as plt
 from tqdm import tqdm
 from torch.utils.data import DataLoader
-from dataset import get_test_dataset
+from dataset import get_test_dataset, get_train_val_dataset
 from model import ResUNet
 from utils import create_dir, compute_region, metric_dice, metric_iou, metric_pa
 
@@ -56,46 +56,47 @@ def test(net_path, batch_size=32, device='cpu'):
 
 
 def visualization(net_path, num_sample=4, device=torch.device('cpu')):
-    # preparing dataset
-    test_set = OxfordIIITPetSeg.split_test('./data')
+    with torch.no_grad():
+        # preparing dataset
+        test_set = get_test_dataset('./data')
 
-    # use subplots to present the image
-    _, ax = plt.subplots(3, num_sample)
+        # use subplots to present the image
+        _, ax = plt.subplots(3, num_sample)
 
-    # sample data for visualization
-    sample_idx = np.random.randint(0, len(test_set), num_sample)
+        # sample data for visualization
+        sample_idx = np.random.randint(0, len(test_set), num_sample)
 
-    for i, idx in enumerate(sample_idx):
-        data, mask = test_set[idx]
-        mask = torch.argmax(mask, dim=0)
+        for i, idx in enumerate(sample_idx):
+            data, mask = test_set[idx]
+            mask = torch.argmax(mask, dim=0)
 
-        # initialize network
-        net = ResUNet().to(device)
-        net.load_state_dict(torch.load(net_path, map_location=device))
-        # net.eval()
+            # initialize network
+            net = ResUNet().to(device)
+            net.load_state_dict(torch.load(net_path, map_location=device))
+            # net.eval()
 
-        # network predict
-        out = net(data.unsqueeze(0))
-        out = torch.argmax(out, dim=1).squeeze(0)
+            # network predict
+            out = net(data.unsqueeze(0).to(device))
+            out = torch.argmax(out, dim=1).squeeze(0)
 
-        ax[0][i].imshow(data.permute((1, 2, 0)))
-        ax[0][i].set_axis_off()
-        ax[1][i].imshow(mask)
-        ax[1][i].set_axis_off()
-        ax[2][i].imshow(out)
-        ax[2][i].set_axis_off()
-    plt.show()
+            ax[0][i].imshow(data.permute((1, 2, 0)))
+            ax[0][i].set_axis_off()
+            ax[1][i].imshow(mask, 'gray')
+            ax[1][i].set_axis_off()
+            ax[2][i].imshow(out.cpu(), 'gray')
+            ax[2][i].set_axis_off()
+        plt.show()
 
 
 if __name__ == '__main__':
-    # test best supervised model
-    print('best supervised model')
-    test('./model/supervised/net_132.pth', 128, 'cuda:4')
+    # # test best supervised model
+    # print('best supervised model')
+    # test('./model/supervised/net_132.pth', 128, 'cuda:4')
+    #
+    # # test best semi-supervised model
+    # print('best semi-supervised model')
+    # test('./model/semi/net_189.pth', 128, 'cuda:4')
 
-    # test best semi-supervised model
-    print('best semi-supervised model')
-    test('./model/semi/net_189.pth', 128, 'cuda:4')
-
-    # matplotlib.use('TkAgg')
-    # visualization('./model/supervised/net_132.pth', 4)
+    matplotlib.use('TkAgg')
+    visualization('./model/supervised/net_197.pth', 4, torch.device('cuda'))
     # visualization('./model/semi/net_189.pth', 4)

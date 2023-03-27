@@ -37,8 +37,9 @@ def clear_progress(filename):
 
 
 if __name__ == '__main__':
-    # read_log('sup.txt')
-    # read_log('semi.txt')
+    read_log('sup.txt')
+    read_log('semi.txt')
+    read_log('cla.txt')
 
     # clear_progress('sup.txt')
-    clear_progress('semi.txt')
+    # clear_progress('semi.txt')

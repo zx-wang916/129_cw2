@@ -2,7 +2,7 @@ import torch
 import numpy as np
 
 from torch.utils.data import DataLoader
-from dataset import get_train_val_dataset
+from dataset import get_sup_dataset
 from model import ResUNet
 from utils import create_dir, parse_arg
 from utils import dice_loss, compute_metric
@@ -13,7 +13,7 @@ create_dir()
 
 def train_supervised(args):
     # prepare train and validation dataset
-    train_set, val_set = get_train_val_dataset('./data', args.train_val_ratio, args.labeled_ratio)
+    train_set, val_set = get_sup_dataset('./data', args.train_val_ratio, args.labeled_ratio)
 
     # prepare dataloader
     train_loader = DataLoader(train_set, args.batch_size, True, num_workers=args.num_worker)
@@ -40,21 +40,14 @@ def train_supervised(args):
         loss_history = []
 
         # for data, mask in train_loader:
-        for data, mask, is_labeled in tqdm(train_loader, desc='training progress', leave=False):
+        for data, mask in tqdm(train_loader, desc='training progress', leave=False):
             data, mask = data.to(args.device), mask.to(args.device)
 
-            idx_labeled = torch.where(is_labeled == 1)
-            if len(idx_labeled) == 0:
-                continue
-
-            data_labeled = data[idx_labeled]
-            mask_labeled = mask[idx_labeled]
-
             # network predict
-            out = net(data_labeled)
+            out = net(data)
 
             # compute loss
-            loss = criterion(out, mask_labeled) / len(idx_labeled)
+            loss = criterion(out, mask)
 
             # backward propagation and parameter update
             optim.zero_grad()
@@ -64,13 +57,13 @@ def train_supervised(args):
             loss_history.append(loss.cpu().data.numpy())
 
             out = torch.argmax(out, dim=1)
-            result = compute_metric(out, mask_labeled)
+            result = compute_metric(out, mask)
             pa += result[0]
-            pa_total += len(mask_labeled)
+            pa_total += len(mask)
             iou += result[1]
-            iou_total += len(mask_labeled)
+            iou_total += len(mask)
             dice += result[2]
-            dice_total += len(mask_labeled)
+            dice_total += len(mask)
 
         print('epoch: %d/%d | train | DICE: %.3f | PA: %.3f | IOU: %.3f | loss: %.3f' % (
             epoch, args.epoch, dice / dice_total, pa / pa_total, iou / iou_total, float(np.mean(loss_history))))

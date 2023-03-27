@@ -5,7 +5,7 @@ import matplotlib
 from matplotlib import pyplot as plt
 from tqdm import tqdm
 from torch.utils.data import DataLoader
-from dataset import get_test_dataset, get_train_val_dataset
+from dataset import get_test_dataset, get_semi_dataset
 from model import ResUNet
 from utils import create_dir, compute_region, metric_dice, metric_iou, metric_pa
 
@@ -98,5 +98,5 @@ if __name__ == '__main__':
     # test('./model/semi/net_189.pth', 128, 'cuda:4')
 
     matplotlib.use('TkAgg')
-    visualization('./model/supervised/net_197.pth', 4, torch.device('cuda'))
-    # visualization('./model/semi/net_189.pth', 4)
+    # visualization('./model/supervised/net_185.pth', 4, torch.device('cuda'))
+    visualization('./model/semi/net_277.pth', 4, torch.device('cuda'))

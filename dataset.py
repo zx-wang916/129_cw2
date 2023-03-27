@@ -12,7 +12,7 @@ FILL_IMAGE = 0
 FILL_MASK = 3
 
 
-def get_train_val_dataset(root, train_ratio=0.9, labeled_ratio=0.2):
+def get_sup_dataset(root, train_ratio=0.9, labeled_ratio=0.2):
     # load and shuffle the raw data
     data, mask, _ = _load_shuffle(root, True)
 
@@ -20,10 +20,26 @@ def get_train_val_dataset(root, train_ratio=0.9, labeled_ratio=0.2):
     train_data, train_mask, _, val_data, val_mask, _ = _split_train_val(data, mask, None, train_ratio)
 
     # initialize the train set
-    train_set = OxfordIIITPetSeg(root, True, False, labeled_ratio, data=train_data, mask=train_mask)
+    train_set = OxfordIIITPetSeg(root, 1, labeled_ratio, data=train_data, mask=train_mask)
 
     # initialize the validation set
-    val_set = OxfordIIITPetSeg(root, False, False, data=val_data, mask=val_mask)
+    val_set = OxfordIIITPetSeg(root, 3, data=val_data, mask=val_mask)
+
+    return train_set, val_set
+
+
+def get_semi_dataset(root, train_ratio=0.9, labeled_ratio=0.2):
+    # load and shuffle the raw data
+    data, mask, _ = _load_shuffle(root, True)
+
+    # split the data
+    train_data, train_mask, _, val_data, val_mask, _ = _split_train_val(data, mask, None, train_ratio)
+
+    # initialize the train set
+    train_set = OxfordIIITPetSeg(root, 2, labeled_ratio, data=train_data, mask=train_mask)
+
+    # initialize the validation set
+    val_set = OxfordIIITPetSeg(root, 3, data=val_data, mask=val_mask)
 
     return train_set, val_set
 
@@ -31,7 +47,7 @@ def get_train_val_dataset(root, train_ratio=0.9, labeled_ratio=0.2):
 def get_test_dataset(root, cla=False):
     # load and shuffle the raw data
     data, mask, label = _load_shuffle(root, False)
-    return OxfordIIITPetSeg(root, False, cla, data=data, mask=mask, label=label)
+    return OxfordIIITPetSeg(root, 3, data=data, mask=mask, label=label)
 
 
 def get_seg_cla_dataset(root, train_ratio=0.9, labeled_ratio=0.2):
@@ -44,11 +60,11 @@ def get_seg_cla_dataset(root, train_ratio=0.9, labeled_ratio=0.2):
 
     # initialize the train set
     train_set = OxfordIIITPetSeg(
-        root, True, True, labeled_ratio, data=train_data, mask=train_mask, label=train_label)
+        root, 4, labeled_ratio, data=train_data, mask=train_mask, label=train_label)
 
     # initialize the validation set
     val_set = OxfordIIITPetSeg(
-        root, False, True, data=val_data, mask=val_mask, label=val_label)
+        root, 4, labeled_ratio=1, data=val_data, mask=val_mask, label=val_label)
 
     return train_set, val_set
 
@@ -110,21 +126,22 @@ def _load_data_path(root, train):
 
 
 class OxfordIIITPetSeg(VisionDataset):
-    def __init__(self, root, train=True, cla=False, labeled_ratio=0.2, **kwargs):
+    def __init__(self, root, split=1, labeled_ratio=0.2, **kwargs):
         super().__init__(root)
-        self.train = train
-        self.cla = cla
+
+        # 1: supervised, 2: semi-supervised, 3: test, 4: with classification
+        self.split = split
         self.labeled_ratio = labeled_ratio
 
         self.data = kwargs['data']
         self.mask = kwargs['mask']
         self.data_unlabeled = None
 
-        if cla:
-            self.label = kwargs['label']
-
-        if train:
+        if split == 1 or split == 2 or split == 4:
             self.divide_dataset()
+
+            if split == 4:
+                self.label = kwargs['label']
 
         self.tr_pil_to_tensor = transforms.PILToTensor()
         self.tr_to_tensor = transforms.ToTensor()
@@ -135,6 +152,22 @@ class OxfordIIITPetSeg(VisionDataset):
             transforms.RandomRotation(90, fill=FILL_MASK),
             transforms.RandomResizedCrop(IMG_SIZE)
         ])
+        self.tr_resize = transforms.Compose([
+            transforms.ToPILImage(),
+            transforms.Resize(IMG_SIZE)
+        ])
+
+    def __len__(self):
+        if self.split == 1 or self.split == 3:
+            return len(self.data)
+        else:
+            return len(self.data) + len(self.data_unlabeled)
+
+    def __getitem__(self, idx):
+        if self.split == 1 or self.split == 3:
+            return self.getitem_without_unlabeled(idx)
+        else:
+            return self.getitem_with_unlabeled(idx)
 
     def divide_dataset(self):
         # divide the dataset into labeled and unlabeled parts
@@ -143,25 +176,13 @@ class OxfordIIITPetSeg(VisionDataset):
         self.data = self.data[:idx_labeled]
         self.mask = self.mask[:idx_labeled]
 
-    def __len__(self):
-        if self.train:
-            return len(self.data) + len(self.data_unlabeled)
-        else:
-            return len(self.data)
-
-    def __getitem__(self, idx):
-        if self.train:
-            return self.getitem_train(idx)
-        else:
-            return self.getitem_test(idx)
-
-    def getitem_train(self, idx):
+    def getitem_with_unlabeled(self, idx):
         if idx < len(self.data):
             # sample labeled data with index
             image = Image.open(self.data[idx]).convert("RGB")
             mask = Image.open(self.mask[idx]).convert("L")
 
-            if self.cla:
+            if self.split == 4:
                 return *self.transform_data(image, mask), self.label[idx], 1
             else:
                 return *self.transform_data(image, mask), 1
@@ -170,20 +191,20 @@ class OxfordIIITPetSeg(VisionDataset):
             # sample unlabeled data
             unlabeled = Image.open(self.data_unlabeled[idx - len(self.data)]).convert("RGB")
 
-            if self.cla:
+            if self.split == 4:
                 return *self.transform_data(unlabeled, None), self.label[idx], 0
             else:
                 return *self.transform_data(unlabeled, None), 0
 
-    def getitem_test(self, idx):
+    def getitem_without_unlabeled(self, idx):
         # sample labeled data with index
         image = Image.open(self.data[idx]).convert("RGB")
         mask = Image.open(self.mask[idx]).convert("L")
 
-        if not self.cla:
-            return self.transform_data(image, mask)
-        else:
+        if self.split == 4:
             return *self.transform_data(image, mask), self.label[idx]
+        else:
+            return self.transform_data(image, mask)
 
     def transform_data(self, image, mask):
         # transform to Tensor before padding
@@ -192,23 +213,31 @@ class OxfordIIITPetSeg(VisionDataset):
         # pad the image to square image
         image = self.pad_to_square_image(image, FILL_IMAGE)
 
+        # for unlabeled data
         if mask is None:
             # resize the image
             image = self.tr_augmentation(image)
             image = self.tr_to_tensor(image)
             return image, torch.empty_like(image)
 
+        # for labeled data
         else:
-            # transform mask
+            # pad the mask
             mask = self.tr_pil_to_tensor(mask)
             mask = self.pad_to_square_image(mask, FILL_MASK)
 
-            # resize the image and mask
-            seed = random.randint(0, 114514)
-            torch.manual_seed(seed)
-            image = self.tr_augmentation(image)
-            torch.manual_seed(seed)
-            mask = self.tr_augmentation(mask)
+            if self.split == 3:
+                # for test dataset, we don't do argumentation
+                image = self.tr_resize(image)
+                mask = self.tr_resize(mask)
+
+            else:
+                # resize the image and mask in the same way
+                seed = random.randint(0, 114514)
+                torch.manual_seed(seed)
+                image = self.tr_augmentation(image)
+                torch.manual_seed(seed)
+                mask = self.tr_augmentation(mask)
 
             image = self.tr_to_tensor(image)
             mask = self.tr_pil_to_tensor(mask)
@@ -234,17 +263,3 @@ class OxfordIIITPetSeg(VisionDataset):
             pad = (0, 0, diff // 2, diff - diff // 2)
 
         return torch.nn.functional.pad(img, pad, mode='constant', value=pad_value)
-
-    def augmentation(self, image, mask=None):
-
-
-        def transform(img, flip, ang, scale, ratio):
-            img = self.tr_to_pil(img)
-            img = img.hflip()
-
-        # if random.uniform(0, 1) > 0.5:
-
-        ang = random.uniform(0, 90)
-        image_rotated = image.rotate(ang, resample=Image.BILINEAR)
-
-        mask_rotated = mask.rotate(angle, resample=Image.NEAREST)

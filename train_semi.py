@@ -2,10 +2,10 @@ import torch
 import numpy as np
 
 from torch.utils.data import DataLoader
-from dataset import get_train_val_dataset
+from dataset import get_semi_dataset
 from model import ResUNet
 from utils import create_dir, parse_arg, get_consistency_weight
-from utils import dice_loss, compute_region, metric_dice, metric_iou, metric_pa
+from utils import dice_loss, compute_metric
 from tqdm import tqdm
 
 create_dir()
@@ -13,7 +13,7 @@ create_dir()
 
 def train_semi(args):
     # prepare train and validation dataset
-    train_set, val_set = get_train_val_dataset('./data', args.train_val_ratio, args.labeled_ratio)
+    train_set, val_set = get_semi_dataset('./data', args.train_val_ratio, args.labeled_ratio)
 
     # prepare dataloader
     train_loader = DataLoader(train_set, args.batch_size, True, num_workers=args.num_worker)
@@ -116,26 +116,13 @@ def train_semi(args):
                 out = net_student(data)
                 out = torch.argmax(out, dim=1)
 
-                for i in range(3):
-                    # compute binary mask for segmentation of each class
-                    out_class_i = torch.zeros_like(out)
-                    out_class_i[torch.where(out == i)] = 1
-                    mask_class_i = mask[:, i]
-
-                    # compute TP, TN, FP, FN
-                    region = compute_region(out_class_i, mask_class_i)
-
-                    # compute pixel accuracy
-                    pa += torch.sum(metric_pa(*region))
-                    pa_total += len(mask)
-
-                    # compute IOU
-                    iou += torch.sum(metric_iou(*region))
-                    iou_total += len(mask)
-
-                    # compute dice
-                    dice += torch.sum(metric_dice(*region))
-                    dice_total += len(mask)
+                result = compute_metric(out, mask)
+                pa += result[0]
+                pa_total += len(mask)
+                iou += result[1]
+                iou_total += len(mask)
+                dice += result[2]
+                dice_total += len(mask)
 
         print('epoch: %d/%d | val | DICE: %.3f | PA: %.3f | IOU: %.3f' % (
             epoch, args.epoch, dice / dice_total, pa / pa_total, iou / iou_total))

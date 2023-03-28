@@ -4,6 +4,7 @@ from torch import nn
 
 
 class Block(nn.Module):
+    # this is the implementation of the Bottleneck module from ResNet
     def __init__(self, in_channel, out_channel, stride=2):
         super().__init__()
 
@@ -76,6 +77,7 @@ class ResUNet(nn.Module):
 
         for _ in range(num_block - 1):
             block.append(Block(out_channel, out_channel, 1))
+
         return block
 
     def backbone_forward(self, x):

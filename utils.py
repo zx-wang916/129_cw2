@@ -92,8 +92,3 @@ def get_consistency_weight(epoch, consistency=1000, rampup_length=100):
         phase = 1.0 - epoch / rampup_length
         weight = float(np.exp(-5.0 * phase * phase))
     return consistency * weight
-
-
-if __name__ == '__main__':
-    for i in range(200):
-        print(i, get_consistency_weight(i))

@@ -1,17 +1,17 @@
-import torch
 import numpy as np
-
+import torch
 from torch.utils.data import DataLoader
+from tqdm import tqdm
+
 from dataset import get_seg_cla_dataset
 from model import ResUNet
 from utils import create_dir, parse_arg, get_consistency_weight
 from utils import dice_loss, compute_metric
-from tqdm import tqdm
 
 create_dir()
 
 
-def train_semi(args):
+def train_seg_cla(args):
     # prepare train and validation dataset
     train_set, val_set = get_seg_cla_dataset('./data', args.train_val_ratio, args.labeled_ratio)
 
@@ -20,10 +20,8 @@ def train_semi(args):
     val_loader = DataLoader(val_set, args.batch_size, True, num_workers=args.num_worker)
 
     # initialize student-teacher network
-    net_student = ResUNet()
-    net_student = net_student.to(args.device)
-    net_teacher = ResUNet()
-    net_teacher = net_teacher.to(args.device)
+    net_student = ResUNet().to(args.device)
+    net_teacher = ResUNet().to(args.device)
     net_teacher.requires_grad_(False)
 
     # define loss
@@ -90,8 +88,7 @@ def train_semi(args):
 
             # using moving exponential average to update teacher model
             for para_stu, (key_tea, para_tea) in zip(param_student.values(), param_teacher.items()):
-                mea = args.alpha * para_tea + (1 - args.alpha) * para_stu
-                param_teacher[key_tea] = mea
+                param_teacher[key_tea] = args.alpha * para_tea + (1 - args.alpha) * para_stu
 
             net_teacher.load_state_dict(param_teacher)
 
@@ -101,8 +98,7 @@ def train_semi(args):
         print('epoch: %d/%d | train | dice: %.4f | classification: %.4f | consistency: %.4f' % (
             epoch, args.epoch, loss_seg_history, loss_cla_history, loss_con_history))
 
-        if epoch > 100:
-            torch.save(net_student.state_dict(), './model/cla/net_%d.pth' % epoch)
+        torch.save(net_student.state_dict(), './model/cla/net_%d.pth' % epoch)
 
         # ####################################### validate model #######################################
 
@@ -128,10 +124,10 @@ def train_semi(args):
 
                 result = compute_metric(out_seg, mask)
                 pa += result[0]
-                pa_total += len(mask)
                 iou += result[1]
-                iou_total += len(mask)
                 dice += result[2]
+                pa_total += len(mask)
+                iou_total += len(mask)
                 dice_total += len(mask)
 
         print('epoch: %d/%d | val | DICE: %.3f | PA: %.3f | IOU: %.3f | ACC: %.3f' % (
@@ -140,4 +136,4 @@ def train_semi(args):
 
 if __name__ == '__main__':
     args = parse_arg()
-    train_semi(args)
+    train_seg_cla(args)

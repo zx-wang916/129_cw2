@@ -1,13 +1,13 @@
-import torch
 import numpy as np
-import matplotlib
-
-from matplotlib import pyplot as plt
-from tqdm import tqdm
+import torch
+from torchvision import transforms
 from torch.utils.data import DataLoader
-from dataset import get_test_dataset, get_semi_dataset
+from tqdm import tqdm
+
+from dataset import get_test_dataset
 from model import ResUNet
-from utils import create_dir, compute_region, metric_dice, metric_iou, metric_pa
+from utils import create_dir, compute_metric
+from PIL import Image
 
 create_dir()
 
@@ -34,58 +34,58 @@ def test(net_path, batch_size=32, device='cpu'):
             out = net(data)
             out = torch.argmax(out, dim=1)
 
-            for i in range(3):
-                # compute binary mask for segmentation of each class
-                out_class_i = torch.zeros_like(out)
-                out_class_i[torch.where(out == i)] = 1
-                mask_class_i = mask[:, i]
-
-                region = compute_region(out_class_i, mask_class_i)
-
-                pa += torch.sum(metric_pa(*region))
-                pa_total += len(mask)
-
-                iou += torch.sum(metric_iou(*region))
-                iou_total += len(mask)
-
-                dice += torch.sum(metric_dice(*region))
-                dice_total += len(mask)
+            # compute metrics
+            result = compute_metric(out, mask)
+            pa += result[0]
+            iou += result[1]
+            dice += result[2]
+            pa_total += len(mask)
+            iou_total += len(mask)
+            dice_total += len(mask)
 
         print('test | DICE: %.3f | PA: %.3f | IOU: %.3f' % (
             dice / dice_total, pa / pa_total, iou / iou_total))
 
 
-def visualization(net_path, num_sample=4, device=torch.device('cpu')):
+def visualization(net_path, out_path, num_sample=4, device=torch.device('cpu')):
     with torch.no_grad():
         # preparing dataset
         test_set = get_test_dataset('./data')
 
-        # use subplots to present the image
-        _, ax = plt.subplots(3, num_sample)
-
         # sample data for visualization
         sample_idx = np.random.randint(0, len(test_set), num_sample)
 
+        img_all = Image.new('RGB', (256 * num_sample, 256 * 3))
+
+        tr = transforms.ToPILImage()
+
+        # initialize network
+        net = ResUNet().to(device)
+        net.load_state_dict(torch.load(net_path, map_location=device))
+
         for i, idx in enumerate(sample_idx):
             data, mask = test_set[idx]
-            mask = torch.argmax(mask, dim=0)
-
-            # initialize network
-            net = ResUNet().to(device)
-            net.load_state_dict(torch.load(net_path, map_location=device))
-            # net.eval()
 
             # network predict
             out = net(data.unsqueeze(0).to(device))
             out = torch.argmax(out, dim=1).squeeze(0)
+            mask = torch.argmax(mask, dim=0)
 
-            ax[0][i].imshow(data.permute((1, 2, 0)))
-            ax[0][i].set_axis_off()
-            ax[1][i].imshow(mask, 'gray')
-            ax[1][i].set_axis_off()
-            ax[2][i].imshow(out.cpu(), 'gray')
-            ax[2][i].set_axis_off()
-        plt.show()
+            img_all.paste(tr(data), (224 * i, 224 * 0))
+
+            mask = mask / 3 * 255
+            mask = mask.numpy().astype(np.uint8)
+            mask = Image.fromarray(mask, mode='L')
+            mask = mask.convert('RGB')
+            img_all.paste(mask, (224 * i, 224 * 1))
+
+            out = out / 3 * 255
+            out = out.cpu().numpy().astype(np.uint8)
+            out = Image.fromarray(out, mode='L')
+            out = out.convert('RGB')
+            img_all.paste(out, (224 * i, 224 * 2))
+
+        img_all.save(out_path)
 
 
 if __name__ == '__main__':
@@ -97,6 +97,5 @@ if __name__ == '__main__':
     # print('best semi-supervised model')
     # test('./model/semi/net_189.pth', 128, 'cuda:4')
 
-    matplotlib.use('TkAgg')
-    # visualization('./model/supervised/net_185.pth', 4, torch.device('cuda'))
-    visualization('./model/semi/net_277.pth', 4, torch.device('cuda'))
+    # visualization('./model/supervised/net_185.pth', 'log/sup.png', 8, torch.device('cuda'))
+    visualization('./model/semi/net_277.pth', 'log/semi.png', 8, torch.device('cuda'))

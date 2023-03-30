@@ -13,7 +13,7 @@ create_dir()
 
 def train_supervised(args):
     # prepare train and validation dataset
-    train_set, val_set = get_sup_dataset('./data', args.train_val_ratio, args.labeled_ratio)
+    train_set, val_set = get_sup_dataset(args.data_path, args.train_val_ratio, args.labeled_ratio)
 
     # prepare dataloader
     train_loader = DataLoader(train_set, args.batch_size, True, num_workers=args.num_worker)

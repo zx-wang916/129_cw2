@@ -11,7 +11,7 @@ IMG_SIZE = (256, 256)
 
 # padding value for the image and mask
 FILL_IMAGE = 0
-FILL_MASK = 3
+FILL_MASK = 2
 
 # dataset type
 TYPE_SUP = 1
@@ -168,8 +168,8 @@ class OxfordIIITPetSeg(VisionDataset):
         self.tr_augmentation = transforms.Compose([
             transforms.ToPILImage(),
             transforms.RandomHorizontalFlip(),
-            transforms.RandomRotation(90, fill=FILL_MASK),
-            transforms.RandomResizedCrop(IMG_SIZE)
+            transforms.RandomRotation(45, fill=FILL_MASK),
+            transforms.RandomResizedCrop(IMG_SIZE, (0.6, 1.0))
         ])
         self.tr_resize = transforms.Compose([
             transforms.ToPILImage(),
@@ -282,3 +282,24 @@ class OxfordIIITPetSeg(VisionDataset):
             pad = (0, 0, diff // 2, diff - diff // 2)
 
         return torch.nn.functional.pad(img, pad, mode='constant', value=pad_value)
+
+
+# if __name__ == '__main__':
+#     from matplotlib import pyplot as plt
+#     from torch.utils.data import DataLoader
+#     from utils import parse_arg
+# 
+#     args = parse_arg()
+# 
+#     train_set, val_set = get_sup_dataset(args.data_path, args.train_val_ratio, args.labeled_ratio)
+#     train_loader = DataLoader(train_set, args.batch_size, True, num_workers=args.num_worker)
+#
+#     # for data, mask in train_loader:
+#     for data, mask in train_loader:
+#         break
+# 
+#     for data, mask in zip(data, mask):
+#         plt.imshow(data.permute((1, 2, 0)))
+#         plt.show()
+#         plt.imshow(mask.permute((1, 2, 0)))
+#         plt.show()

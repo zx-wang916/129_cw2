@@ -32,6 +32,7 @@ def parse_arg():
     parser.add_argument('-a', '--alpha', type=float, default=0.99, required=False)
     parser.add_argument('-d', '--device', type=str, default='cpu', required=False)
     parser.add_argument('-n', '--num_worker', type=int, default=8, required=False)
+    parser.add_argument('-p', '--data_path', type=str, default='./data', required=False)
     return parser.parse_args()
 
 

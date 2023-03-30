@@ -6,16 +6,18 @@ from tqdm import tqdm
 
 from dataset import get_test_dataset
 from model import ResUNet
-from utils import create_dir, compute_metric
+from utils import create_dir, parse_arg, compute_metric
 from PIL import Image
 
 create_dir()
 
 
-def test(net_path, batch_size=32, device='cpu'):
+def test(net_path, args):
+    device = torch.device(args.device)
+
     # preparing dataset
-    test_set = get_test_dataset('./data')
-    test_loader = DataLoader(test_set, batch_size, True, num_workers=8)
+    test_set = get_test_dataset(args.data_path)
+    test_loader = DataLoader(test_set, args.batch_size, True, num_workers=8)
 
     # initialize network
     net = ResUNet().to(device)
@@ -43,14 +45,20 @@ def test(net_path, batch_size=32, device='cpu'):
             iou_total += len(mask)
             dice_total += len(mask)
 
-        print('test | DICE: %.3f | PA: %.3f | IOU: %.3f' % (
-            dice / dice_total, pa / pa_total, iou / iou_total))
+    dice = dice / dice_total
+    pa = pa / pa_total
+    iou = iou / iou_total
+    print('test | DICE: %.3f | PA: %.3f | IOU: %.3f' % (dice, pa, iou))
+
+    return dice, pa, iou
 
 
-def visualization(net_path, out_path, num_sample=4, device=torch.device('cpu')):
+def visualization(net_path, out_path, num_sample, args):
+    device = torch.device(args.device)
+
     with torch.no_grad():
         # preparing dataset
-        test_set = get_test_dataset('./data')
+        test_set = get_test_dataset(args.data_path)
 
         # sample data for visualization
         sample_idx = np.random.randint(0, len(test_set), num_sample)
@@ -89,6 +97,8 @@ def visualization(net_path, out_path, num_sample=4, device=torch.device('cpu')):
 
 
 if __name__ == '__main__':
+    args = parse_arg()
+
     # # test best supervised model
     # print('best supervised model')
     # test('./model/supervised/net_132.pth', 128, 'cuda:4')
@@ -98,4 +108,14 @@ if __name__ == '__main__':
     # test('./model/semi/net_189.pth', 128, 'cuda:4')
 
     # visualization('./model/supervised/net_185.pth', 'log/sup.png', 8, torch.device('cuda'))
-    visualization('./model/semi/net_277.pth', 'log/semi.png', 8, torch.device('cuda'))
+    # visualization('./model/semi/net_277.pth', 'log/semi.png', 8, torch.device('cuda'))
+
+    best_i = 0
+    best_iou = 0
+    for i in range(100, 200):
+        _, _, iou = test('model/supervised/net_%d.pth' % i, args)
+        if iou > best_iou:
+            best_i = i
+            best_iou = iou
+
+    print(best_i, best_iou)

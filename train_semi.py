@@ -61,7 +61,6 @@ def train_semi(args):
                 # compute cross-entropy loss
                 loss_seg = loss_seg + criterion_ce(out, mask_labeled)
 
-                loss_seg = loss_seg / len(idx_labeled)
                 loss_seg_history.append(loss_seg.cpu().data.numpy())
 
             # compute consistency loss
@@ -71,7 +70,7 @@ def train_semi(args):
                 out_stu = net_student.noisy_forward(data_unlabeled)
                 out_tea = net_teacher.noisy_forward(data_unlabeled)
 
-                loss_con = criterion_con(out_stu, out_tea) / len(idx_unlabeled)
+                loss_con = criterion_con(out_stu, out_tea)
                 loss_con_history.append(loss_con.cpu().data.numpy() * consistency_weight)
 
             # combine the segmentation loss and the consistency loss

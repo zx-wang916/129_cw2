@@ -26,7 +26,7 @@ def parse_arg():
     parser.add_argument('-b', '--batch_size', type=int, default=64, required=False)
     parser.add_argument('-l', '--labeled_ratio', type=float, default=0.1, required=False)
     parser.add_argument('-t', '--train_val_ratio', type=float, default=0.8, required=False)
-    parser.add_argument('-c', '--cla_weight', type=float, default=1, required=False)
+    parser.add_argument('-c', '--cla_weight', type=float, default=20, required=False)
     parser.add_argument('-lr', '--lr', type=float, default=1e-3, required=False)
     parser.add_argument('-e', '--epoch', type=int, default=200, required=False)
     parser.add_argument('-a', '--alpha', type=float, default=0.99, required=False)
@@ -38,10 +38,10 @@ def parse_arg():
 
 def dice_loss(pred, mask, ep=1e-8):
     # metrics for evaluating the segmentation performance
-    intersection = 2 * torch.sum(pred * mask) + ep
-    union = torch.sum(pred) + torch.sum(mask) + ep
+    intersection = 2 * torch.sum(pred * mask, dim=(1, 2, 3)) + ep
+    union = torch.sum(pred, dim=(1, 2, 3)) + torch.sum(mask, dim=(1, 2, 3)) + ep
     loss = 1 - intersection / union
-    return loss
+    return torch.mean(loss)
 
 
 def compute_metric(pred, mask):

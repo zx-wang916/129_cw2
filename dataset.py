@@ -288,18 +288,22 @@ class OxfordIIITPetSeg(VisionDataset):
 #     from matplotlib import pyplot as plt
 #     from torch.utils.data import DataLoader
 #     from utils import parse_arg
-# 
+#
 #     args = parse_arg()
-# 
-#     train_set, val_set = get_sup_dataset(args.data_path, args.train_val_ratio, args.labeled_ratio)
+#
+#     train_set, _ = get_seg_cla_dataset(args.data_path, args.train_val_ratio, args.labeled_ratio)
 #     train_loader = DataLoader(train_set, args.batch_size, True, num_workers=args.num_worker)
 #
 #     # for data, mask in train_loader:
-#     for data, mask in train_loader:
+#     for data, mask, label, is_labeled in train_loader:
 #         break
-# 
-#     for data, mask in zip(data, mask):
+#
+#     for data, mask, label, is_labeled in zip(data, mask, label, is_labeled):
+#         if not is_labeled:
+#             continue
 #         plt.imshow(data.permute((1, 2, 0)))
 #         plt.show()
 #         plt.imshow(mask.permute((1, 2, 0)))
 #         plt.show()
+#
+#         print(label)

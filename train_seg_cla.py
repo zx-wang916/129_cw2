@@ -56,12 +56,10 @@ def train_seg_cla(args):
                 # compute segmentation loss
                 loss_seg = criterion_dice(out_seg[idx_labeled], mask[idx_labeled])
                 loss_seg = loss_seg + criterion_ce(out_seg[idx_labeled], mask[idx_labeled])
-                loss_seg = loss_seg / len(idx_labeled)
                 loss_seg_history.append(loss_seg.cpu().data.numpy())
 
             # compute classification loss
             loss_cla = criterion_ce(out_cla, label)
-            loss_cla = loss_cla / len(data)
             loss_cla_history.append(loss_cla.cpu().data.numpy() * args.cla_weight)
 
             # compute consistency loss
@@ -71,7 +69,7 @@ def train_seg_cla(args):
                 out_stu = out_seg[idx_unlabeled]
                 out_tea = net_teacher.noisy_forward(data[idx_unlabeled])
 
-                loss_con = criterion_con(out_stu, out_tea) / len(idx_unlabeled)
+                loss_con = criterion_con(out_stu, out_tea)
                 loss_con_history.append(loss_con.cpu().data.numpy() * consistency_weight)
 
             # combine the segmentation loss and the consistency loss

@@ -12,11 +12,11 @@ class Block(nn.Module):
         self.conv = nn.Sequential(
             nn.Conv2d(in_channel, width, 1, bias=False),
             nn.BatchNorm2d(width),
-            nn.ReLU(),
+            nn.ReLU(inplace=True),
 
             nn.Conv2d(width, width, 3, stride, 1, 1),
             nn.BatchNorm2d(width),
-            nn.ReLU(),
+            nn.ReLU(inplace=True),
 
             nn.Conv2d(width, out_channel, 1, bias=False),
             nn.BatchNorm2d(out_channel)
@@ -26,7 +26,7 @@ class Block(nn.Module):
         if stride != 1 or in_channel != out_channel:
             self.downsample = nn.Conv2d(in_channel, out_channel, 1, stride, bias=False)
 
-        self.relu = nn.ReLU()
+        self.relu = nn.ReLU(inplace=True)
 
     def forward(self, x):
         if self.downsample is None:
@@ -64,9 +64,9 @@ class ResUNet(nn.Module):
             nn.AdaptiveAvgPool2d((1, 1)),
             nn.Flatten(),
             nn.Linear(512, 256),
-            nn.ReLU(),
+            nn.ReLU(inplace=True),
             nn.Linear(256, 64),
-            nn.ReLU(),
+            nn.ReLU(inplace=True),
             nn.Linear(64, 37),
             nn.Softmax(dim=1)
         )

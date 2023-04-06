@@ -52,10 +52,10 @@ class ResUNet(nn.Module):
         self.encoder_block4 = self.make_block(128, 256)
 
         self.upsample = nn.Upsample(scale_factor=2, mode='bilinear')
-        self.decoder_block1 = self.make_block(256, 128, 1, 1, False)
-        self.decoder_block2 = self.make_block(128, 64, 1, 1, False)
-        self.decoder_block3 = self.make_block(64, 32, 1, 1, False)
-        self.decoder_block4 = self.make_block(32, 32, 1, 1, False)
+        self.decoder_block1 = self.make_block(256, 128, 1, 1, True)
+        self.decoder_block2 = self.make_block(128, 64, 1, 1, True)
+        self.decoder_block3 = self.make_block(64, 32, 1, 1, True)
+        self.decoder_block4 = self.make_block(32, 32, 1, 1, True)
 
         self.seg_out = nn.Sequential(
             nn.Conv2d(32, 3, 1, 1, bias=True),

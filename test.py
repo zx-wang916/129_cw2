@@ -13,8 +13,6 @@ create_dir()
 
 
 def test(net_path, args):
-    print(args.device)
-
     # preparing dataset
     test_set = get_test_dataset(args.data_path)
     test_loader = DataLoader(test_set, args.batch_size, True, num_workers=args.num_worker)
@@ -99,13 +97,18 @@ def visualization(net_path, out_path, num_sample, args):
 if __name__ == '__main__':
     args = parse_arg()
 
-    # # test best supervised model
-    # print('best supervised model')
-    # test('model/net_sup_full.pth', args)
+    # test supervised model with all label available
+    test('model/net_sup_full.pth', args)
+
+    # test supervised model with 10% label available
+    test('model/net_sup.pth', args)
+
+    # test semi-supervised model
+    test('net/sup_full/net_sup_full.pth', args)
 
     # # test best semi-supervised model
     # print('best semi-supervised model')
     # test('./model/net_189.pth', 128, 'cuda:4')
 
-    visualization('model/net_sup_noskip.pth', 'log/sup_noskip.png', 8, args)
+    # visualization('model/net_sup.pth', 'log/sup.png', 8, args)
     # visualization('./model/net_277.pth', 'log/semi.png', 8, torch.device('cuda'))

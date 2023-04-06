@@ -1,0 +1,849 @@
+[00:32:52.405] start training!
+[00:33:07.924] epoch: 0/400 | train | dice loss: 1.182
+[00:33:10.980] epoch: 0/400 |  val  | DICE: 0.495 | PA: 0.857 | IOU: 0.413
+[00:33:11.016] best model | epoch: 0 | DICE: 0.495 | PA: 0.857 | IOU: 0.413
+[00:33:25.724] epoch: 1/400 | train | dice loss: 1.053
+[00:33:28.894] epoch: 1/400 |  val  | DICE: 0.495 | PA: 0.850 | IOU: 0.413
+[00:33:44.208] epoch: 2/400 | train | dice loss: 1.032
+[00:33:47.213] epoch: 2/400 |  val  | DICE: 0.507 | PA: 0.861 | IOU: 0.428
+[00:33:47.249] best model | epoch: 2 | DICE: 0.507 | PA: 0.861 | IOU: 0.428
+[00:34:05.623] epoch: 3/400 | train | dice loss: 1.016
+[00:34:10.615] epoch: 3/400 |  val  | DICE: 0.506 | PA: 0.862 | IOU: 0.427
+[00:34:31.602] epoch: 4/400 | train | dice loss: 0.997
+[00:34:36.450] epoch: 4/400 |  val  | DICE: 0.518 | PA: 0.870 | IOU: 0.441
+[00:34:36.488] best model | epoch: 4 | DICE: 0.518 | PA: 0.870 | IOU: 0.441
+[00:34:58.095] epoch: 5/400 | train | dice loss: 0.988
+[00:35:03.747] epoch: 5/400 |  val  | DICE: 0.507 | PA: 0.857 | IOU: 0.429
+[00:35:24.880] epoch: 6/400 | train | dice loss: 0.978
+[00:35:28.965] epoch: 6/400 |  val  | DICE: 0.525 | PA: 0.875 | IOU: 0.451
+[00:35:29.011] best model | epoch: 6 | DICE: 0.525 | PA: 0.875 | IOU: 0.451
+[00:35:49.416] epoch: 7/400 | train | dice loss: 0.964
+[00:35:54.155] epoch: 7/400 |  val  | DICE: 0.523 | PA: 0.872 | IOU: 0.449
+[00:36:14.699] epoch: 8/400 | train | dice loss: 0.963
+[00:36:18.794] epoch: 8/400 |  val  | DICE: 0.526 | PA: 0.876 | IOU: 0.452
+[00:36:18.885] best model | epoch: 8 | DICE: 0.526 | PA: 0.876 | IOU: 0.452
+[00:36:40.115] epoch: 9/400 | train | dice loss: 0.959
+[00:36:44.735] epoch: 9/400 |  val  | DICE: 0.532 | PA: 0.880 | IOU: 0.461
+[00:36:44.777] best model | epoch: 9 | DICE: 0.532 | PA: 0.880 | IOU: 0.461
+[00:37:06.082] epoch: 10/400 | train | dice loss: 0.947
+[00:37:11.247] epoch: 10/400 |  val  | DICE: 0.531 | PA: 0.879 | IOU: 0.459
+[00:37:32.515] epoch: 11/400 | train | dice loss: 0.943
+[00:37:37.151] epoch: 11/400 |  val  | DICE: 0.527 | PA: 0.875 | IOU: 0.455
+[00:37:58.376] epoch: 12/400 | train | dice loss: 0.938
+[00:38:03.428] epoch: 12/400 |  val  | DICE: 0.532 | PA: 0.878 | IOU: 0.460
+[00:38:24.468] epoch: 13/400 | train | dice loss: 0.927
+[00:38:28.886] epoch: 13/400 |  val  | DICE: 0.537 | PA: 0.884 | IOU: 0.467
+[00:38:28.955] best model | epoch: 13 | DICE: 0.537 | PA: 0.884 | IOU: 0.467
+[00:38:50.371] epoch: 14/400 | train | dice loss: 0.927
+[00:38:54.761] epoch: 14/400 |  val  | DICE: 0.539 | PA: 0.884 | IOU: 0.469
+[00:38:54.801] best model | epoch: 14 | DICE: 0.539 | PA: 0.884 | IOU: 0.469
+[00:39:15.808] epoch: 15/400 | train | dice loss: 0.923
+[00:39:21.017] epoch: 15/400 |  val  | DICE: 0.534 | PA: 0.881 | IOU: 0.464
+[00:39:42.127] epoch: 16/400 | train | dice loss: 0.918
+[00:39:46.961] epoch: 16/400 |  val  | DICE: 0.537 | PA: 0.883 | IOU: 0.467
+[00:40:08.402] epoch: 17/400 | train | dice loss: 0.915
+[00:40:13.422] epoch: 17/400 |  val  | DICE: 0.528 | PA: 0.873 | IOU: 0.456
+[00:40:34.473] epoch: 18/400 | train | dice loss: 0.909
+[00:40:38.683] epoch: 18/400 |  val  | DICE: 0.545 | PA: 0.890 | IOU: 0.478
+[00:40:38.751] best model | epoch: 18 | DICE: 0.545 | PA: 0.890 | IOU: 0.478
+[00:40:59.434] epoch: 19/400 | train | dice loss: 0.907
+[00:41:04.192] epoch: 19/400 |  val  | DICE: 0.550 | PA: 0.893 | IOU: 0.483
+[00:41:04.227] best model | epoch: 19 | DICE: 0.550 | PA: 0.893 | IOU: 0.483
+[00:41:24.573] epoch: 20/400 | train | dice loss: 0.905
+[00:41:28.615] epoch: 20/400 |  val  | DICE: 0.542 | PA: 0.888 | IOU: 0.474
+[00:41:49.773] epoch: 21/400 | train | dice loss: 0.900
+[00:41:54.395] epoch: 21/400 |  val  | DICE: 0.547 | PA: 0.891 | IOU: 0.480
+[00:42:14.575] epoch: 22/400 | train | dice loss: 0.904
+[00:42:19.321] epoch: 22/400 |  val  | DICE: 0.545 | PA: 0.890 | IOU: 0.478
+[00:42:40.393] epoch: 23/400 | train | dice loss: 0.893
+[00:42:44.999] epoch: 23/400 |  val  | DICE: 0.551 | PA: 0.894 | IOU: 0.485
+[00:42:45.044] best model | epoch: 23 | DICE: 0.551 | PA: 0.894 | IOU: 0.485
+[00:43:06.143] epoch: 24/400 | train | dice loss: 0.894
+[00:43:11.333] epoch: 24/400 |  val  | DICE: 0.555 | PA: 0.898 | IOU: 0.490
+[00:43:11.371] best model | epoch: 24 | DICE: 0.555 | PA: 0.898 | IOU: 0.490
+[00:43:32.352] epoch: 25/400 | train | dice loss: 0.891
+[00:43:37.109] epoch: 25/400 |  val  | DICE: 0.550 | PA: 0.894 | IOU: 0.485
+[00:43:59.120] epoch: 26/400 | train | dice loss: 0.889
+[00:44:03.875] epoch: 26/400 |  val  | DICE: 0.545 | PA: 0.890 | IOU: 0.479
+[00:44:24.469] epoch: 27/400 | train | dice loss: 0.889
+[00:44:28.864] epoch: 27/400 |  val  | DICE: 0.545 | PA: 0.890 | IOU: 0.478
+[00:44:50.727] epoch: 28/400 | train | dice loss: 0.889
+[00:44:55.395] epoch: 28/400 |  val  | DICE: 0.543 | PA: 0.887 | IOU: 0.475
+[00:45:15.624] epoch: 29/400 | train | dice loss: 0.883
+[00:45:19.654] epoch: 29/400 |  val  | DICE: 0.549 | PA: 0.892 | IOU: 0.483
+[00:45:41.033] epoch: 30/400 | train | dice loss: 0.886
+[00:45:45.703] epoch: 30/400 |  val  | DICE: 0.547 | PA: 0.891 | IOU: 0.481
+[00:46:07.519] epoch: 31/400 | train | dice loss: 0.885
+[00:46:13.003] epoch: 31/400 |  val  | DICE: 0.549 | PA: 0.892 | IOU: 0.483
+[00:46:34.110] epoch: 32/400 | train | dice loss: 0.880
+[00:46:38.498] epoch: 32/400 |  val  | DICE: 0.548 | PA: 0.891 | IOU: 0.481
+[00:47:00.282] epoch: 33/400 | train | dice loss: 0.882
+[00:47:05.078] epoch: 33/400 |  val  | DICE: 0.540 | PA: 0.883 | IOU: 0.472
+[00:47:25.481] epoch: 34/400 | train | dice loss: 0.882
+[00:47:30.188] epoch: 34/400 |  val  | DICE: 0.544 | PA: 0.887 | IOU: 0.477
+[00:47:50.657] epoch: 35/400 | train | dice loss: 0.877
+[00:47:55.551] epoch: 35/400 |  val  | DICE: 0.553 | PA: 0.895 | IOU: 0.489
+[00:48:17.142] epoch: 36/400 | train | dice loss: 0.875
+[00:48:22.416] epoch: 36/400 |  val  | DICE: 0.549 | PA: 0.891 | IOU: 0.483
+[00:48:43.176] epoch: 37/400 | train | dice loss: 0.875
+[00:48:47.510] epoch: 37/400 |  val  | DICE: 0.556 | PA: 0.899 | IOU: 0.493
+[00:48:47.578] best model | epoch: 37 | DICE: 0.556 | PA: 0.899 | IOU: 0.493
+[00:49:09.005] epoch: 38/400 | train | dice loss: 0.875
+[00:49:14.021] epoch: 38/400 |  val  | DICE: 0.553 | PA: 0.895 | IOU: 0.488
+[00:49:34.459] epoch: 39/400 | train | dice loss: 0.871
+[00:49:38.652] epoch: 39/400 |  val  | DICE: 0.551 | PA: 0.894 | IOU: 0.486
+[00:49:59.470] epoch: 40/400 | train | dice loss: 0.873
+[00:50:04.056] epoch: 40/400 |  val  | DICE: 0.546 | PA: 0.889 | IOU: 0.480
+[00:50:24.771] epoch: 41/400 | train | dice loss: 0.875
+[00:50:28.980] epoch: 41/400 |  val  | DICE: 0.546 | PA: 0.890 | IOU: 0.479
+[00:50:49.795] epoch: 42/400 | train | dice loss: 0.867
+[00:50:54.395] epoch: 42/400 |  val  | DICE: 0.543 | PA: 0.888 | IOU: 0.476
+[00:51:14.900] epoch: 43/400 | train | dice loss: 0.859
+[00:51:19.564] epoch: 43/400 |  val  | DICE: 0.697 | PA: 0.899 | IOU: 0.587
+[00:51:19.615] best model | epoch: 43 | DICE: 0.697 | PA: 0.899 | IOU: 0.587
+[00:51:40.308] epoch: 44/400 | train | dice loss: 0.825
+[00:51:44.753] epoch: 44/400 |  val  | DICE: 0.713 | PA: 0.899 | IOU: 0.600
+[00:51:44.797] best model | epoch: 44 | DICE: 0.713 | PA: 0.899 | IOU: 0.600
+[00:52:05.467] epoch: 45/400 | train | dice loss: 0.823
+[00:52:09.668] epoch: 45/400 |  val  | DICE: 0.707 | PA: 0.896 | IOU: 0.595
+[00:52:30.418] epoch: 46/400 | train | dice loss: 0.820
+[00:52:35.137] epoch: 46/400 |  val  | DICE: 0.732 | PA: 0.909 | IOU: 0.623
+[00:52:35.174] best model | epoch: 46 | DICE: 0.732 | PA: 0.909 | IOU: 0.623
+[00:52:55.256] epoch: 47/400 | train | dice loss: 0.818
+[00:53:00.041] epoch: 47/400 |  val  | DICE: 0.726 | PA: 0.909 | IOU: 0.617
+[00:53:20.563] epoch: 48/400 | train | dice loss: 0.814
+[00:53:25.334] epoch: 48/400 |  val  | DICE: 0.726 | PA: 0.909 | IOU: 0.617
+[00:53:46.932] epoch: 49/400 | train | dice loss: 0.819
+[00:53:52.149] epoch: 49/400 |  val  | DICE: 0.738 | PA: 0.915 | IOU: 0.631
+[00:53:52.189] best model | epoch: 49 | DICE: 0.738 | PA: 0.915 | IOU: 0.631
+[00:54:13.534] epoch: 50/400 | train | dice loss: 0.812
+[00:54:17.819] epoch: 50/400 |  val  | DICE: 0.731 | PA: 0.911 | IOU: 0.622
+[00:54:38.830] epoch: 51/400 | train | dice loss: 0.810
+[00:54:43.528] epoch: 51/400 |  val  | DICE: 0.718 | PA: 0.899 | IOU: 0.605
+[00:55:04.160] epoch: 52/400 | train | dice loss: 0.808
+[00:55:08.231] epoch: 52/400 |  val  | DICE: 0.714 | PA: 0.899 | IOU: 0.602
+[00:55:28.924] epoch: 53/400 | train | dice loss: 0.806
+[00:55:33.179] epoch: 53/400 |  val  | DICE: 0.746 | PA: 0.917 | IOU: 0.639
+[00:55:33.225] best model | epoch: 53 | DICE: 0.746 | PA: 0.917 | IOU: 0.639
+[00:55:55.111] epoch: 54/400 | train | dice loss: 0.806
+[00:56:00.285] epoch: 54/400 |  val  | DICE: 0.724 | PA: 0.908 | IOU: 0.616
+[00:56:21.269] epoch: 55/400 | train | dice loss: 0.803
+[00:56:25.328] epoch: 55/400 |  val  | DICE: 0.730 | PA: 0.907 | IOU: 0.621
+[00:56:46.897] epoch: 56/400 | train | dice loss: 0.807
+[00:56:51.518] epoch: 56/400 |  val  | DICE: 0.725 | PA: 0.903 | IOU: 0.614
+[00:57:11.691] epoch: 57/400 | train | dice loss: 0.797
+[00:57:15.980] epoch: 57/400 |  val  | DICE: 0.747 | PA: 0.916 | IOU: 0.641
+[00:57:16.063] best model | epoch: 57 | DICE: 0.747 | PA: 0.916 | IOU: 0.641
+[00:57:37.695] epoch: 58/400 | train | dice loss: 0.797
+[00:57:42.758] epoch: 58/400 |  val  | DICE: 0.735 | PA: 0.905 | IOU: 0.624
+[00:58:04.825] epoch: 59/400 | train | dice loss: 0.798
+[00:58:09.709] epoch: 59/400 |  val  | DICE: 0.743 | PA: 0.913 | IOU: 0.636
+[00:58:30.342] epoch: 60/400 | train | dice loss: 0.797
+[00:58:34.302] epoch: 60/400 |  val  | DICE: 0.753 | PA: 0.916 | IOU: 0.645
+[00:58:34.367] best model | epoch: 60 | DICE: 0.753 | PA: 0.916 | IOU: 0.645
+[00:58:55.487] epoch: 61/400 | train | dice loss: 0.793
+[00:59:00.313] epoch: 61/400 |  val  | DICE: 0.751 | PA: 0.918 | IOU: 0.645
+[00:59:20.957] epoch: 62/400 | train | dice loss: 0.792
+[00:59:25.669] epoch: 62/400 |  val  | DICE: 0.742 | PA: 0.912 | IOU: 0.635
+[00:59:47.294] epoch: 63/400 | train | dice loss: 0.791
+[00:59:51.992] epoch: 63/400 |  val  | DICE: 0.741 | PA: 0.908 | IOU: 0.632
+[01:00:13.709] epoch: 64/400 | train | dice loss: 0.793
+[01:00:18.893] epoch: 64/400 |  val  | DICE: 0.739 | PA: 0.907 | IOU: 0.630
+[01:00:39.425] epoch: 65/400 | train | dice loss: 0.786
+[01:00:43.801] epoch: 65/400 |  val  | DICE: 0.746 | PA: 0.916 | IOU: 0.640
+[01:01:04.995] epoch: 66/400 | train | dice loss: 0.787
+[01:01:09.876] epoch: 66/400 |  val  | DICE: 0.751 | PA: 0.916 | IOU: 0.644
+[01:01:31.923] epoch: 67/400 | train | dice loss: 0.788
+[01:01:37.128] epoch: 67/400 |  val  | DICE: 0.744 | PA: 0.912 | IOU: 0.637
+[01:01:57.574] epoch: 68/400 | train | dice loss: 0.786
+[01:02:01.752] epoch: 68/400 |  val  | DICE: 0.745 | PA: 0.913 | IOU: 0.637
+[01:02:22.223] epoch: 69/400 | train | dice loss: 0.786
+[01:02:26.904] epoch: 69/400 |  val  | DICE: 0.754 | PA: 0.916 | IOU: 0.648
+[01:02:26.942] best model | epoch: 69 | DICE: 0.754 | PA: 0.916 | IOU: 0.648
+[01:02:47.206] epoch: 70/400 | train | dice loss: 0.787
+[01:02:50.790] epoch: 70/400 |  val  | DICE: 0.753 | PA: 0.921 | IOU: 0.649
+[01:03:11.835] epoch: 71/400 | train | dice loss: 0.782
+[01:03:16.668] epoch: 71/400 |  val  | DICE: 0.751 | PA: 0.914 | IOU: 0.644
+[01:03:37.030] epoch: 72/400 | train | dice loss: 0.777
+[01:03:41.355] epoch: 72/400 |  val  | DICE: 0.756 | PA: 0.920 | IOU: 0.651
+[01:03:41.431] best model | epoch: 72 | DICE: 0.756 | PA: 0.920 | IOU: 0.651
+[01:04:02.905] epoch: 73/400 | train | dice loss: 0.780
+[01:04:07.480] epoch: 73/400 |  val  | DICE: 0.752 | PA: 0.918 | IOU: 0.648
+[01:04:28.496] epoch: 74/400 | train | dice loss: 0.782
+[01:04:33.369] epoch: 74/400 |  val  | DICE: 0.756 | PA: 0.919 | IOU: 0.650
+[01:04:54.973] epoch: 75/400 | train | dice loss: 0.783
+[01:04:59.812] epoch: 75/400 |  val  | DICE: 0.762 | PA: 0.925 | IOU: 0.659
+[01:04:59.883] best model | epoch: 75 | DICE: 0.762 | PA: 0.925 | IOU: 0.659
+[01:05:21.267] epoch: 76/400 | train | dice loss: 0.778
+[01:05:26.288] epoch: 76/400 |  val  | DICE: 0.748 | PA: 0.910 | IOU: 0.640
+[01:05:46.716] epoch: 77/400 | train | dice loss: 0.778
+[01:05:50.555] epoch: 77/400 |  val  | DICE: 0.767 | PA: 0.924 | IOU: 0.663
+[01:05:50.628] best model | epoch: 77 | DICE: 0.767 | PA: 0.924 | IOU: 0.663
+[01:06:11.695] epoch: 78/400 | train | dice loss: 0.778
+[01:06:16.221] epoch: 78/400 |  val  | DICE: 0.767 | PA: 0.923 | IOU: 0.663
+[01:06:16.262] best model | epoch: 78 | DICE: 0.767 | PA: 0.923 | IOU: 0.663
+[01:06:36.805] epoch: 79/400 | train | dice loss: 0.778
+[01:06:41.017] epoch: 79/400 |  val  | DICE: 0.729 | PA: 0.903 | IOU: 0.619
+[01:07:01.445] epoch: 80/400 | train | dice loss: 0.781
+[01:07:05.875] epoch: 80/400 |  val  | DICE: 0.750 | PA: 0.915 | IOU: 0.644
+[01:07:26.534] epoch: 81/400 | train | dice loss: 0.779
+[01:07:30.582] epoch: 81/400 |  val  | DICE: 0.750 | PA: 0.914 | IOU: 0.643
+[01:07:51.743] epoch: 82/400 | train | dice loss: 0.773
+[01:07:56.443] epoch: 82/400 |  val  | DICE: 0.766 | PA: 0.924 | IOU: 0.661
+[01:08:17.363] epoch: 83/400 | train | dice loss: 0.774
+[01:08:22.411] epoch: 83/400 |  val  | DICE: 0.737 | PA: 0.907 | IOU: 0.628
+[01:08:43.226] epoch: 84/400 | train | dice loss: 0.775
+[01:08:48.095] epoch: 84/400 |  val  | DICE: 0.756 | PA: 0.919 | IOU: 0.651
+[01:09:10.042] epoch: 85/400 | train | dice loss: 0.768
+[01:09:14.920] epoch: 85/400 |  val  | DICE: 0.763 | PA: 0.920 | IOU: 0.658
+[01:09:35.235] epoch: 86/400 | train | dice loss: 0.771
+[01:09:39.132] epoch: 86/400 |  val  | DICE: 0.761 | PA: 0.922 | IOU: 0.656
+[01:10:00.276] epoch: 87/400 | train | dice loss: 0.770
+[01:10:05.282] epoch: 87/400 |  val  | DICE: 0.772 | PA: 0.927 | IOU: 0.669
+[01:10:05.381] best model | epoch: 87 | DICE: 0.772 | PA: 0.927 | IOU: 0.669
+[01:10:25.975] epoch: 88/400 | train | dice loss: 0.770
+[01:10:30.892] epoch: 88/400 |  val  | DICE: 0.763 | PA: 0.920 | IOU: 0.658
+[01:10:51.203] epoch: 89/400 | train | dice loss: 0.766
+[01:10:56.007] epoch: 89/400 |  val  | DICE: 0.765 | PA: 0.924 | IOU: 0.662
+[01:11:17.639] epoch: 90/400 | train | dice loss: 0.768
+[01:11:23.496] epoch: 90/400 |  val  | DICE: 0.766 | PA: 0.921 | IOU: 0.662
+[01:11:44.838] epoch: 91/400 | train | dice loss: 0.765
+[01:11:48.856] epoch: 91/400 |  val  | DICE: 0.764 | PA: 0.920 | IOU: 0.659
+[01:12:09.857] epoch: 92/400 | train | dice loss: 0.764
+[01:12:14.380] epoch: 92/400 |  val  | DICE: 0.772 | PA: 0.926 | IOU: 0.669
+[01:12:14.416] best model | epoch: 92 | DICE: 0.772 | PA: 0.926 | IOU: 0.669
+[01:12:35.012] epoch: 93/400 | train | dice loss: 0.768
+[01:12:39.483] epoch: 93/400 |  val  | DICE: 0.762 | PA: 0.921 | IOU: 0.658
+[01:13:00.328] epoch: 94/400 | train | dice loss: 0.766
+[01:13:04.721] epoch: 94/400 |  val  | DICE: 0.760 | PA: 0.919 | IOU: 0.655
+[01:13:26.847] epoch: 95/400 | train | dice loss: 0.764
+[01:13:32.244] epoch: 95/400 |  val  | DICE: 0.771 | PA: 0.926 | IOU: 0.667
+[01:13:52.975] epoch: 96/400 | train | dice loss: 0.762
+[01:13:57.403] epoch: 96/400 |  val  | DICE: 0.777 | PA: 0.929 | IOU: 0.675
+[01:13:57.461] best model | epoch: 96 | DICE: 0.777 | PA: 0.929 | IOU: 0.675
+[01:14:18.900] epoch: 97/400 | train | dice loss: 0.764
+[01:14:23.794] epoch: 97/400 |  val  | DICE: 0.764 | PA: 0.921 | IOU: 0.659
+[01:14:44.472] epoch: 98/400 | train | dice loss: 0.760
+[01:14:48.824] epoch: 98/400 |  val  | DICE: 0.754 | PA: 0.916 | IOU: 0.649
+[01:15:09.461] epoch: 99/400 | train | dice loss: 0.763
+[01:15:14.473] epoch: 99/400 |  val  | DICE: 0.769 | PA: 0.922 | IOU: 0.665
+[01:15:35.112] epoch: 100/400 | train | dice loss: 0.764
+[01:15:39.623] epoch: 100/400 |  val  | DICE: 0.762 | PA: 0.919 | IOU: 0.657
+[01:15:59.968] epoch: 101/400 | train | dice loss: 0.761
+[01:16:04.555] epoch: 101/400 |  val  | DICE: 0.777 | PA: 0.930 | IOU: 0.676
+[01:16:04.591] best model | epoch: 101 | DICE: 0.777 | PA: 0.930 | IOU: 0.676
+[01:16:24.909] epoch: 102/400 | train | dice loss: 0.759
+[01:16:29.469] epoch: 102/400 |  val  | DICE: 0.769 | PA: 0.925 | IOU: 0.666
+[01:16:51.055] epoch: 103/400 | train | dice loss: 0.757
+[01:16:55.656] epoch: 103/400 |  val  | DICE: 0.775 | PA: 0.928 | IOU: 0.673
+[01:17:15.691] epoch: 104/400 | train | dice loss: 0.757
+[01:17:19.705] epoch: 104/400 |  val  | DICE: 0.772 | PA: 0.925 | IOU: 0.669
+[01:17:40.292] epoch: 105/400 | train | dice loss: 0.759
+[01:17:44.871] epoch: 105/400 |  val  | DICE: 0.779 | PA: 0.929 | IOU: 0.677
+[01:17:44.907] best model | epoch: 105 | DICE: 0.779 | PA: 0.929 | IOU: 0.677
+[01:18:05.393] epoch: 106/400 | train | dice loss: 0.757
+[01:18:09.988] epoch: 106/400 |  val  | DICE: 0.785 | PA: 0.933 | IOU: 0.685
+[01:18:10.027] best model | epoch: 106 | DICE: 0.785 | PA: 0.933 | IOU: 0.685
+[01:18:31.372] epoch: 107/400 | train | dice loss: 0.758
+[01:18:36.078] epoch: 107/400 |  val  | DICE: 0.771 | PA: 0.925 | IOU: 0.669
+[01:18:57.060] epoch: 108/400 | train | dice loss: 0.756
+[01:19:01.961] epoch: 108/400 |  val  | DICE: 0.758 | PA: 0.917 | IOU: 0.652
+[01:19:22.765] epoch: 109/400 | train | dice loss: 0.757
+[01:19:27.669] epoch: 109/400 |  val  | DICE: 0.758 | PA: 0.918 | IOU: 0.653
+[01:19:49.370] epoch: 110/400 | train | dice loss: 0.759
+[01:19:54.616] epoch: 110/400 |  val  | DICE: 0.770 | PA: 0.922 | IOU: 0.666
+[01:20:15.152] epoch: 111/400 | train | dice loss: 0.751
+[01:20:19.980] epoch: 111/400 |  val  | DICE: 0.781 | PA: 0.928 | IOU: 0.679
+[01:20:42.097] epoch: 112/400 | train | dice loss: 0.758
+[01:20:46.872] epoch: 112/400 |  val  | DICE: 0.773 | PA: 0.925 | IOU: 0.670
+[01:21:08.028] epoch: 113/400 | train | dice loss: 0.750
+[01:21:12.437] epoch: 113/400 |  val  | DICE: 0.772 | PA: 0.924 | IOU: 0.668
+[01:21:32.582] epoch: 114/400 | train | dice loss: 0.753
+[01:21:36.841] epoch: 114/400 |  val  | DICE: 0.776 | PA: 0.928 | IOU: 0.674
+[01:21:57.434] epoch: 115/400 | train | dice loss: 0.755
+[01:22:01.776] epoch: 115/400 |  val  | DICE: 0.773 | PA: 0.925 | IOU: 0.670
+[01:22:22.005] epoch: 116/400 | train | dice loss: 0.752
+[01:22:26.976] epoch: 116/400 |  val  | DICE: 0.780 | PA: 0.930 | IOU: 0.678
+[01:22:47.468] epoch: 117/400 | train | dice loss: 0.753
+[01:22:51.708] epoch: 117/400 |  val  | DICE: 0.786 | PA: 0.932 | IOU: 0.685
+[01:22:51.758] best model | epoch: 117 | DICE: 0.786 | PA: 0.932 | IOU: 0.685
+[01:23:13.406] epoch: 118/400 | train | dice loss: 0.754
+[01:23:17.766] epoch: 118/400 |  val  | DICE: 0.774 | PA: 0.927 | IOU: 0.672
+[01:23:39.091] epoch: 119/400 | train | dice loss: 0.751
+[01:23:44.148] epoch: 119/400 |  val  | DICE: 0.768 | PA: 0.921 | IOU: 0.663
+[01:24:04.911] epoch: 120/400 | train | dice loss: 0.756
+[01:24:09.778] epoch: 120/400 |  val  | DICE: 0.772 | PA: 0.925 | IOU: 0.669
+[01:24:32.372] epoch: 121/400 | train | dice loss: 0.752
+[01:24:37.149] epoch: 121/400 |  val  | DICE: 0.769 | PA: 0.918 | IOU: 0.663
+[01:24:57.334] epoch: 122/400 | train | dice loss: 0.752
+[01:25:01.513] epoch: 122/400 |  val  | DICE: 0.773 | PA: 0.923 | IOU: 0.670
+[01:25:22.928] epoch: 123/400 | train | dice loss: 0.748
+[01:25:27.336] epoch: 123/400 |  val  | DICE: 0.768 | PA: 0.921 | IOU: 0.663
+[01:25:47.716] epoch: 124/400 | train | dice loss: 0.748
+[01:25:51.822] epoch: 124/400 |  val  | DICE: 0.770 | PA: 0.920 | IOU: 0.664
+[01:26:12.841] epoch: 125/400 | train | dice loss: 0.748
+[01:26:17.805] epoch: 125/400 |  val  | DICE: 0.780 | PA: 0.927 | IOU: 0.678
+[01:26:38.602] epoch: 126/400 | train | dice loss: 0.748
+[01:26:43.059] epoch: 126/400 |  val  | DICE: 0.777 | PA: 0.926 | IOU: 0.676
+[01:27:04.602] epoch: 127/400 | train | dice loss: 0.746
+[01:27:09.112] epoch: 127/400 |  val  | DICE: 0.789 | PA: 0.931 | IOU: 0.688
+[01:27:09.147] best model | epoch: 127 | DICE: 0.789 | PA: 0.931 | IOU: 0.688
+[01:27:29.835] epoch: 128/400 | train | dice loss: 0.748
+[01:27:34.630] epoch: 128/400 |  val  | DICE: 0.787 | PA: 0.931 | IOU: 0.687
+[01:27:54.489] epoch: 129/400 | train | dice loss: 0.749
+[01:27:59.264] epoch: 129/400 |  val  | DICE: 0.799 | PA: 0.938 | IOU: 0.701
+[01:27:59.309] best model | epoch: 129 | DICE: 0.799 | PA: 0.938 | IOU: 0.701
+[01:28:20.783] epoch: 130/400 | train | dice loss: 0.748
+[01:28:26.295] epoch: 130/400 |  val  | DICE: 0.778 | PA: 0.926 | IOU: 0.675
+[01:28:47.501] epoch: 131/400 | train | dice loss: 0.753
+[01:28:52.074] epoch: 131/400 |  val  | DICE: 0.783 | PA: 0.928 | IOU: 0.680
+[01:29:13.181] epoch: 132/400 | train | dice loss: 0.746
+[01:29:18.484] epoch: 132/400 |  val  | DICE: 0.777 | PA: 0.924 | IOU: 0.674
+[01:29:39.267] epoch: 133/400 | train | dice loss: 0.748
+[01:29:43.056] epoch: 133/400 |  val  | DICE: 0.785 | PA: 0.930 | IOU: 0.683
+[01:30:04.036] epoch: 134/400 | train | dice loss: 0.741
+[01:30:08.944] epoch: 134/400 |  val  | DICE: 0.785 | PA: 0.930 | IOU: 0.683
+[01:30:29.362] epoch: 135/400 | train | dice loss: 0.743
+[01:30:33.634] epoch: 135/400 |  val  | DICE: 0.795 | PA: 0.935 | IOU: 0.696
+[01:30:53.596] epoch: 136/400 | train | dice loss: 0.745
+[01:30:57.987] epoch: 136/400 |  val  | DICE: 0.782 | PA: 0.927 | IOU: 0.679
+[01:31:18.849] epoch: 137/400 | train | dice loss: 0.744
+[01:31:24.107] epoch: 137/400 |  val  | DICE: 0.771 | PA: 0.921 | IOU: 0.667
+[01:31:45.086] epoch: 138/400 | train | dice loss: 0.743
+[01:31:49.326] epoch: 138/400 |  val  | DICE: 0.775 | PA: 0.924 | IOU: 0.671
+[01:32:10.474] epoch: 139/400 | train | dice loss: 0.742
+[01:32:15.642] epoch: 139/400 |  val  | DICE: 0.793 | PA: 0.933 | IOU: 0.692
+[01:32:36.864] epoch: 140/400 | train | dice loss: 0.744
+[01:32:41.608] epoch: 140/400 |  val  | DICE: 0.794 | PA: 0.935 | IOU: 0.695
+[01:33:01.926] epoch: 141/400 | train | dice loss: 0.741
+[01:33:06.645] epoch: 141/400 |  val  | DICE: 0.774 | PA: 0.925 | IOU: 0.671
+[01:33:27.543] epoch: 142/400 | train | dice loss: 0.742
+[01:33:32.549] epoch: 142/400 |  val  | DICE: 0.779 | PA: 0.928 | IOU: 0.677
+[01:33:53.509] epoch: 143/400 | train | dice loss: 0.742
+[01:33:57.912] epoch: 143/400 |  val  | DICE: 0.766 | PA: 0.917 | IOU: 0.659
+[01:34:19.582] epoch: 144/400 | train | dice loss: 0.741
+[01:34:24.818] epoch: 144/400 |  val  | DICE: 0.788 | PA: 0.932 | IOU: 0.688
+[01:34:45.860] epoch: 145/400 | train | dice loss: 0.742
+[01:34:49.896] epoch: 145/400 |  val  | DICE: 0.783 | PA: 0.928 | IOU: 0.681
+[01:35:11.316] epoch: 146/400 | train | dice loss: 0.739
+[01:35:16.140] epoch: 146/400 |  val  | DICE: 0.790 | PA: 0.930 | IOU: 0.689
+[01:35:36.687] epoch: 147/400 | train | dice loss: 0.739
+[01:35:40.987] epoch: 147/400 |  val  | DICE: 0.772 | PA: 0.921 | IOU: 0.668
+[01:36:02.421] epoch: 148/400 | train | dice loss: 0.739
+[01:36:07.723] epoch: 148/400 |  val  | DICE: 0.792 | PA: 0.933 | IOU: 0.693
+[01:36:28.937] epoch: 149/400 | train | dice loss: 0.743
+[01:36:33.154] epoch: 149/400 |  val  | DICE: 0.789 | PA: 0.931 | IOU: 0.688
+[01:36:54.610] epoch: 150/400 | train | dice loss: 0.740
+[01:36:59.410] epoch: 150/400 |  val  | DICE: 0.783 | PA: 0.928 | IOU: 0.681
+[01:37:21.506] epoch: 151/400 | train | dice loss: 0.738
+[01:37:27.015] epoch: 151/400 |  val  | DICE: 0.787 | PA: 0.928 | IOU: 0.686
+[01:37:48.165] epoch: 152/400 | train | dice loss: 0.738
+[01:37:52.426] epoch: 152/400 |  val  | DICE: 0.787 | PA: 0.931 | IOU: 0.686
+[01:38:13.838] epoch: 153/400 | train | dice loss: 0.739
+[01:38:18.711] epoch: 153/400 |  val  | DICE: 0.788 | PA: 0.931 | IOU: 0.687
+[01:38:39.114] epoch: 154/400 | train | dice loss: 0.739
+[01:38:43.456] epoch: 154/400 |  val  | DICE: 0.788 | PA: 0.931 | IOU: 0.687
+[01:39:05.173] epoch: 155/400 | train | dice loss: 0.739
+[01:39:10.689] epoch: 155/400 |  val  | DICE: 0.783 | PA: 0.927 | IOU: 0.681
+[01:39:31.298] epoch: 156/400 | train | dice loss: 0.738
+[01:39:35.906] epoch: 156/400 |  val  | DICE: 0.783 | PA: 0.928 | IOU: 0.681
+[01:39:56.913] epoch: 157/400 | train | dice loss: 0.741
+[01:40:02.094] epoch: 157/400 |  val  | DICE: 0.778 | PA: 0.925 | IOU: 0.675
+[01:40:23.201] epoch: 158/400 | train | dice loss: 0.738
+[01:40:27.308] epoch: 158/400 |  val  | DICE: 0.792 | PA: 0.932 | IOU: 0.692
+[01:40:44.178] epoch: 159/400 | train | dice loss: 0.734
+[01:40:47.245] epoch: 159/400 |  val  | DICE: 0.782 | PA: 0.928 | IOU: 0.679
+[01:41:02.192] epoch: 160/400 | train | dice loss: 0.738
+[01:41:05.225] epoch: 160/400 |  val  | DICE: 0.789 | PA: 0.934 | IOU: 0.689
+[01:41:20.107] epoch: 161/400 | train | dice loss: 0.739
+[01:41:23.287] epoch: 161/400 |  val  | DICE: 0.789 | PA: 0.931 | IOU: 0.689
+[01:41:38.237] epoch: 162/400 | train | dice loss: 0.736
+[01:41:41.458] epoch: 162/400 |  val  | DICE: 0.779 | PA: 0.927 | IOU: 0.677
+[01:41:56.536] epoch: 163/400 | train | dice loss: 0.735
+[01:41:59.780] epoch: 163/400 |  val  | DICE: 0.789 | PA: 0.931 | IOU: 0.688
+[01:42:14.750] epoch: 164/400 | train | dice loss: 0.735
+[01:42:17.942] epoch: 164/400 |  val  | DICE: 0.777 | PA: 0.925 | IOU: 0.675
+[01:42:33.189] epoch: 165/400 | train | dice loss: 0.736
+[01:42:36.352] epoch: 165/400 |  val  | DICE: 0.803 | PA: 0.940 | IOU: 0.706
+[01:42:36.398] best model | epoch: 165 | DICE: 0.803 | PA: 0.940 | IOU: 0.706
+[01:42:51.451] epoch: 166/400 | train | dice loss: 0.737
+[01:42:54.505] epoch: 166/400 |  val  | DICE: 0.802 | PA: 0.938 | IOU: 0.704
+[01:43:09.560] epoch: 167/400 | train | dice loss: 0.732
+[01:43:12.605] epoch: 167/400 |  val  | DICE: 0.786 | PA: 0.928 | IOU: 0.684
+[01:43:27.370] epoch: 168/400 | train | dice loss: 0.735
+[01:43:30.549] epoch: 168/400 |  val  | DICE: 0.793 | PA: 0.934 | IOU: 0.694
+[01:43:45.595] epoch: 169/400 | train | dice loss: 0.735
+[01:43:48.637] epoch: 169/400 |  val  | DICE: 0.793 | PA: 0.932 | IOU: 0.692
+[01:44:03.536] epoch: 170/400 | train | dice loss: 0.734
+[01:44:06.730] epoch: 170/400 |  val  | DICE: 0.794 | PA: 0.931 | IOU: 0.693
+[01:44:21.600] epoch: 171/400 | train | dice loss: 0.731
+[01:44:24.743] epoch: 171/400 |  val  | DICE: 0.792 | PA: 0.933 | IOU: 0.692
+[01:44:39.777] epoch: 172/400 | train | dice loss: 0.734
+[01:44:42.881] epoch: 172/400 |  val  | DICE: 0.796 | PA: 0.933 | IOU: 0.697
+[01:44:57.884] epoch: 173/400 | train | dice loss: 0.733
+[01:45:00.765] epoch: 173/400 |  val  | DICE: 0.787 | PA: 0.929 | IOU: 0.686
+[01:45:15.979] epoch: 174/400 | train | dice loss: 0.732
+[01:45:19.053] epoch: 174/400 |  val  | DICE: 0.796 | PA: 0.934 | IOU: 0.697
+[01:45:33.917] epoch: 175/400 | train | dice loss: 0.732
+[01:45:37.086] epoch: 175/400 |  val  | DICE: 0.800 | PA: 0.939 | IOU: 0.703
+[01:45:51.979] epoch: 176/400 | train | dice loss: 0.732
+[01:45:54.858] epoch: 176/400 |  val  | DICE: 0.792 | PA: 0.932 | IOU: 0.693
+[01:46:09.665] epoch: 177/400 | train | dice loss: 0.730
+[01:46:12.763] epoch: 177/400 |  val  | DICE: 0.802 | PA: 0.937 | IOU: 0.704
+[01:46:28.071] epoch: 178/400 | train | dice loss: 0.733
+[01:46:31.179] epoch: 178/400 |  val  | DICE: 0.806 | PA: 0.939 | IOU: 0.709
+[01:46:31.214] best model | epoch: 178 | DICE: 0.806 | PA: 0.939 | IOU: 0.709
+[01:46:46.227] epoch: 179/400 | train | dice loss: 0.730
+[01:46:49.364] epoch: 179/400 |  val  | DICE: 0.795 | PA: 0.936 | IOU: 0.696
+[01:47:04.213] epoch: 180/400 | train | dice loss: 0.732
+[01:47:07.186] epoch: 180/400 |  val  | DICE: 0.797 | PA: 0.935 | IOU: 0.698
+[01:47:22.025] epoch: 181/400 | train | dice loss: 0.732
+[01:47:25.067] epoch: 181/400 |  val  | DICE: 0.787 | PA: 0.931 | IOU: 0.686
+[01:47:39.903] epoch: 182/400 | train | dice loss: 0.732
+[01:47:43.076] epoch: 182/400 |  val  | DICE: 0.796 | PA: 0.935 | IOU: 0.697
+[01:47:57.939] epoch: 183/400 | train | dice loss: 0.729
+[01:48:01.176] epoch: 183/400 |  val  | DICE: 0.803 | PA: 0.939 | IOU: 0.706
+[01:48:16.104] epoch: 184/400 | train | dice loss: 0.729
+[01:48:19.054] epoch: 184/400 |  val  | DICE: 0.801 | PA: 0.936 | IOU: 0.702
+[01:48:33.952] epoch: 185/400 | train | dice loss: 0.730
+[01:48:37.083] epoch: 185/400 |  val  | DICE: 0.794 | PA: 0.931 | IOU: 0.694
+[01:48:51.877] epoch: 186/400 | train | dice loss: 0.731
+[01:48:54.907] epoch: 186/400 |  val  | DICE: 0.799 | PA: 0.937 | IOU: 0.702
+[01:49:09.966] epoch: 187/400 | train | dice loss: 0.734
+[01:49:12.928] epoch: 187/400 |  val  | DICE: 0.802 | PA: 0.937 | IOU: 0.704
+[01:49:27.911] epoch: 188/400 | train | dice loss: 0.730
+[01:49:30.944] epoch: 188/400 |  val  | DICE: 0.798 | PA: 0.937 | IOU: 0.700
+[01:49:45.773] epoch: 189/400 | train | dice loss: 0.726
+[01:49:48.951] epoch: 189/400 |  val  | DICE: 0.801 | PA: 0.936 | IOU: 0.703
+[01:50:03.794] epoch: 190/400 | train | dice loss: 0.726
+[01:50:07.014] epoch: 190/400 |  val  | DICE: 0.798 | PA: 0.935 | IOU: 0.700
+[01:50:21.914] epoch: 191/400 | train | dice loss: 0.727
+[01:50:24.902] epoch: 191/400 |  val  | DICE: 0.799 | PA: 0.936 | IOU: 0.701
+[01:50:39.711] epoch: 192/400 | train | dice loss: 0.728
+[01:50:42.697] epoch: 192/400 |  val  | DICE: 0.805 | PA: 0.939 | IOU: 0.708
+[01:50:57.576] epoch: 193/400 | train | dice loss: 0.729
+[01:51:00.733] epoch: 193/400 |  val  | DICE: 0.809 | PA: 0.941 | IOU: 0.713
+[01:51:00.770] best model | epoch: 193 | DICE: 0.809 | PA: 0.941 | IOU: 0.713
+[01:51:15.669] epoch: 194/400 | train | dice loss: 0.728
+[01:51:18.716] epoch: 194/400 |  val  | DICE: 0.795 | PA: 0.933 | IOU: 0.695
+[01:51:33.571] epoch: 195/400 | train | dice loss: 0.726
+[01:51:36.724] epoch: 195/400 |  val  | DICE: 0.802 | PA: 0.937 | IOU: 0.704
+[01:51:51.544] epoch: 196/400 | train | dice loss: 0.726
+[01:51:54.682] epoch: 196/400 |  val  | DICE: 0.804 | PA: 0.940 | IOU: 0.708
+[01:52:09.602] epoch: 197/400 | train | dice loss: 0.725
+[01:52:12.583] epoch: 197/400 |  val  | DICE: 0.801 | PA: 0.936 | IOU: 0.702
+[01:52:27.374] epoch: 198/400 | train | dice loss: 0.724
+[01:52:30.432] epoch: 198/400 |  val  | DICE: 0.798 | PA: 0.934 | IOU: 0.699
+[01:52:45.357] epoch: 199/400 | train | dice loss: 0.724
+[01:52:48.523] epoch: 199/400 |  val  | DICE: 0.793 | PA: 0.931 | IOU: 0.694
+[01:53:03.337] epoch: 200/400 | train | dice loss: 0.727
+[01:53:06.448] epoch: 200/400 |  val  | DICE: 0.799 | PA: 0.935 | IOU: 0.701
+[01:53:21.263] epoch: 201/400 | train | dice loss: 0.726
+[01:53:24.343] epoch: 201/400 |  val  | DICE: 0.809 | PA: 0.940 | IOU: 0.713
+[01:53:39.369] epoch: 202/400 | train | dice loss: 0.726
+[01:53:42.237] epoch: 202/400 |  val  | DICE: 0.805 | PA: 0.937 | IOU: 0.708
+[01:53:57.052] epoch: 203/400 | train | dice loss: 0.724
+[01:54:00.084] epoch: 203/400 |  val  | DICE: 0.809 | PA: 0.940 | IOU: 0.713
+[01:54:15.128] epoch: 204/400 | train | dice loss: 0.724
+[01:54:18.174] epoch: 204/400 |  val  | DICE: 0.805 | PA: 0.938 | IOU: 0.708
+[01:54:33.037] epoch: 205/400 | train | dice loss: 0.723
+[01:54:36.263] epoch: 205/400 |  val  | DICE: 0.803 | PA: 0.937 | IOU: 0.705
+[01:54:51.191] epoch: 206/400 | train | dice loss: 0.725
+[01:54:54.357] epoch: 206/400 |  val  | DICE: 0.810 | PA: 0.940 | IOU: 0.714
+[01:54:54.392] best model | epoch: 206 | DICE: 0.810 | PA: 0.940 | IOU: 0.714
+[01:55:09.144] epoch: 207/400 | train | dice loss: 0.723
+[01:55:12.222] epoch: 207/400 |  val  | DICE: 0.801 | PA: 0.937 | IOU: 0.704
+[01:55:26.901] epoch: 208/400 | train | dice loss: 0.722
+[01:55:29.909] epoch: 208/400 |  val  | DICE: 0.797 | PA: 0.935 | IOU: 0.699
+[01:55:44.695] epoch: 209/400 | train | dice loss: 0.723
+[01:55:47.849] epoch: 209/400 |  val  | DICE: 0.797 | PA: 0.935 | IOU: 0.697
+[01:56:02.826] epoch: 210/400 | train | dice loss: 0.723
+[01:56:05.915] epoch: 210/400 |  val  | DICE: 0.803 | PA: 0.937 | IOU: 0.706
+[01:56:20.804] epoch: 211/400 | train | dice loss: 0.726
+[01:56:23.825] epoch: 211/400 |  val  | DICE: 0.796 | PA: 0.934 | IOU: 0.697
+[01:56:38.749] epoch: 212/400 | train | dice loss: 0.726
+[01:56:41.896] epoch: 212/400 |  val  | DICE: 0.800 | PA: 0.937 | IOU: 0.703
+[01:56:56.658] epoch: 213/400 | train | dice loss: 0.722
+[01:56:59.707] epoch: 213/400 |  val  | DICE: 0.807 | PA: 0.938 | IOU: 0.710
+[01:57:14.945] epoch: 214/400 | train | dice loss: 0.726
+[01:57:18.041] epoch: 214/400 |  val  | DICE: 0.812 | PA: 0.942 | IOU: 0.717
+[01:57:18.077] best model | epoch: 214 | DICE: 0.812 | PA: 0.942 | IOU: 0.717
+[01:57:33.126] epoch: 215/400 | train | dice loss: 0.725
+[01:57:36.204] epoch: 215/400 |  val  | DICE: 0.795 | PA: 0.932 | IOU: 0.695
+[01:57:51.166] epoch: 216/400 | train | dice loss: 0.721
+[01:57:54.195] epoch: 216/400 |  val  | DICE: 0.804 | PA: 0.937 | IOU: 0.707
+[01:58:09.117] epoch: 217/400 | train | dice loss: 0.721
+[01:58:12.227] epoch: 217/400 |  val  | DICE: 0.807 | PA: 0.940 | IOU: 0.711
+[01:58:27.118] epoch: 218/400 | train | dice loss: 0.721
+[01:58:30.082] epoch: 218/400 |  val  | DICE: 0.803 | PA: 0.936 | IOU: 0.706
+[01:58:45.210] epoch: 219/400 | train | dice loss: 0.721
+[01:58:48.293] epoch: 219/400 |  val  | DICE: 0.798 | PA: 0.933 | IOU: 0.699
+[01:59:03.081] epoch: 220/400 | train | dice loss: 0.719
+[01:59:06.235] epoch: 220/400 |  val  | DICE: 0.808 | PA: 0.941 | IOU: 0.713
+[01:59:21.572] epoch: 221/400 | train | dice loss: 0.717
+[01:59:24.642] epoch: 221/400 |  val  | DICE: 0.806 | PA: 0.938 | IOU: 0.709
+[01:59:39.528] epoch: 222/400 | train | dice loss: 0.721
+[01:59:42.738] epoch: 222/400 |  val  | DICE: 0.798 | PA: 0.934 | IOU: 0.700
+[01:59:57.479] epoch: 223/400 | train | dice loss: 0.720
+[02:00:00.550] epoch: 223/400 |  val  | DICE: 0.802 | PA: 0.937 | IOU: 0.705
+[02:00:15.511] epoch: 224/400 | train | dice loss: 0.724
+[02:00:18.598] epoch: 224/400 |  val  | DICE: 0.808 | PA: 0.941 | IOU: 0.712
+[02:00:33.553] epoch: 225/400 | train | dice loss: 0.719
+[02:00:36.716] epoch: 225/400 |  val  | DICE: 0.814 | PA: 0.942 | IOU: 0.719
+[02:00:36.754] best model | epoch: 225 | DICE: 0.814 | PA: 0.942 | IOU: 0.719
+[02:00:52.187] epoch: 226/400 | train | dice loss: 0.719
+[02:00:55.193] epoch: 226/400 |  val  | DICE: 0.810 | PA: 0.940 | IOU: 0.714
+[02:01:10.021] epoch: 227/400 | train | dice loss: 0.718
+[02:01:13.239] epoch: 227/400 |  val  | DICE: 0.800 | PA: 0.933 | IOU: 0.699
+[02:01:28.166] epoch: 228/400 | train | dice loss: 0.719
+[02:01:31.238] epoch: 228/400 |  val  | DICE: 0.803 | PA: 0.937 | IOU: 0.705
+[02:01:46.095] epoch: 229/400 | train | dice loss: 0.720
+[02:01:49.155] epoch: 229/400 |  val  | DICE: 0.797 | PA: 0.934 | IOU: 0.698
+[02:02:03.960] epoch: 230/400 | train | dice loss: 0.719
+[02:02:06.990] epoch: 230/400 |  val  | DICE: 0.801 | PA: 0.934 | IOU: 0.702
+[02:02:21.762] epoch: 231/400 | train | dice loss: 0.720
+[02:02:24.797] epoch: 231/400 |  val  | DICE: 0.810 | PA: 0.940 | IOU: 0.714
+[02:02:39.567] epoch: 232/400 | train | dice loss: 0.720
+[02:02:42.670] epoch: 232/400 |  val  | DICE: 0.807 | PA: 0.940 | IOU: 0.712
+[02:02:57.737] epoch: 233/400 | train | dice loss: 0.718
+[02:03:00.807] epoch: 233/400 |  val  | DICE: 0.809 | PA: 0.941 | IOU: 0.714
+[02:03:15.712] epoch: 234/400 | train | dice loss: 0.720
+[02:03:18.748] epoch: 234/400 |  val  | DICE: 0.813 | PA: 0.942 | IOU: 0.718
+[02:03:33.702] epoch: 235/400 | train | dice loss: 0.718
+[02:03:36.879] epoch: 235/400 |  val  | DICE: 0.808 | PA: 0.938 | IOU: 0.710
+[02:03:51.960] epoch: 236/400 | train | dice loss: 0.719
+[02:03:55.061] epoch: 236/400 |  val  | DICE: 0.805 | PA: 0.937 | IOU: 0.708
+[02:04:10.066] epoch: 237/400 | train | dice loss: 0.719
+[02:04:13.105] epoch: 237/400 |  val  | DICE: 0.796 | PA: 0.933 | IOU: 0.695
+[02:04:28.317] epoch: 238/400 | train | dice loss: 0.718
+[02:04:31.357] epoch: 238/400 |  val  | DICE: 0.805 | PA: 0.937 | IOU: 0.707
+[02:04:46.162] epoch: 239/400 | train | dice loss: 0.716
+[02:04:49.175] epoch: 239/400 |  val  | DICE: 0.810 | PA: 0.941 | IOU: 0.715
+[02:05:04.115] epoch: 240/400 | train | dice loss: 0.718
+[02:05:07.260] epoch: 240/400 |  val  | DICE: 0.805 | PA: 0.938 | IOU: 0.708
+[02:05:22.089] epoch: 241/400 | train | dice loss: 0.716
+[02:05:25.197] epoch: 241/400 |  val  | DICE: 0.807 | PA: 0.939 | IOU: 0.711
+[02:05:40.068] epoch: 242/400 | train | dice loss: 0.718
+[02:05:43.028] epoch: 242/400 |  val  | DICE: 0.811 | PA: 0.941 | IOU: 0.715
+[02:05:57.836] epoch: 243/400 | train | dice loss: 0.716
+[02:06:01.016] epoch: 243/400 |  val  | DICE: 0.814 | PA: 0.942 | IOU: 0.720
+[02:06:01.060] best model | epoch: 243 | DICE: 0.814 | PA: 0.942 | IOU: 0.720
+[02:06:16.162] epoch: 244/400 | train | dice loss: 0.718
+[02:06:19.286] epoch: 244/400 |  val  | DICE: 0.807 | PA: 0.938 | IOU: 0.711
+[02:06:34.397] epoch: 245/400 | train | dice loss: 0.716
+[02:06:37.624] epoch: 245/400 |  val  | DICE: 0.805 | PA: 0.938 | IOU: 0.708
+[02:06:52.562] epoch: 246/400 | train | dice loss: 0.714
+[02:06:55.553] epoch: 246/400 |  val  | DICE: 0.807 | PA: 0.938 | IOU: 0.711
+[02:07:10.687] epoch: 247/400 | train | dice loss: 0.719
+[02:07:13.896] epoch: 247/400 |  val  | DICE: 0.806 | PA: 0.937 | IOU: 0.709
+[02:07:28.915] epoch: 248/400 | train | dice loss: 0.717
+[02:07:32.014] epoch: 248/400 |  val  | DICE: 0.809 | PA: 0.939 | IOU: 0.713
+[02:07:46.877] epoch: 249/400 | train | dice loss: 0.718
+[02:07:49.894] epoch: 249/400 |  val  | DICE: 0.800 | PA: 0.935 | IOU: 0.701
+[02:08:04.790] epoch: 250/400 | train | dice loss: 0.718
+[02:08:07.896] epoch: 250/400 |  val  | DICE: 0.803 | PA: 0.936 | IOU: 0.705
+[02:08:22.721] epoch: 251/400 | train | dice loss: 0.716
+[02:08:25.690] epoch: 251/400 |  val  | DICE: 0.800 | PA: 0.933 | IOU: 0.701
+[02:08:40.509] epoch: 252/400 | train | dice loss: 0.715
+[02:08:43.596] epoch: 252/400 |  val  | DICE: 0.805 | PA: 0.939 | IOU: 0.709
+[02:08:58.445] epoch: 253/400 | train | dice loss: 0.715
+[02:09:01.600] epoch: 253/400 |  val  | DICE: 0.793 | PA: 0.931 | IOU: 0.694
+[02:09:16.541] epoch: 254/400 | train | dice loss: 0.715
+[02:09:19.643] epoch: 254/400 |  val  | DICE: 0.818 | PA: 0.945 | IOU: 0.725
+[02:09:19.680] best model | epoch: 254 | DICE: 0.818 | PA: 0.945 | IOU: 0.725
+[02:09:34.603] epoch: 255/400 | train | dice loss: 0.719
+[02:09:37.685] epoch: 255/400 |  val  | DICE: 0.811 | PA: 0.941 | IOU: 0.716
+[02:09:52.559] epoch: 256/400 | train | dice loss: 0.715
+[02:09:55.483] epoch: 256/400 |  val  | DICE: 0.806 | PA: 0.937 | IOU: 0.709
+[02:10:10.442] epoch: 257/400 | train | dice loss: 0.717
+[02:10:13.428] epoch: 257/400 |  val  | DICE: 0.797 | PA: 0.934 | IOU: 0.698
+[02:10:28.421] epoch: 258/400 | train | dice loss: 0.716
+[02:10:31.368] epoch: 258/400 |  val  | DICE: 0.815 | PA: 0.944 | IOU: 0.721
+[02:10:46.209] epoch: 259/400 | train | dice loss: 0.714
+[02:10:49.211] epoch: 259/400 |  val  | DICE: 0.801 | PA: 0.935 | IOU: 0.702
+[02:11:03.940] epoch: 260/400 | train | dice loss: 0.712
+[02:11:07.032] epoch: 260/400 |  val  | DICE: 0.815 | PA: 0.942 | IOU: 0.720
+[02:11:21.884] epoch: 261/400 | train | dice loss: 0.714
+[02:11:24.868] epoch: 261/400 |  val  | DICE: 0.815 | PA: 0.943 | IOU: 0.721
+[02:11:39.726] epoch: 262/400 | train | dice loss: 0.714
+[02:11:42.912] epoch: 262/400 |  val  | DICE: 0.809 | PA: 0.939 | IOU: 0.713
+[02:11:57.821] epoch: 263/400 | train | dice loss: 0.713
+[02:12:00.908] epoch: 263/400 |  val  | DICE: 0.816 | PA: 0.943 | IOU: 0.722
+[02:12:15.882] epoch: 264/400 | train | dice loss: 0.714
+[02:12:19.004] epoch: 264/400 |  val  | DICE: 0.815 | PA: 0.942 | IOU: 0.721
+[02:12:33.909] epoch: 265/400 | train | dice loss: 0.714
+[02:12:37.086] epoch: 265/400 |  val  | DICE: 0.813 | PA: 0.942 | IOU: 0.718
+[02:12:52.073] epoch: 266/400 | train | dice loss: 0.713
+[02:12:55.141] epoch: 266/400 |  val  | DICE: 0.815 | PA: 0.943 | IOU: 0.720
+[02:13:10.069] epoch: 267/400 | train | dice loss: 0.713
+[02:13:13.229] epoch: 267/400 |  val  | DICE: 0.811 | PA: 0.940 | IOU: 0.716
+[02:13:28.053] epoch: 268/400 | train | dice loss: 0.714
+[02:13:31.162] epoch: 268/400 |  val  | DICE: 0.815 | PA: 0.944 | IOU: 0.721
+[02:13:46.032] epoch: 269/400 | train | dice loss: 0.715
+[02:13:49.078] epoch: 269/400 |  val  | DICE: 0.804 | PA: 0.936 | IOU: 0.707
+[02:14:03.908] epoch: 270/400 | train | dice loss: 0.712
+[02:14:07.059] epoch: 270/400 |  val  | DICE: 0.814 | PA: 0.942 | IOU: 0.719
+[02:14:21.894] epoch: 271/400 | train | dice loss: 0.712
+[02:14:24.982] epoch: 271/400 |  val  | DICE: 0.800 | PA: 0.935 | IOU: 0.702
+[02:14:40.047] epoch: 272/400 | train | dice loss: 0.713
+[02:14:43.063] epoch: 272/400 |  val  | DICE: 0.816 | PA: 0.942 | IOU: 0.722
+[02:14:58.005] epoch: 273/400 | train | dice loss: 0.712
+[02:15:01.065] epoch: 273/400 |  val  | DICE: 0.817 | PA: 0.943 | IOU: 0.724
+[02:15:15.924] epoch: 274/400 | train | dice loss: 0.712
+[02:15:19.083] epoch: 274/400 |  val  | DICE: 0.813 | PA: 0.942 | IOU: 0.718
+[02:15:33.916] epoch: 275/400 | train | dice loss: 0.709
+[02:15:37.042] epoch: 275/400 |  val  | DICE: 0.807 | PA: 0.938 | IOU: 0.711
+[02:15:51.831] epoch: 276/400 | train | dice loss: 0.713
+[02:15:54.944] epoch: 276/400 |  val  | DICE: 0.802 | PA: 0.935 | IOU: 0.704
+[02:16:09.893] epoch: 277/400 | train | dice loss: 0.712
+[02:16:13.113] epoch: 277/400 |  val  | DICE: 0.805 | PA: 0.937 | IOU: 0.708
+[02:16:27.902] epoch: 278/400 | train | dice loss: 0.714
+[02:16:31.036] epoch: 278/400 |  val  | DICE: 0.801 | PA: 0.934 | IOU: 0.703
+[02:16:45.864] epoch: 279/400 | train | dice loss: 0.711
+[02:16:48.885] epoch: 279/400 |  val  | DICE: 0.813 | PA: 0.942 | IOU: 0.719
+[02:17:03.785] epoch: 280/400 | train | dice loss: 0.712
+[02:17:07.022] epoch: 280/400 |  val  | DICE: 0.817 | PA: 0.942 | IOU: 0.722
+[02:17:21.963] epoch: 281/400 | train | dice loss: 0.709
+[02:17:25.058] epoch: 281/400 |  val  | DICE: 0.813 | PA: 0.942 | IOU: 0.718
+[02:17:39.910] epoch: 282/400 | train | dice loss: 0.708
+[02:17:42.915] epoch: 282/400 |  val  | DICE: 0.810 | PA: 0.941 | IOU: 0.714
+[02:17:58.223] epoch: 283/400 | train | dice loss: 0.713
+[02:18:01.220] epoch: 283/400 |  val  | DICE: 0.816 | PA: 0.943 | IOU: 0.722
+[02:18:16.087] epoch: 284/400 | train | dice loss: 0.710
+[02:18:19.172] epoch: 284/400 |  val  | DICE: 0.816 | PA: 0.942 | IOU: 0.722
+[02:18:34.019] epoch: 285/400 | train | dice loss: 0.708
+[02:18:37.111] epoch: 285/400 |  val  | DICE: 0.813 | PA: 0.941 | IOU: 0.718
+[02:18:52.002] epoch: 286/400 | train | dice loss: 0.710
+[02:18:54.980] epoch: 286/400 |  val  | DICE: 0.808 | PA: 0.939 | IOU: 0.711
+[02:19:09.820] epoch: 287/400 | train | dice loss: 0.711
+[02:19:12.962] epoch: 287/400 |  val  | DICE: 0.809 | PA: 0.939 | IOU: 0.712
+[02:19:27.775] epoch: 288/400 | train | dice loss: 0.710
+[02:19:30.779] epoch: 288/400 |  val  | DICE: 0.806 | PA: 0.938 | IOU: 0.710
+[02:19:45.706] epoch: 289/400 | train | dice loss: 0.711
+[02:19:48.857] epoch: 289/400 |  val  | DICE: 0.811 | PA: 0.939 | IOU: 0.715
+[02:20:03.845] epoch: 290/400 | train | dice loss: 0.709
+[02:20:06.817] epoch: 290/400 |  val  | DICE: 0.813 | PA: 0.940 | IOU: 0.718
+[02:20:21.680] epoch: 291/400 | train | dice loss: 0.709
+[02:20:24.836] epoch: 291/400 |  val  | DICE: 0.812 | PA: 0.940 | IOU: 0.717
+[02:20:39.717] epoch: 292/400 | train | dice loss: 0.709
+[02:20:42.710] epoch: 292/400 |  val  | DICE: 0.812 | PA: 0.940 | IOU: 0.717
+[02:20:57.708] epoch: 293/400 | train | dice loss: 0.710
+[02:21:00.754] epoch: 293/400 |  val  | DICE: 0.815 | PA: 0.944 | IOU: 0.722
+[02:21:15.516] epoch: 294/400 | train | dice loss: 0.710
+[02:21:18.705] epoch: 294/400 |  val  | DICE: 0.808 | PA: 0.938 | IOU: 0.711
+[02:21:33.691] epoch: 295/400 | train | dice loss: 0.710
+[02:21:36.648] epoch: 295/400 |  val  | DICE: 0.812 | PA: 0.941 | IOU: 0.717
+[02:21:51.726] epoch: 296/400 | train | dice loss: 0.711
+[02:21:54.837] epoch: 296/400 |  val  | DICE: 0.812 | PA: 0.940 | IOU: 0.717
+[02:22:09.729] epoch: 297/400 | train | dice loss: 0.709
+[02:22:12.858] epoch: 297/400 |  val  | DICE: 0.816 | PA: 0.943 | IOU: 0.723
+[02:22:27.667] epoch: 298/400 | train | dice loss: 0.708
+[02:22:31.064] epoch: 298/400 |  val  | DICE: 0.805 | PA: 0.939 | IOU: 0.709
+[02:22:46.067] epoch: 299/400 | train | dice loss: 0.707
+[02:22:49.183] epoch: 299/400 |  val  | DICE: 0.811 | PA: 0.940 | IOU: 0.716
+[02:23:04.224] epoch: 300/400 | train | dice loss: 0.710
+[02:23:07.257] epoch: 300/400 |  val  | DICE: 0.808 | PA: 0.938 | IOU: 0.712
+[02:23:22.121] epoch: 301/400 | train | dice loss: 0.711
+[02:23:25.228] epoch: 301/400 |  val  | DICE: 0.811 | PA: 0.939 | IOU: 0.715
+[02:23:40.598] epoch: 302/400 | train | dice loss: 0.709
+[02:23:43.658] epoch: 302/400 |  val  | DICE: 0.816 | PA: 0.943 | IOU: 0.722
+[02:23:58.571] epoch: 303/400 | train | dice loss: 0.707
+[02:24:01.606] epoch: 303/400 |  val  | DICE: 0.810 | PA: 0.941 | IOU: 0.715
+[02:24:16.427] epoch: 304/400 | train | dice loss: 0.708
+[02:24:19.541] epoch: 304/400 |  val  | DICE: 0.817 | PA: 0.943 | IOU: 0.723
+[02:24:34.358] epoch: 305/400 | train | dice loss: 0.708
+[02:24:37.497] epoch: 305/400 |  val  | DICE: 0.818 | PA: 0.944 | IOU: 0.724
+[02:24:52.396] epoch: 306/400 | train | dice loss: 0.706
+[02:24:55.484] epoch: 306/400 |  val  | DICE: 0.815 | PA: 0.942 | IOU: 0.720
+[02:25:10.504] epoch: 307/400 | train | dice loss: 0.706
+[02:25:13.642] epoch: 307/400 |  val  | DICE: 0.809 | PA: 0.937 | IOU: 0.713
+[02:25:28.387] epoch: 308/400 | train | dice loss: 0.707
+[02:25:31.353] epoch: 308/400 |  val  | DICE: 0.800 | PA: 0.936 | IOU: 0.703
+[02:25:46.272] epoch: 309/400 | train | dice loss: 0.709
+[02:25:49.375] epoch: 309/400 |  val  | DICE: 0.812 | PA: 0.941 | IOU: 0.717
+[02:26:04.103] epoch: 310/400 | train | dice loss: 0.708
+[02:26:07.209] epoch: 310/400 |  val  | DICE: 0.814 | PA: 0.941 | IOU: 0.719
+[02:26:22.034] epoch: 311/400 | train | dice loss: 0.710
+[02:26:25.189] epoch: 311/400 |  val  | DICE: 0.803 | PA: 0.934 | IOU: 0.704
+[02:26:40.096] epoch: 312/400 | train | dice loss: 0.707
+[02:26:43.181] epoch: 312/400 |  val  | DICE: 0.817 | PA: 0.944 | IOU: 0.723
+[02:26:58.302] epoch: 313/400 | train | dice loss: 0.706
+[02:27:01.524] epoch: 313/400 |  val  | DICE: 0.813 | PA: 0.940 | IOU: 0.718
+[02:27:16.345] epoch: 314/400 | train | dice loss: 0.706
+[02:27:19.371] epoch: 314/400 |  val  | DICE: 0.815 | PA: 0.941 | IOU: 0.720
+[02:27:34.106] epoch: 315/400 | train | dice loss: 0.708
+[02:27:37.272] epoch: 315/400 |  val  | DICE: 0.812 | PA: 0.941 | IOU: 0.717
+[02:27:52.375] epoch: 316/400 | train | dice loss: 0.705
+[02:27:55.447] epoch: 316/400 |  val  | DICE: 0.815 | PA: 0.943 | IOU: 0.721
+[02:28:10.403] epoch: 317/400 | train | dice loss: 0.703
+[02:28:13.583] epoch: 317/400 |  val  | DICE: 0.820 | PA: 0.945 | IOU: 0.727
+[02:28:13.651] best model | epoch: 317 | DICE: 0.820 | PA: 0.945 | IOU: 0.727
+[02:28:28.614] epoch: 318/400 | train | dice loss: 0.706
+[02:28:31.697] epoch: 318/400 |  val  | DICE: 0.809 | PA: 0.938 | IOU: 0.713
+[02:28:46.546] epoch: 319/400 | train | dice loss: 0.706
+[02:28:49.595] epoch: 319/400 |  val  | DICE: 0.814 | PA: 0.942 | IOU: 0.720
+[02:29:05.147] epoch: 320/400 | train | dice loss: 0.704
+[02:29:08.229] epoch: 320/400 |  val  | DICE: 0.815 | PA: 0.941 | IOU: 0.720
+[02:29:23.208] epoch: 321/400 | train | dice loss: 0.704
+[02:29:26.262] epoch: 321/400 |  val  | DICE: 0.822 | PA: 0.946 | IOU: 0.730
+[02:29:26.297] best model | epoch: 321 | DICE: 0.822 | PA: 0.946 | IOU: 0.730
+[02:29:41.552] epoch: 322/400 | train | dice loss: 0.706
+[02:29:44.782] epoch: 322/400 |  val  | DICE: 0.804 | PA: 0.936 | IOU: 0.707
+[02:29:59.767] epoch: 323/400 | train | dice loss: 0.707
+[02:30:02.778] epoch: 323/400 |  val  | DICE: 0.814 | PA: 0.940 | IOU: 0.719
+[02:30:17.711] epoch: 324/400 | train | dice loss: 0.707
+[02:30:20.931] epoch: 324/400 |  val  | DICE: 0.823 | PA: 0.945 | IOU: 0.730
+[02:30:20.967] best model | epoch: 324 | DICE: 0.823 | PA: 0.945 | IOU: 0.730
+[02:30:35.926] epoch: 325/400 | train | dice loss: 0.707
+[02:30:39.049] epoch: 325/400 |  val  | DICE: 0.819 | PA: 0.944 | IOU: 0.725
+[02:30:53.914] epoch: 326/400 | train | dice loss: 0.708
+[02:30:57.041] epoch: 326/400 |  val  | DICE: 0.821 | PA: 0.944 | IOU: 0.728
+[02:31:11.922] epoch: 327/400 | train | dice loss: 0.705
+[02:31:15.046] epoch: 327/400 |  val  | DICE: 0.820 | PA: 0.945 | IOU: 0.728
+[02:31:30.097] epoch: 328/400 | train | dice loss: 0.707
+[02:31:33.326] epoch: 328/400 |  val  | DICE: 0.818 | PA: 0.943 | IOU: 0.725
+[02:31:48.292] epoch: 329/400 | train | dice loss: 0.704
+[02:31:51.572] epoch: 329/400 |  val  | DICE: 0.821 | PA: 0.944 | IOU: 0.728
+[02:32:06.832] epoch: 330/400 | train | dice loss: 0.703
+[02:32:09.973] epoch: 330/400 |  val  | DICE: 0.819 | PA: 0.945 | IOU: 0.726
+[02:32:25.058] epoch: 331/400 | train | dice loss: 0.702
+[02:32:28.241] epoch: 331/400 |  val  | DICE: 0.821 | PA: 0.946 | IOU: 0.728
+[02:32:43.297] epoch: 332/400 | train | dice loss: 0.709
+[02:32:46.425] epoch: 332/400 |  val  | DICE: 0.816 | PA: 0.944 | IOU: 0.722
+[02:33:01.417] epoch: 333/400 | train | dice loss: 0.705
+[02:33:04.524] epoch: 333/400 |  val  | DICE: 0.815 | PA: 0.942 | IOU: 0.721
+[02:33:19.547] epoch: 334/400 | train | dice loss: 0.707
+[02:33:22.773] epoch: 334/400 |  val  | DICE: 0.808 | PA: 0.938 | IOU: 0.712
+[02:33:37.999] epoch: 335/400 | train | dice loss: 0.705
+[02:33:41.196] epoch: 335/400 |  val  | DICE: 0.804 | PA: 0.936 | IOU: 0.707
+[02:33:56.252] epoch: 336/400 | train | dice loss: 0.705
+[02:33:59.507] epoch: 336/400 |  val  | DICE: 0.818 | PA: 0.943 | IOU: 0.724
+[02:34:14.445] epoch: 337/400 | train | dice loss: 0.705
+[02:34:17.595] epoch: 337/400 |  val  | DICE: 0.822 | PA: 0.946 | IOU: 0.730
+[02:34:32.542] epoch: 338/400 | train | dice loss: 0.703
+[02:34:35.719] epoch: 338/400 |  val  | DICE: 0.820 | PA: 0.943 | IOU: 0.726
+[02:34:50.799] epoch: 339/400 | train | dice loss: 0.705
+[02:34:53.886] epoch: 339/400 |  val  | DICE: 0.817 | PA: 0.942 | IOU: 0.722
+[02:35:08.775] epoch: 340/400 | train | dice loss: 0.702
+[02:35:12.005] epoch: 340/400 |  val  | DICE: 0.814 | PA: 0.941 | IOU: 0.719
+[02:35:26.945] epoch: 341/400 | train | dice loss: 0.703
+[02:35:30.040] epoch: 341/400 |  val  | DICE: 0.819 | PA: 0.944 | IOU: 0.726
+[02:35:45.177] epoch: 342/400 | train | dice loss: 0.702
+[02:35:48.304] epoch: 342/400 |  val  | DICE: 0.819 | PA: 0.943 | IOU: 0.725
+[02:36:03.157] epoch: 343/400 | train | dice loss: 0.702
+[02:36:06.216] epoch: 343/400 |  val  | DICE: 0.823 | PA: 0.946 | IOU: 0.731
+[02:36:06.253] best model | epoch: 343 | DICE: 0.823 | PA: 0.946 | IOU: 0.731
+[02:36:21.181] epoch: 344/400 | train | dice loss: 0.704
+[02:36:24.421] epoch: 344/400 |  val  | DICE: 0.813 | PA: 0.941 | IOU: 0.718
+[02:36:39.479] epoch: 345/400 | train | dice loss: 0.701
+[02:36:42.679] epoch: 345/400 |  val  | DICE: 0.815 | PA: 0.942 | IOU: 0.720
+[02:36:57.835] epoch: 346/400 | train | dice loss: 0.703
+[02:37:01.074] epoch: 346/400 |  val  | DICE: 0.820 | PA: 0.944 | IOU: 0.727
+[02:37:16.596] epoch: 347/400 | train | dice loss: 0.705
+[02:37:19.758] epoch: 347/400 |  val  | DICE: 0.820 | PA: 0.945 | IOU: 0.728
+[02:37:34.824] epoch: 348/400 | train | dice loss: 0.705
+[02:37:37.978] epoch: 348/400 |  val  | DICE: 0.798 | PA: 0.934 | IOU: 0.700
+[02:37:53.045] epoch: 349/400 | train | dice loss: 0.703
+[02:37:56.457] epoch: 349/400 |  val  | DICE: 0.806 | PA: 0.937 | IOU: 0.710
+[02:38:11.555] epoch: 350/400 | train | dice loss: 0.702
+[02:38:14.742] epoch: 350/400 |  val  | DICE: 0.815 | PA: 0.941 | IOU: 0.720
+[02:38:29.652] epoch: 351/400 | train | dice loss: 0.705
+[02:38:32.769] epoch: 351/400 |  val  | DICE: 0.818 | PA: 0.943 | IOU: 0.725
+[02:38:47.832] epoch: 352/400 | train | dice loss: 0.703
+[02:38:51.143] epoch: 352/400 |  val  | DICE: 0.818 | PA: 0.943 | IOU: 0.725
+[02:39:06.112] epoch: 353/400 | train | dice loss: 0.700
+[02:39:09.204] epoch: 353/400 |  val  | DICE: 0.827 | PA: 0.948 | IOU: 0.736
+[02:39:09.246] best model | epoch: 353 | DICE: 0.827 | PA: 0.948 | IOU: 0.736
+[02:39:24.839] epoch: 354/400 | train | dice loss: 0.701
+[02:39:28.009] epoch: 354/400 |  val  | DICE: 0.818 | PA: 0.943 | IOU: 0.724
+[02:39:43.057] epoch: 355/400 | train | dice loss: 0.702
+[02:39:46.089] epoch: 355/400 |  val  | DICE: 0.821 | PA: 0.944 | IOU: 0.727
+[02:40:01.192] epoch: 356/400 | train | dice loss: 0.703
+[02:40:04.448] epoch: 356/400 |  val  | DICE: 0.821 | PA: 0.946 | IOU: 0.728
+[02:40:19.344] epoch: 357/400 | train | dice loss: 0.707
+[02:40:22.432] epoch: 357/400 |  val  | DICE: 0.820 | PA: 0.946 | IOU: 0.728
+[02:40:37.502] epoch: 358/400 | train | dice loss: 0.707
+[02:40:40.824] epoch: 358/400 |  val  | DICE: 0.819 | PA: 0.945 | IOU: 0.726
+[02:40:55.738] epoch: 359/400 | train | dice loss: 0.700
+[02:40:58.749] epoch: 359/400 |  val  | DICE: 0.821 | PA: 0.944 | IOU: 0.727
+[02:41:13.936] epoch: 360/400 | train | dice loss: 0.702
+[02:41:16.949] epoch: 360/400 |  val  | DICE: 0.820 | PA: 0.945 | IOU: 0.728
+[02:41:31.976] epoch: 361/400 | train | dice loss: 0.703
+[02:41:35.100] epoch: 361/400 |  val  | DICE: 0.823 | PA: 0.945 | IOU: 0.731
+[02:41:50.219] epoch: 362/400 | train | dice loss: 0.702
+[02:41:53.297] epoch: 362/400 |  val  | DICE: 0.820 | PA: 0.944 | IOU: 0.727
+[02:42:08.421] epoch: 363/400 | train | dice loss: 0.701
+[02:42:11.534] epoch: 363/400 |  val  | DICE: 0.815 | PA: 0.942 | IOU: 0.721
+[02:42:26.646] epoch: 364/400 | train | dice loss: 0.701
+[02:42:29.762] epoch: 364/400 |  val  | DICE: 0.822 | PA: 0.946 | IOU: 0.730
+[02:42:44.852] epoch: 365/400 | train | dice loss: 0.701
+[02:42:47.889] epoch: 365/400 |  val  | DICE: 0.824 | PA: 0.946 | IOU: 0.732
+[02:43:02.873] epoch: 366/400 | train | dice loss: 0.703
+[02:43:06.144] epoch: 366/400 |  val  | DICE: 0.819 | PA: 0.944 | IOU: 0.724
+[02:43:21.381] epoch: 367/400 | train | dice loss: 0.702
+[02:43:24.675] epoch: 367/400 |  val  | DICE: 0.823 | PA: 0.946 | IOU: 0.731
+[02:43:39.813] epoch: 368/400 | train | dice loss: 0.701
+[02:43:42.982] epoch: 368/400 |  val  | DICE: 0.822 | PA: 0.944 | IOU: 0.729
+[02:43:58.150] epoch: 369/400 | train | dice loss: 0.700
+[02:44:01.333] epoch: 369/400 |  val  | DICE: 0.816 | PA: 0.943 | IOU: 0.722
+[02:44:16.453] epoch: 370/400 | train | dice loss: 0.698
+[02:44:19.612] epoch: 370/400 |  val  | DICE: 0.823 | PA: 0.947 | IOU: 0.732
+[02:44:35.097] epoch: 371/400 | train | dice loss: 0.699
+[02:44:38.310] epoch: 371/400 |  val  | DICE: 0.819 | PA: 0.944 | IOU: 0.727
+[02:44:53.230] epoch: 372/400 | train | dice loss: 0.698
+[02:44:56.368] epoch: 372/400 |  val  | DICE: 0.825 | PA: 0.946 | IOU: 0.733
+[02:45:11.454] epoch: 373/400 | train | dice loss: 0.700
+[02:45:14.619] epoch: 373/400 |  val  | DICE: 0.823 | PA: 0.944 | IOU: 0.729
+[02:45:29.824] epoch: 374/400 | train | dice loss: 0.701
+[02:45:32.958] epoch: 374/400 |  val  | DICE: 0.819 | PA: 0.944 | IOU: 0.726
+[02:45:47.984] epoch: 375/400 | train | dice loss: 0.702
+[02:45:51.262] epoch: 375/400 |  val  | DICE: 0.821 | PA: 0.945 | IOU: 0.729
+[02:46:06.341] epoch: 376/400 | train | dice loss: 0.698
+[02:46:09.546] epoch: 376/400 |  val  | DICE: 0.824 | PA: 0.946 | IOU: 0.732
+[02:46:24.635] epoch: 377/400 | train | dice loss: 0.698
+[02:46:27.835] epoch: 377/400 |  val  | DICE: 0.820 | PA: 0.944 | IOU: 0.726
+[02:46:42.897] epoch: 378/400 | train | dice loss: 0.699
+[02:46:46.129] epoch: 378/400 |  val  | DICE: 0.820 | PA: 0.944 | IOU: 0.727
+[02:47:01.322] epoch: 379/400 | train | dice loss: 0.702
+[02:47:04.412] epoch: 379/400 |  val  | DICE: 0.825 | PA: 0.947 | IOU: 0.733
+[02:47:19.363] epoch: 380/400 | train | dice loss: 0.701
+[02:47:22.655] epoch: 380/400 |  val  | DICE: 0.824 | PA: 0.948 | IOU: 0.733
+[02:47:37.739] epoch: 381/400 | train | dice loss: 0.700
+[02:47:40.769] epoch: 381/400 |  val  | DICE: 0.819 | PA: 0.945 | IOU: 0.726
+[02:47:55.892] epoch: 382/400 | train | dice loss: 0.698
+[02:47:59.105] epoch: 382/400 |  val  | DICE: 0.824 | PA: 0.947 | IOU: 0.733
+[02:48:14.146] epoch: 383/400 | train | dice loss: 0.698
+[02:48:17.326] epoch: 383/400 |  val  | DICE: 0.818 | PA: 0.943 | IOU: 0.723
+[02:48:32.311] epoch: 384/400 | train | dice loss: 0.699
+[02:48:35.393] epoch: 384/400 |  val  | DICE: 0.826 | PA: 0.948 | IOU: 0.735
+[02:48:50.579] epoch: 385/400 | train | dice loss: 0.699
+[02:48:53.701] epoch: 385/400 |  val  | DICE: 0.822 | PA: 0.945 | IOU: 0.729
+[02:49:08.963] epoch: 386/400 | train | dice loss: 0.699
+[02:49:12.079] epoch: 386/400 |  val  | DICE: 0.820 | PA: 0.944 | IOU: 0.727
+[02:49:27.334] epoch: 387/400 | train | dice loss: 0.698
+[02:49:30.539] epoch: 387/400 |  val  | DICE: 0.822 | PA: 0.944 | IOU: 0.729
+[02:49:45.660] epoch: 388/400 | train | dice loss: 0.697
+[02:49:48.793] epoch: 388/400 |  val  | DICE: 0.826 | PA: 0.947 | IOU: 0.735
+[02:50:03.722] epoch: 389/400 | train | dice loss: 0.699
+[02:50:06.790] epoch: 389/400 |  val  | DICE: 0.815 | PA: 0.940 | IOU: 0.720
+[02:50:21.697] epoch: 390/400 | train | dice loss: 0.699
+[02:50:24.750] epoch: 390/400 |  val  | DICE: 0.817 | PA: 0.943 | IOU: 0.724
+[02:50:39.647] epoch: 391/400 | train | dice loss: 0.696
+[02:50:42.642] epoch: 391/400 |  val  | DICE: 0.818 | PA: 0.942 | IOU: 0.723
+[02:50:57.723] epoch: 392/400 | train | dice loss: 0.698
+[02:51:00.824] epoch: 392/400 |  val  | DICE: 0.826 | PA: 0.947 | IOU: 0.735
+[02:51:15.791] epoch: 393/400 | train | dice loss: 0.699
+[02:51:19.010] epoch: 393/400 |  val  | DICE: 0.828 | PA: 0.949 | IOU: 0.737
+[02:51:19.045] best model | epoch: 393 | DICE: 0.828 | PA: 0.949 | IOU: 0.737
+[02:51:33.970] epoch: 394/400 | train | dice loss: 0.699
+[02:51:37.242] epoch: 394/400 |  val  | DICE: 0.824 | PA: 0.946 | IOU: 0.731
+[02:51:52.189] epoch: 395/400 | train | dice loss: 0.697
+[02:51:55.402] epoch: 395/400 |  val  | DICE: 0.824 | PA: 0.946 | IOU: 0.732
+[02:52:10.451] epoch: 396/400 | train | dice loss: 0.699
+[02:52:13.791] epoch: 396/400 |  val  | DICE: 0.822 | PA: 0.945 | IOU: 0.729
+[02:52:29.145] epoch: 397/400 | train | dice loss: 0.696
+[02:52:32.204] epoch: 397/400 |  val  | DICE: 0.823 | PA: 0.946 | IOU: 0.731
+[02:52:47.683] epoch: 398/400 | train | dice loss: 0.697
+[02:52:50.869] epoch: 398/400 |  val  | DICE: 0.820 | PA: 0.944 | IOU: 0.727
+[02:53:05.826] epoch: 399/400 | train | dice loss: 0.697
+[02:53:08.911] epoch: 399/400 |  val  | DICE: 0.818 | PA: 0.944 | IOU: 0.725

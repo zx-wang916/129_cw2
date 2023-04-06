@@ -1,0 +1,406 @@
+[21:15:49.522] Namespace(alpha=0.99, batch_size=64, cla_weight=0.01, consistency=100, data_path='/home/featurize/data', device='cuda', epoch=400, labeled_ratio=0.1, lr=0.001, num_worker=6, rampup_len=100, train_val_ratio=0.8)
+[21:16:08.024] start training!
+[21:16:21.093] epoch: 0/400 | train | dice loss: 0.5833 | consistency loss: 0.0142
+[21:16:24.160] epoch: 0/400 | val | DICE: 0.382 | PA: 0.787 | IOU: 0.299
+[21:16:24.203] best model | epoch: 0 | DICE: 0.382 | PA: 0.787 | IOU: 0.299
+[21:16:34.614] epoch: 1/400 | train | dice loss: 0.4610 | consistency loss: 0.0324
+[21:16:37.753] epoch: 1/400 | val | DICE: 0.459 | PA: 0.821 | IOU: 0.373
+[21:16:37.797] best model | epoch: 1 | DICE: 0.459 | PA: 0.821 | IOU: 0.373
+[21:16:48.372] epoch: 2/400 | train | dice loss: 0.3802 | consistency loss: 0.0381
+[21:16:51.333] epoch: 2/400 | val | DICE: 0.500 | PA: 0.856 | IOU: 0.417
+[21:16:51.372] best model | epoch: 2 | DICE: 0.500 | PA: 0.856 | IOU: 0.417
+[21:17:01.972] epoch: 3/400 | train | dice loss: 0.3269 | consistency loss: 0.0221
+[21:17:05.298] epoch: 3/400 | val | DICE: 0.503 | PA: 0.858 | IOU: 0.420
+[21:17:05.337] best model | epoch: 3 | DICE: 0.503 | PA: 0.858 | IOU: 0.420
+[21:17:15.710] epoch: 4/400 | train | dice loss: 0.3012 | consistency loss: 0.0175
+[21:17:19.057] epoch: 4/400 | val | DICE: 0.500 | PA: 0.854 | IOU: 0.417
+[21:17:29.494] epoch: 5/400 | train | dice loss: 0.2827 | consistency loss: 0.0166
+[21:17:32.433] epoch: 5/400 | val | DICE: 0.506 | PA: 0.861 | IOU: 0.425
+[21:17:32.473] best model | epoch: 5 | DICE: 0.506 | PA: 0.861 | IOU: 0.425
+[21:17:42.968] epoch: 6/400 | train | dice loss: 0.2761 | consistency loss: 0.0110
+[21:17:46.046] epoch: 6/400 | val | DICE: 0.510 | PA: 0.864 | IOU: 0.430
+[21:17:46.091] best model | epoch: 6 | DICE: 0.510 | PA: 0.864 | IOU: 0.430
+[21:17:56.543] epoch: 7/400 | train | dice loss: 0.2810 | consistency loss: 0.0103
+[21:17:59.889] epoch: 7/400 | val | DICE: 0.503 | PA: 0.858 | IOU: 0.421
+[21:18:10.864] epoch: 8/400 | train | dice loss: 0.2666 | consistency loss: 0.0107
+[21:18:14.049] epoch: 8/400 | val | DICE: 0.511 | PA: 0.865 | IOU: 0.430
+[21:18:14.091] best model | epoch: 8 | DICE: 0.511 | PA: 0.865 | IOU: 0.430
+[21:18:24.837] epoch: 9/400 | train | dice loss: 0.2648 | consistency loss: 0.0078
+[21:18:28.464] epoch: 9/400 | val | DICE: 0.507 | PA: 0.861 | IOU: 0.426
+[21:18:39.440] epoch: 10/400 | train | dice loss: 0.2621 | consistency loss: 0.0071
+[21:18:42.723] epoch: 10/400 | val | DICE: 0.509 | PA: 0.863 | IOU: 0.428
+[21:18:52.937] epoch: 11/400 | train | dice loss: 0.2626 | consistency loss: 0.0063
+[21:18:56.051] epoch: 11/400 | val | DICE: 0.514 | PA: 0.864 | IOU: 0.434
+[21:18:56.104] best model | epoch: 11 | DICE: 0.514 | PA: 0.864 | IOU: 0.434
+[21:19:06.600] epoch: 12/400 | train | dice loss: 0.2510 | consistency loss: 0.0100
+[21:19:09.876] epoch: 12/400 | val | DICE: 0.510 | PA: 0.863 | IOU: 0.429
+[21:19:20.661] epoch: 13/400 | train | dice loss: 0.2569 | consistency loss: 0.0094
+[21:19:24.018] epoch: 13/400 | val | DICE: 0.494 | PA: 0.858 | IOU: 0.416
+[21:19:34.288] epoch: 14/400 | train | dice loss: 0.2754 | consistency loss: 0.0209
+[21:19:37.839] epoch: 14/400 | val | DICE: 0.501 | PA: 0.857 | IOU: 0.419
+[21:19:48.772] epoch: 15/400 | train | dice loss: 0.2628 | consistency loss: 0.0077
+[21:19:52.127] epoch: 15/400 | val | DICE: 0.513 | PA: 0.865 | IOU: 0.433
+[21:20:02.623] epoch: 16/400 | train | dice loss: 0.2448 | consistency loss: 0.0067
+[21:20:05.977] epoch: 16/400 | val | DICE: 0.518 | PA: 0.870 | IOU: 0.440
+[21:20:06.023] best model | epoch: 16 | DICE: 0.518 | PA: 0.870 | IOU: 0.440
+[21:20:16.539] epoch: 17/400 | train | dice loss: 0.2432 | consistency loss: 0.0069
+[21:20:19.416] epoch: 17/400 | val | DICE: 0.520 | PA: 0.871 | IOU: 0.442
+[21:20:19.455] best model | epoch: 17 | DICE: 0.520 | PA: 0.871 | IOU: 0.442
+[21:20:30.125] epoch: 18/400 | train | dice loss: 0.2391 | consistency loss: 0.0065
+[21:20:33.417] epoch: 18/400 | val | DICE: 0.518 | PA: 0.869 | IOU: 0.440
+[21:20:43.959] epoch: 19/400 | train | dice loss: 0.2403 | consistency loss: 0.0056
+[21:20:47.184] epoch: 19/400 | val | DICE: 0.514 | PA: 0.864 | IOU: 0.435
+[21:20:57.681] epoch: 20/400 | train | dice loss: 0.2409 | consistency loss: 0.0050
+[21:21:00.590] epoch: 20/400 | val | DICE: 0.518 | PA: 0.867 | IOU: 0.439
+[21:21:11.187] epoch: 21/400 | train | dice loss: 0.2400 | consistency loss: 0.0051
+[21:21:14.489] epoch: 21/400 | val | DICE: 0.523 | PA: 0.874 | IOU: 0.445
+[21:21:14.528] best model | epoch: 21 | DICE: 0.523 | PA: 0.874 | IOU: 0.445
+[21:21:24.879] epoch: 22/400 | train | dice loss: 0.2341 | consistency loss: 0.0048
+[21:21:28.225] epoch: 22/400 | val | DICE: 0.526 | PA: 0.876 | IOU: 0.449
+[21:21:28.272] best model | epoch: 22 | DICE: 0.526 | PA: 0.876 | IOU: 0.449
+[21:21:38.912] epoch: 23/400 | train | dice loss: 0.2257 | consistency loss: 0.0051
+[21:21:41.839] epoch: 23/400 | val | DICE: 0.526 | PA: 0.874 | IOU: 0.450
+[21:21:52.491] epoch: 24/400 | train | dice loss: 0.2414 | consistency loss: 0.0062
+[21:21:56.141] epoch: 24/400 | val | DICE: 0.523 | PA: 0.873 | IOU: 0.446
+[21:22:06.660] epoch: 25/400 | train | dice loss: 0.2305 | consistency loss: 0.0045
+[21:22:09.851] epoch: 25/400 | val | DICE: 0.520 | PA: 0.869 | IOU: 0.441
+[21:22:20.283] epoch: 26/400 | train | dice loss: 0.2366 | consistency loss: 0.0051
+[21:22:23.431] epoch: 26/400 | val | DICE: 0.528 | PA: 0.877 | IOU: 0.452
+[21:22:23.476] best model | epoch: 26 | DICE: 0.528 | PA: 0.877 | IOU: 0.452
+[21:22:33.836] epoch: 27/400 | train | dice loss: 0.2699 | consistency loss: 0.0154
+[21:22:37.015] epoch: 27/400 | val | DICE: 0.493 | PA: 0.849 | IOU: 0.411
+[21:22:47.641] epoch: 28/400 | train | dice loss: 0.3956 | consistency loss: 0.0447
+[21:22:50.647] epoch: 28/400 | val | DICE: 0.276 | PA: 0.800 | IOU: 0.236
+[21:23:00.884] epoch: 29/400 | train | dice loss: 0.4063 | consistency loss: 0.0407
+[21:23:03.958] epoch: 29/400 | val | DICE: 0.291 | PA: 0.801 | IOU: 0.244
+[21:23:14.314] epoch: 30/400 | train | dice loss: 0.3454 | consistency loss: 0.0298
+[21:23:17.335] epoch: 30/400 | val | DICE: 0.499 | PA: 0.859 | IOU: 0.418
+[21:23:27.718] epoch: 31/400 | train | dice loss: 0.2656 | consistency loss: 0.0115
+[21:23:30.709] epoch: 31/400 | val | DICE: 0.504 | PA: 0.859 | IOU: 0.422
+[21:23:41.068] epoch: 32/400 | train | dice loss: 0.2592 | consistency loss: 0.0091
+[21:23:44.121] epoch: 32/400 | val | DICE: 0.510 | PA: 0.863 | IOU: 0.431
+[21:23:54.705] epoch: 33/400 | train | dice loss: 0.2506 | consistency loss: 0.0082
+[21:23:57.592] epoch: 33/400 | val | DICE: 0.511 | PA: 0.865 | IOU: 0.432
+[21:24:08.180] epoch: 34/400 | train | dice loss: 0.2484 | consistency loss: 0.0066
+[21:24:11.350] epoch: 34/400 | val | DICE: 0.515 | PA: 0.867 | IOU: 0.436
+[21:24:21.697] epoch: 35/400 | train | dice loss: 0.2435 | consistency loss: 0.0060
+[21:24:24.865] epoch: 35/400 | val | DICE: 0.508 | PA: 0.859 | IOU: 0.428
+[21:24:35.287] epoch: 36/400 | train | dice loss: 0.2452 | consistency loss: 0.0066
+[21:24:38.583] epoch: 36/400 | val | DICE: 0.511 | PA: 0.862 | IOU: 0.432
+[21:24:48.840] epoch: 37/400 | train | dice loss: 0.2737 | consistency loss: 0.0149
+[21:24:52.041] epoch: 37/400 | val | DICE: 0.509 | PA: 0.863 | IOU: 0.429
+[21:25:02.468] epoch: 38/400 | train | dice loss: 0.2529 | consistency loss: 0.0060
+[21:25:05.456] epoch: 38/400 | val | DICE: 0.520 | PA: 0.871 | IOU: 0.442
+[21:25:15.889] epoch: 39/400 | train | dice loss: 0.2439 | consistency loss: 0.0050
+[21:25:19.002] epoch: 39/400 | val | DICE: 0.520 | PA: 0.871 | IOU: 0.442
+[21:25:29.428] epoch: 40/400 | train | dice loss: 0.2393 | consistency loss: 0.0044
+[21:25:32.599] epoch: 40/400 | val | DICE: 0.521 | PA: 0.872 | IOU: 0.444
+[21:25:43.161] epoch: 41/400 | train | dice loss: 0.2395 | consistency loss: 0.0042
+[21:25:46.175] epoch: 41/400 | val | DICE: 0.521 | PA: 0.871 | IOU: 0.444
+[21:25:56.479] epoch: 42/400 | train | dice loss: 0.2324 | consistency loss: 0.0040
+[21:25:59.919] epoch: 42/400 | val | DICE: 0.518 | PA: 0.868 | IOU: 0.440
+[21:26:10.378] epoch: 43/400 | train | dice loss: 0.2418 | consistency loss: 0.0064
+[21:26:13.144] epoch: 43/400 | val | DICE: 0.519 | PA: 0.871 | IOU: 0.441
+[21:26:23.511] epoch: 44/400 | train | dice loss: 0.2305 | consistency loss: 0.0093
+[21:26:26.637] epoch: 44/400 | val | DICE: 0.521 | PA: 0.871 | IOU: 0.444
+[21:26:36.981] epoch: 45/400 | train | dice loss: 0.2364 | consistency loss: 0.0040
+[21:26:40.313] epoch: 45/400 | val | DICE: 0.521 | PA: 0.870 | IOU: 0.443
+[21:26:51.187] epoch: 46/400 | train | dice loss: 0.2397 | consistency loss: 0.0038
+[21:26:54.473] epoch: 46/400 | val | DICE: 0.522 | PA: 0.872 | IOU: 0.444
+[21:27:05.057] epoch: 47/400 | train | dice loss: 0.2230 | consistency loss: 0.0035
+[21:27:08.242] epoch: 47/400 | val | DICE: 0.520 | PA: 0.869 | IOU: 0.443
+[21:27:18.467] epoch: 48/400 | train | dice loss: 0.2302 | consistency loss: 0.0040
+[21:27:21.453] epoch: 48/400 | val | DICE: 0.524 | PA: 0.873 | IOU: 0.448
+[21:27:32.114] epoch: 49/400 | train | dice loss: 0.2307 | consistency loss: 0.0039
+[21:27:35.457] epoch: 49/400 | val | DICE: 0.522 | PA: 0.871 | IOU: 0.445
+[21:27:45.913] epoch: 50/400 | train | dice loss: 0.2301 | consistency loss: 0.0035
+[21:27:49.022] epoch: 50/400 | val | DICE: 0.524 | PA: 0.873 | IOU: 0.447
+[21:27:59.515] epoch: 51/400 | train | dice loss: 0.2299 | consistency loss: 0.0037
+[21:28:02.689] epoch: 51/400 | val | DICE: 0.521 | PA: 0.871 | IOU: 0.445
+[21:28:12.951] epoch: 52/400 | train | dice loss: 0.2289 | consistency loss: 0.0039
+[21:28:16.026] epoch: 52/400 | val | DICE: 0.520 | PA: 0.870 | IOU: 0.443
+[21:28:26.319] epoch: 53/400 | train | dice loss: 0.2369 | consistency loss: 0.0074
+[21:28:29.266] epoch: 53/400 | val | DICE: 0.521 | PA: 0.872 | IOU: 0.443
+[21:28:39.473] epoch: 54/400 | train | dice loss: 0.2281 | consistency loss: 0.0055
+[21:28:42.500] epoch: 54/400 | val | DICE: 0.523 | PA: 0.871 | IOU: 0.447
+[21:28:52.779] epoch: 55/400 | train | dice loss: 0.2197 | consistency loss: 0.0043
+[21:28:55.528] epoch: 55/400 | val | DICE: 0.525 | PA: 0.873 | IOU: 0.449
+[21:29:05.710] epoch: 56/400 | train | dice loss: 0.2232 | consistency loss: 0.0038
+[21:29:08.779] epoch: 56/400 | val | DICE: 0.523 | PA: 0.872 | IOU: 0.447
+[21:29:19.336] epoch: 57/400 | train | dice loss: 0.2304 | consistency loss: 0.0041
+[21:29:22.372] epoch: 57/400 | val | DICE: 0.523 | PA: 0.872 | IOU: 0.447
+[21:29:32.687] epoch: 58/400 | train | dice loss: 0.2249 | consistency loss: 0.0058
+[21:29:35.857] epoch: 58/400 | val | DICE: 0.519 | PA: 0.868 | IOU: 0.442
+[21:29:46.187] epoch: 59/400 | train | dice loss: 0.2339 | consistency loss: 0.0064
+[21:29:48.987] epoch: 59/400 | val | DICE: 0.520 | PA: 0.870 | IOU: 0.443
+[21:29:59.211] epoch: 60/400 | train | dice loss: 0.2268 | consistency loss: 0.0062
+[21:30:02.400] epoch: 60/400 | val | DICE: 0.527 | PA: 0.876 | IOU: 0.451
+[21:30:12.601] epoch: 61/400 | train | dice loss: 0.2302 | consistency loss: 0.0043
+[21:30:15.767] epoch: 61/400 | val | DICE: 0.519 | PA: 0.868 | IOU: 0.441
+[21:30:26.040] epoch: 62/400 | train | dice loss: 0.2271 | consistency loss: 0.0043
+[21:30:28.876] epoch: 62/400 | val | DICE: 0.523 | PA: 0.871 | IOU: 0.446
+[21:30:39.212] epoch: 63/400 | train | dice loss: 0.2315 | consistency loss: 0.0042
+[21:30:42.421] epoch: 63/400 | val | DICE: 0.522 | PA: 0.871 | IOU: 0.446
+[21:30:52.525] epoch: 64/400 | train | dice loss: 0.2244 | consistency loss: 0.0054
+[21:30:55.603] epoch: 64/400 | val | DICE: 0.522 | PA: 0.870 | IOU: 0.445
+[21:31:05.939] epoch: 65/400 | train | dice loss: 0.2184 | consistency loss: 0.0044
+[21:31:08.844] epoch: 65/400 | val | DICE: 0.527 | PA: 0.875 | IOU: 0.451
+[21:31:18.992] epoch: 66/400 | train | dice loss: 0.2260 | consistency loss: 0.0069
+[21:31:22.137] epoch: 66/400 | val | DICE: 0.528 | PA: 0.877 | IOU: 0.453
+[21:31:22.186] best model | epoch: 66 | DICE: 0.528 | PA: 0.877 | IOU: 0.453
+[21:31:32.685] epoch: 67/400 | train | dice loss: 0.2256 | consistency loss: 0.0046
+[21:31:35.676] epoch: 67/400 | val | DICE: 0.525 | PA: 0.873 | IOU: 0.449
+[21:31:46.245] epoch: 68/400 | train | dice loss: 0.2134 | consistency loss: 0.0041
+[21:31:49.368] epoch: 68/400 | val | DICE: 0.526 | PA: 0.875 | IOU: 0.450
+[21:31:59.588] epoch: 69/400 | train | dice loss: 0.2290 | consistency loss: 0.0037
+[21:32:02.793] epoch: 69/400 | val | DICE: 0.526 | PA: 0.874 | IOU: 0.450
+[21:32:13.243] epoch: 70/400 | train | dice loss: 0.2215 | consistency loss: 0.0041
+[21:32:16.342] epoch: 70/400 | val | DICE: 0.525 | PA: 0.873 | IOU: 0.448
+[21:32:26.779] epoch: 71/400 | train | dice loss: 0.2166 | consistency loss: 0.0043
+[21:32:30.129] epoch: 71/400 | val | DICE: 0.527 | PA: 0.877 | IOU: 0.452
+[21:32:40.464] epoch: 72/400 | train | dice loss: 0.2154 | consistency loss: 0.0040
+[21:32:43.535] epoch: 72/400 | val | DICE: 0.524 | PA: 0.874 | IOU: 0.448
+[21:32:53.946] epoch: 73/400 | train | dice loss: 0.2149 | consistency loss: 0.0050
+[21:32:56.838] epoch: 73/400 | val | DICE: 0.526 | PA: 0.874 | IOU: 0.451
+[21:33:06.947] epoch: 74/400 | train | dice loss: 0.2135 | consistency loss: 0.0047
+[21:33:09.909] epoch: 74/400 | val | DICE: 0.521 | PA: 0.869 | IOU: 0.444
+[21:33:20.047] epoch: 75/400 | train | dice loss: 0.2160 | consistency loss: 0.0047
+[21:33:22.972] epoch: 75/400 | val | DICE: 0.523 | PA: 0.870 | IOU: 0.446
+[21:33:33.058] epoch: 76/400 | train | dice loss: 0.2177 | consistency loss: 0.0049
+[21:33:36.373] epoch: 76/400 | val | DICE: 0.526 | PA: 0.875 | IOU: 0.450
+[21:33:46.862] epoch: 77/400 | train | dice loss: 0.2196 | consistency loss: 0.0045
+[21:33:49.866] epoch: 77/400 | val | DICE: 0.526 | PA: 0.874 | IOU: 0.451
+[21:34:00.239] epoch: 78/400 | train | dice loss: 0.2201 | consistency loss: 0.0053
+[21:34:03.032] epoch: 78/400 | val | DICE: 0.525 | PA: 0.873 | IOU: 0.449
+[21:34:13.218] epoch: 79/400 | train | dice loss: 0.2169 | consistency loss: 0.0041
+[21:34:16.379] epoch: 79/400 | val | DICE: 0.526 | PA: 0.875 | IOU: 0.451
+[21:34:26.782] epoch: 80/400 | train | dice loss: 0.2143 | consistency loss: 0.0068
+[21:34:29.969] epoch: 80/400 | val | DICE: 0.524 | PA: 0.874 | IOU: 0.448
+[21:34:40.457] epoch: 81/400 | train | dice loss: 0.2215 | consistency loss: 0.0061
+[21:34:43.478] epoch: 81/400 | val | DICE: 0.525 | PA: 0.875 | IOU: 0.449
+[21:34:53.943] epoch: 82/400 | train | dice loss: 0.2261 | consistency loss: 0.0050
+[21:34:57.308] epoch: 82/400 | val | DICE: 0.525 | PA: 0.873 | IOU: 0.450
+[21:35:07.665] epoch: 83/400 | train | dice loss: 0.2179 | consistency loss: 0.0047
+[21:35:10.492] epoch: 83/400 | val | DICE: 0.527 | PA: 0.875 | IOU: 0.452
+[21:35:21.101] epoch: 84/400 | train | dice loss: 0.2269 | consistency loss: 0.0040
+[21:35:24.623] epoch: 84/400 | val | DICE: 0.529 | PA: 0.877 | IOU: 0.455
+[21:35:24.666] best model | epoch: 84 | DICE: 0.529 | PA: 0.877 | IOU: 0.455
+[21:35:35.145] epoch: 85/400 | train | dice loss: 0.2143 | consistency loss: 0.0042
+[21:35:38.353] epoch: 85/400 | val | DICE: 0.526 | PA: 0.875 | IOU: 0.450
+[21:35:48.661] epoch: 86/400 | train | dice loss: 0.2142 | consistency loss: 0.0054
+[21:35:51.698] epoch: 86/400 | val | DICE: 0.527 | PA: 0.875 | IOU: 0.452
+[21:36:01.851] epoch: 87/400 | train | dice loss: 0.2135 | consistency loss: 0.0067
+[21:36:05.034] epoch: 87/400 | val | DICE: 0.525 | PA: 0.872 | IOU: 0.449
+[21:36:15.347] epoch: 88/400 | train | dice loss: 0.2099 | consistency loss: 0.0045
+[21:36:18.571] epoch: 88/400 | val | DICE: 0.524 | PA: 0.872 | IOU: 0.448
+[21:36:28.986] epoch: 89/400 | train | dice loss: 0.2181 | consistency loss: 0.0040
+[21:36:31.824] epoch: 89/400 | val | DICE: 0.527 | PA: 0.874 | IOU: 0.451
+[21:36:42.149] epoch: 90/400 | train | dice loss: 0.2189 | consistency loss: 0.0040
+[21:36:45.192] epoch: 90/400 | val | DICE: 0.530 | PA: 0.879 | IOU: 0.456
+[21:36:45.232] best model | epoch: 90 | DICE: 0.530 | PA: 0.879 | IOU: 0.456
+[21:36:55.396] epoch: 91/400 | train | dice loss: 0.2172 | consistency loss: 0.0042
+[21:36:58.418] epoch: 91/400 | val | DICE: 0.524 | PA: 0.874 | IOU: 0.449
+[21:37:08.645] epoch: 92/400 | train | dice loss: 0.2167 | consistency loss: 0.0043
+[21:37:11.361] epoch: 92/400 | val | DICE: 0.523 | PA: 0.871 | IOU: 0.447
+[21:37:21.639] epoch: 93/400 | train | dice loss: 0.2164 | consistency loss: 0.0042
+[21:37:24.781] epoch: 93/400 | val | DICE: 0.529 | PA: 0.877 | IOU: 0.455
+[21:37:35.245] epoch: 94/400 | train | dice loss: 0.2111 | consistency loss: 0.0040
+[21:37:38.523] epoch: 94/400 | val | DICE: 0.529 | PA: 0.877 | IOU: 0.454
+[21:37:48.919] epoch: 95/400 | train | dice loss: 0.2163 | consistency loss: 0.0047
+[21:37:51.840] epoch: 95/400 | val | DICE: 0.528 | PA: 0.876 | IOU: 0.454
+[21:38:02.160] epoch: 96/400 | train | dice loss: 0.2160 | consistency loss: 0.0045
+[21:38:05.381] epoch: 96/400 | val | DICE: 0.528 | PA: 0.876 | IOU: 0.453
+[21:38:15.532] epoch: 97/400 | train | dice loss: 0.2169 | consistency loss: 0.0036
+[21:38:18.544] epoch: 97/400 | val | DICE: 0.527 | PA: 0.875 | IOU: 0.453
+[21:38:28.496] epoch: 98/400 | train | dice loss: 0.2136 | consistency loss: 0.0046
+[21:38:31.421] epoch: 98/400 | val | DICE: 0.529 | PA: 0.876 | IOU: 0.455
+[21:38:41.565] epoch: 99/400 | train | dice loss: 0.2144 | consistency loss: 0.0038
+[21:38:44.518] epoch: 99/400 | val | DICE: 0.529 | PA: 0.876 | IOU: 0.455
+[21:38:54.525] epoch: 100/400 | train | dice loss: 0.2194 | consistency loss: 0.0036
+[21:38:57.417] epoch: 100/400 | val | DICE: 0.531 | PA: 0.879 | IOU: 0.458
+[21:38:57.454] best model | epoch: 100 | DICE: 0.531 | PA: 0.879 | IOU: 0.458
+[21:39:07.770] epoch: 101/400 | train | dice loss: 0.2185 | consistency loss: 0.0040
+[21:39:10.965] epoch: 101/400 | val | DICE: 0.528 | PA: 0.877 | IOU: 0.454
+[21:39:21.177] epoch: 102/400 | train | dice loss: 0.2096 | consistency loss: 0.0045
+[21:39:24.068] epoch: 102/400 | val | DICE: 0.532 | PA: 0.879 | IOU: 0.458
+[21:39:24.105] best model | epoch: 102 | DICE: 0.532 | PA: 0.879 | IOU: 0.458
+[21:39:34.315] epoch: 103/400 | train | dice loss: 0.2153 | consistency loss: 0.0039
+[21:39:37.568] epoch: 103/400 | val | DICE: 0.534 | PA: 0.881 | IOU: 0.460
+[21:39:37.623] best model | epoch: 103 | DICE: 0.534 | PA: 0.881 | IOU: 0.460
+[21:39:48.161] epoch: 104/400 | train | dice loss: 0.2100 | consistency loss: 0.0039
+[21:39:51.428] epoch: 104/400 | val | DICE: 0.533 | PA: 0.880 | IOU: 0.460
+[21:40:01.754] epoch: 105/400 | train | dice loss: 0.2122 | consistency loss: 0.0043
+[21:40:05.054] epoch: 105/400 | val | DICE: 0.534 | PA: 0.880 | IOU: 0.461
+[21:40:05.093] best model | epoch: 105 | DICE: 0.534 | PA: 0.880 | IOU: 0.461
+[21:40:15.498] epoch: 106/400 | train | dice loss: 0.2104 | consistency loss: 0.0035
+[21:40:18.332] epoch: 106/400 | val | DICE: 0.529 | PA: 0.877 | IOU: 0.455
+[21:40:28.768] epoch: 107/400 | train | dice loss: 0.2114 | consistency loss: 0.0032
+[21:40:31.749] epoch: 107/400 | val | DICE: 0.533 | PA: 0.879 | IOU: 0.460
+[21:40:41.716] epoch: 108/400 | train | dice loss: 0.2173 | consistency loss: 0.0048
+[21:40:44.720] epoch: 108/400 | val | DICE: 0.531 | PA: 0.877 | IOU: 0.457
+[21:40:55.199] epoch: 109/400 | train | dice loss: 0.2084 | consistency loss: 0.0035
+[21:40:58.019] epoch: 109/400 | val | DICE: 0.532 | PA: 0.878 | IOU: 0.458
+[21:41:08.459] epoch: 110/400 | train | dice loss: 0.2096 | consistency loss: 0.0045
+[21:41:11.620] epoch: 110/400 | val | DICE: 0.528 | PA: 0.874 | IOU: 0.453
+[21:41:21.832] epoch: 111/400 | train | dice loss: 0.2098 | consistency loss: 0.0041
+[21:41:25.167] epoch: 111/400 | val | DICE: 0.531 | PA: 0.879 | IOU: 0.458
+[21:41:35.512] epoch: 112/400 | train | dice loss: 0.2089 | consistency loss: 0.0033
+[21:41:38.209] epoch: 112/400 | val | DICE: 0.529 | PA: 0.875 | IOU: 0.455
+[21:41:48.458] epoch: 113/400 | train | dice loss: 0.2049 | consistency loss: 0.0030
+[21:41:51.450] epoch: 113/400 | val | DICE: 0.530 | PA: 0.878 | IOU: 0.456
+[21:42:01.586] epoch: 114/400 | train | dice loss: 0.2107 | consistency loss: 0.0035
+[21:42:04.921] epoch: 114/400 | val | DICE: 0.532 | PA: 0.880 | IOU: 0.459
+[21:42:15.316] epoch: 115/400 | train | dice loss: 0.2028 | consistency loss: 0.0029
+[21:42:18.241] epoch: 115/400 | val | DICE: 0.532 | PA: 0.879 | IOU: 0.459
+[21:42:28.581] epoch: 116/400 | train | dice loss: 0.2038 | consistency loss: 0.0032
+[21:42:31.604] epoch: 116/400 | val | DICE: 0.534 | PA: 0.880 | IOU: 0.460
+[21:42:41.718] epoch: 117/400 | train | dice loss: 0.2130 | consistency loss: 0.0032
+[21:42:45.055] epoch: 117/400 | val | DICE: 0.535 | PA: 0.883 | IOU: 0.462
+[21:42:45.093] best model | epoch: 117 | DICE: 0.535 | PA: 0.883 | IOU: 0.462
+[21:42:55.441] epoch: 118/400 | train | dice loss: 0.2071 | consistency loss: 0.0040
+[21:42:58.216] epoch: 118/400 | val | DICE: 0.527 | PA: 0.875 | IOU: 0.453
+[21:43:08.308] epoch: 119/400 | train | dice loss: 0.2007 | consistency loss: 0.0049
+[21:43:11.395] epoch: 119/400 | val | DICE: 0.529 | PA: 0.878 | IOU: 0.455
+[21:43:21.532] epoch: 120/400 | train | dice loss: 0.2065 | consistency loss: 0.0056
+[21:43:24.383] epoch: 120/400 | val | DICE: 0.526 | PA: 0.872 | IOU: 0.450
+[21:43:34.361] epoch: 121/400 | train | dice loss: 0.2049 | consistency loss: 0.0052
+[21:43:37.348] epoch: 121/400 | val | DICE: 0.535 | PA: 0.880 | IOU: 0.462
+[21:43:47.685] epoch: 122/400 | train | dice loss: 0.2142 | consistency loss: 0.0043
+[21:43:50.560] epoch: 122/400 | val | DICE: 0.537 | PA: 0.883 | IOU: 0.465
+[21:43:50.595] best model | epoch: 122 | DICE: 0.537 | PA: 0.883 | IOU: 0.465
+[21:44:00.589] epoch: 123/400 | train | dice loss: 0.1983 | consistency loss: 0.0044
+[21:44:03.427] epoch: 123/400 | val | DICE: 0.533 | PA: 0.878 | IOU: 0.459
+[21:44:13.486] epoch: 124/400 | train | dice loss: 0.2036 | consistency loss: 0.0031
+[21:44:16.410] epoch: 124/400 | val | DICE: 0.540 | PA: 0.885 | IOU: 0.468
+[21:44:16.447] best model | epoch: 124 | DICE: 0.540 | PA: 0.885 | IOU: 0.468
+[21:44:26.462] epoch: 125/400 | train | dice loss: 0.2916 | consistency loss: 0.2137
+[21:44:29.479] epoch: 125/400 | val | DICE: 0.272 | PA: 0.800 | IOU: 0.233
+[21:44:39.392] epoch: 126/400 | train | dice loss: 0.5225 | consistency loss: 0.0835
+[21:44:42.938] epoch: 126/400 | val | DICE: 0.272 | PA: 0.800 | IOU: 0.233
+[21:44:53.416] epoch: 127/400 | train | dice loss: 0.5236 | consistency loss: 0.0339
+[21:44:56.578] epoch: 127/400 | val | DICE: 0.272 | PA: 0.800 | IOU: 0.233
+[21:45:06.943] epoch: 128/400 | train | dice loss: 0.5004 | consistency loss: 0.0176
+[21:45:10.036] epoch: 128/400 | val | DICE: 0.272 | PA: 0.800 | IOU: 0.233
+[21:45:20.469] epoch: 129/400 | train | dice loss: 0.4699 | consistency loss: 0.0178
+[21:45:23.669] epoch: 129/400 | val | DICE: 0.272 | PA: 0.800 | IOU: 0.233
+[21:45:34.072] epoch: 130/400 | train | dice loss: 0.4470 | consistency loss: 0.0155
+[21:45:37.304] epoch: 130/400 | val | DICE: 0.272 | PA: 0.800 | IOU: 0.233
+[21:45:47.623] epoch: 131/400 | train | dice loss: 0.4117 | consistency loss: 0.0172
+[21:45:50.314] epoch: 131/400 | val | DICE: 0.272 | PA: 0.800 | IOU: 0.233
+[21:46:00.588] epoch: 132/400 | train | dice loss: 0.4213 | consistency loss: 0.0251
+[21:46:03.664] epoch: 132/400 | val | DICE: 0.272 | PA: 0.800 | IOU: 0.233
+[21:46:13.851] epoch: 133/400 | train | dice loss: 0.4027 | consistency loss: 0.0125
+[21:46:17.101] epoch: 133/400 | val | DICE: 0.272 | PA: 0.800 | IOU: 0.233
+[21:46:27.501] epoch: 134/400 | train | dice loss: 0.3885 | consistency loss: 0.0117
+[21:46:30.430] epoch: 134/400 | val | DICE: 0.272 | PA: 0.800 | IOU: 0.233
+[21:46:40.635] epoch: 135/400 | train | dice loss: 0.3767 | consistency loss: 0.0088
+[21:46:43.896] epoch: 135/400 | val | DICE: 0.272 | PA: 0.800 | IOU: 0.233
+[21:46:54.129] epoch: 136/400 | train | dice loss: 0.3909 | consistency loss: 0.0091
+[21:46:57.411] epoch: 136/400 | val | DICE: 0.272 | PA: 0.800 | IOU: 0.233
+[21:47:07.711] epoch: 137/400 | train | dice loss: 0.3860 | consistency loss: 0.0083
+[21:47:10.518] epoch: 137/400 | val | DICE: 0.272 | PA: 0.800 | IOU: 0.233
+[21:47:20.594] epoch: 138/400 | train | dice loss: 0.3857 | consistency loss: 0.0090
+[21:47:23.636] epoch: 138/400 | val | DICE: 0.272 | PA: 0.800 | IOU: 0.233
+[21:47:33.934] epoch: 139/400 | train | dice loss: 0.3807 | consistency loss: 0.0069
+[21:47:37.048] epoch: 139/400 | val | DICE: 0.272 | PA: 0.800 | IOU: 0.233
+[21:47:47.434] epoch: 140/400 | train | dice loss: 0.3864 | consistency loss: 0.0070
+[21:47:50.313] epoch: 140/400 | val | DICE: 0.272 | PA: 0.800 | IOU: 0.233
+[21:48:00.644] epoch: 141/400 | train | dice loss: 0.3780 | consistency loss: 0.0069
+[21:48:03.711] epoch: 141/400 | val | DICE: 0.272 | PA: 0.800 | IOU: 0.233
+[21:48:13.880] epoch: 142/400 | train | dice loss: 0.3876 | consistency loss: 0.0149
+[21:48:16.621] epoch: 142/400 | val | DICE: 0.272 | PA: 0.800 | IOU: 0.233
+[21:48:26.998] epoch: 143/400 | train | dice loss: 0.3942 | consistency loss: 0.0153
+[21:48:29.780] epoch: 143/400 | val | DICE: 0.272 | PA: 0.800 | IOU: 0.233
+[21:48:39.798] epoch: 144/400 | train | dice loss: 0.3834 | consistency loss: 0.0079
+[21:48:42.723] epoch: 144/400 | val | DICE: 0.272 | PA: 0.800 | IOU: 0.233
+[21:48:52.927] epoch: 145/400 | train | dice loss: 0.4034 | consistency loss: 0.1933
+[21:48:55.979] epoch: 145/400 | val | DICE: 0.272 | PA: 0.800 | IOU: 0.233
+[21:49:05.974] epoch: 146/400 | train | dice loss: 0.4109 | consistency loss: 0.0199
+[21:49:08.844] epoch: 146/400 | val | DICE: 0.272 | PA: 0.800 | IOU: 0.233
+[21:49:19.042] epoch: 147/400 | train | dice loss: 0.4006 | consistency loss: 0.0116
+[21:49:21.978] epoch: 147/400 | val | DICE: 0.272 | PA: 0.800 | IOU: 0.233
+[21:49:32.088] epoch: 148/400 | train | dice loss: 0.3897 | consistency loss: 0.0078
+[21:49:35.044] epoch: 148/400 | val | DICE: 0.272 | PA: 0.800 | IOU: 0.233
+[21:49:45.058] epoch: 149/400 | train | dice loss: 0.3815 | consistency loss: 0.0070
+[21:49:47.896] epoch: 149/400 | val | DICE: 0.272 | PA: 0.800 | IOU: 0.233
+[21:49:57.991] epoch: 150/400 | train | dice loss: 0.3829 | consistency loss: 0.0067
+[21:50:01.197] epoch: 150/400 | val | DICE: 0.272 | PA: 0.800 | IOU: 0.233
+[21:50:11.821] epoch: 151/400 | train | dice loss: 0.3821 | consistency loss: 0.0065
+[21:50:14.909] epoch: 151/400 | val | DICE: 0.272 | PA: 0.800 | IOU: 0.233
+[21:50:25.175] epoch: 152/400 | train | dice loss: 0.3839 | consistency loss: 0.0083
+[21:50:28.522] epoch: 152/400 | val | DICE: 0.272 | PA: 0.800 | IOU: 0.233
+[21:50:39.023] epoch: 153/400 | train | dice loss: 0.3828 | consistency loss: 0.0061
+[21:50:42.028] epoch: 153/400 | val | DICE: 0.272 | PA: 0.800 | IOU: 0.233
+[21:50:52.287] epoch: 154/400 | train | dice loss: 0.3777 | consistency loss: 0.0093
+[21:50:55.494] epoch: 154/400 | val | DICE: 0.272 | PA: 0.800 | IOU: 0.233
+[21:51:05.739] epoch: 155/400 | train | dice loss: 0.3752 | consistency loss: 0.0093
+[21:51:08.353] epoch: 155/400 | val | DICE: 0.272 | PA: 0.800 | IOU: 0.233
+[21:51:18.361] epoch: 156/400 | train | dice loss: 0.3874 | consistency loss: 0.0069
+[21:51:21.286] epoch: 156/400 | val | DICE: 0.272 | PA: 0.800 | IOU: 0.233
+[21:51:31.444] epoch: 157/400 | train | dice loss: 0.3843 | consistency loss: 0.0066
+[21:51:34.625] epoch: 157/400 | val | DICE: 0.272 | PA: 0.800 | IOU: 0.233
+[21:51:45.029] epoch: 158/400 | train | dice loss: 0.3675 | consistency loss: 0.0059
+[21:51:47.889] epoch: 158/400 | val | DICE: 0.272 | PA: 0.800 | IOU: 0.233
+[21:51:57.910] epoch: 159/400 | train | dice loss: 0.3824 | consistency loss: 0.0074
+[21:52:00.945] epoch: 159/400 | val | DICE: 0.272 | PA: 0.800 | IOU: 0.233
+[21:52:11.191] epoch: 160/400 | train | dice loss: 0.3812 | consistency loss: 0.0061
+[21:52:14.210] epoch: 160/400 | val | DICE: 0.272 | PA: 0.800 | IOU: 0.233
+[21:52:24.360] epoch: 161/400 | train | dice loss: 0.3756 | consistency loss: 0.0063
+[21:52:27.084] epoch: 161/400 | val | DICE: 0.272 | PA: 0.800 | IOU: 0.233
+[21:52:37.294] epoch: 162/400 | train | dice loss: 0.3783 | consistency loss: 0.0064
+[21:52:40.232] epoch: 162/400 | val | DICE: 0.272 | PA: 0.800 | IOU: 0.233
+[21:52:50.317] epoch: 163/400 | train | dice loss: 0.3818 | consistency loss: 0.0059
+[21:52:53.391] epoch: 163/400 | val | DICE: 0.272 | PA: 0.800 | IOU: 0.233
+[21:53:03.507] epoch: 164/400 | train | dice loss: 0.3824 | consistency loss: 0.0062
+[21:53:06.319] epoch: 164/400 | val | DICE: 0.272 | PA: 0.800 | IOU: 0.233
+[21:53:16.556] epoch: 165/400 | train | dice loss: 0.3777 | consistency loss: 0.0056
+[21:53:19.498] epoch: 165/400 | val | DICE: 0.278 | PA: 0.799 | IOU: 0.236
+[21:53:29.596] epoch: 166/400 | train | dice loss: 0.3806 | consistency loss: 0.0064
+[21:53:32.783] epoch: 166/400 | val | DICE: 0.285 | PA: 0.799 | IOU: 0.240
+[21:53:42.839] epoch: 167/400 | train | dice loss: 0.3759 | consistency loss: 0.0047
+[21:53:45.687] epoch: 167/400 | val | DICE: 0.288 | PA: 0.799 | IOU: 0.242
+[21:53:55.647] epoch: 168/400 | train | dice loss: 0.3697 | consistency loss: 0.0053
+[21:53:58.408] epoch: 168/400 | val | DICE: 0.307 | PA: 0.795 | IOU: 0.253
+[21:54:08.525] epoch: 169/400 | train | dice loss: 0.3779 | consistency loss: 0.0046
+[21:54:11.557] epoch: 169/400 | val | DICE: 0.329 | PA: 0.799 | IOU: 0.268
+[21:54:21.824] epoch: 170/400 | train | dice loss: 0.3721 | consistency loss: 0.0054
+[21:54:24.908] epoch: 170/400 | val | DICE: 0.351 | PA: 0.802 | IOU: 0.284
+[21:54:34.980] epoch: 171/400 | train | dice loss: 0.3531 | consistency loss: 0.0060
+[21:54:37.920] epoch: 171/400 | val | DICE: 0.410 | PA: 0.826 | IOU: 0.335
+[21:54:48.116] epoch: 172/400 | train | dice loss: 0.3189 | consistency loss: 0.0068
+[21:54:50.813] epoch: 172/400 | val | DICE: 0.443 | PA: 0.837 | IOU: 0.363
+[21:55:00.893] epoch: 173/400 | train | dice loss: 0.3060 | consistency loss: 0.0082
+[21:55:03.974] epoch: 173/400 | val | DICE: 0.472 | PA: 0.849 | IOU: 0.391
+[21:55:14.213] epoch: 174/400 | train | dice loss: 0.2908 | consistency loss: 0.0083
+[21:55:17.740] epoch: 174/400 | val | DICE: 0.484 | PA: 0.853 | IOU: 0.403
+[21:55:28.275] epoch: 175/400 | train | dice loss: 0.2949 | consistency loss: 0.0134
+[21:55:31.550] epoch: 175/400 | val | DICE: 0.482 | PA: 0.850 | IOU: 0.399
+[21:55:41.920] epoch: 176/400 | train | dice loss: 0.2830 | consistency loss: 0.0141
+[21:55:45.170] epoch: 176/400 | val | DICE: 0.503 | PA: 0.862 | IOU: 0.422
+[21:55:55.495] epoch: 177/400 | train | dice loss: 0.2698 | consistency loss: 0.0087
+[21:55:58.244] epoch: 177/400 | val | DICE: 0.506 | PA: 0.862 | IOU: 0.426
+[21:56:08.575] epoch: 178/400 | train | dice loss: 0.2686 | consistency loss: 0.0072
+[21:56:11.747] epoch: 178/400 | val | DICE: 0.513 | PA: 0.867 | IOU: 0.433
+[21:56:21.921] epoch: 179/400 | train | dice loss: 0.2599 | consistency loss: 0.0071
+[21:56:25.009] epoch: 179/400 | val | DICE: 0.512 | PA: 0.866 | IOU: 0.432
+[21:56:35.355] epoch: 180/400 | train | dice loss: 0.2574 | consistency loss: 0.0070
+[21:56:38.534] epoch: 180/400 | val | DICE: 0.515 | PA: 0.867 | IOU: 0.435
+[21:56:48.822] epoch: 181/400 | train | dice loss: 0.2511 | consistency loss: 0.0068
+[21:56:52.026] epoch: 181/400 | val | DICE: 0.516 | PA: 0.867 | IOU: 0.438
+[21:57:02.273] epoch: 182/400 | train | dice loss: 0.2408 | consistency loss: 0.0074
+[21:57:04.978] epoch: 182/400 | val | DICE: 0.518 | PA: 0.870 | IOU: 0.441
+[21:57:15.203] epoch: 183/400 | train | dice loss: 0.2561 | consistency loss: 0.0067
+[21:57:18.456] epoch: 183/400 | val | DICE: 0.516 | PA: 0.868 | IOU: 0.437
+[21:57:28.682] epoch: 184/400 | train | dice loss: 0.2482 | consistency loss: 0.0059
+[21:57:31.788] epoch: 184/400 | val | DICE: 0.516 | PA: 0.866 | IOU: 0.437
+[21:57:42.127] epoch: 185/400 | train | dice loss: 0.2440 | consistency loss: 0.0064
+[21:57:44.894] epoch: 185/400 | val | DICE: 0.520 | PA: 0.871 | IOU: 0.442
+[21:57:55.052] epoch: 186/400 | train | dice loss: 0.2399 | consistency loss: 0.0073
+[21:57:58.293] epoch: 186/400 | val | DICE: 0.523 | PA: 0.874 | IOU: 0.446
+[21:58:08.630] epoch: 187/400 | train | dice loss: 0.2368 | consistency loss: 0.0059
+[21:58:11.845] epoch: 187/400 | val | DICE: 0.518 | PA: 0.868 | IOU: 0.440
+[21:58:22.107] epoch: 188/400 | train | dice loss: 0.2417 | consistency loss: 0.0069
+[21:58:25.014] epoch: 188/400 | val | DICE: 0.521 | PA: 0.871 | IOU: 0.444
+
+test | DICE: 0.490 | PA: 0.855 | IOU: 0.406
+

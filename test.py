@@ -104,11 +104,12 @@ if __name__ == '__main__':
     test('model/net_sup.pth', args)
 
     # test semi-supervised model
-    test('net/sup_full/net_sup_full.pth', args)
+    test('model/net_semi.pth', args)
 
-    # # test best semi-supervised model
-    # print('best semi-supervised model')
-    # test('./model/net_189.pth', 128, 'cuda:4')
+    # test semi-supervised model with classification label
+    test('model/net_cla.pth', args)
 
-    # visualization('model/net_sup.pth', 'log/sup.png', 8, args)
-    # visualization('./model/net_277.pth', 'log/semi.png', 8, torch.device('cuda'))
+    visualization('model/net_sup_full.pth', 'log/sup_full.png', 8, args)
+    visualization('model/net_sup.pth', 'log/sup.png', 8, args)
+    visualization('model/net_semi.pth', 'log/sup_semi.png', 8, args)
+    visualization('model/net_cla.pth', 'log/sup_cla.png', 8, args)

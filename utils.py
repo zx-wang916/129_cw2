@@ -11,25 +11,19 @@ def create_dir():
     if not os.path.isdir('model'):
         os.mkdir('model')
 
-    if not os.path.isdir('model/supervised'):
-        os.mkdir('model/supervised')
-
-    if not os.path.isdir('model/semi'):
-        os.mkdir('model/semi')
-
-    if not os.path.isdir('model/cla'):
-        os.mkdir('model/cla')
-
 
 def parse_arg():
     parser = argparse.ArgumentParser()
     parser.add_argument('-b', '--batch_size', type=int, default=64, required=False)
     parser.add_argument('-l', '--labeled_ratio', type=float, default=0.1, required=False)
+    parser.add_argument('-u', '--unlabeled_ratio', type=float, default=1.0, required=False)
     parser.add_argument('-t', '--train_val_ratio', type=float, default=0.8, required=False)
-    parser.add_argument('-c', '--cla_weight', type=float, default=20, required=False)
-    parser.add_argument('-lr', '--lr', type=float, default=1e-3, required=False)
-    parser.add_argument('-e', '--epoch', type=int, default=200, required=False)
+    parser.add_argument('-con', '--consistency', type=float, default=100, required=False)
+    parser.add_argument('-rl', '--rampup_len', type=float, default=100, required=False)
     parser.add_argument('-a', '--alpha', type=float, default=0.99, required=False)
+    parser.add_argument('-c', '--cla_weight', type=float, default=0.3, required=False)
+    parser.add_argument('-lr', '--lr', type=float, default=1e-3, required=False)
+    parser.add_argument('-e', '--epoch', type=int, default=400, required=False)
     parser.add_argument('-d', '--device', type=str, default='cpu', required=False)
     parser.add_argument('-n', '--num_worker', type=int, default=8, required=False)
     parser.add_argument('-p', '--data_path', type=str, default='./data', required=False)
@@ -85,7 +79,7 @@ def metric_iou(TP, FP, TN, FN):
     return TP / (FP + TP + FN + 1e-10)
 
 
-def get_consistency_weight(epoch, consistency=1000, rampup_length=100):
+def get_consistency_weight(epoch, consistency=500, rampup_length=100):
     if rampup_length == 0:
         weight = 1.0
     else:

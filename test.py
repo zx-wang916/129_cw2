@@ -13,15 +13,15 @@ create_dir()
 
 
 def test(net_path, args):
-    device = torch.device(args.device)
+    print(args.device)
 
     # preparing dataset
     test_set = get_test_dataset(args.data_path)
-    test_loader = DataLoader(test_set, args.batch_size, True, num_workers=8)
+    test_loader = DataLoader(test_set, args.batch_size, True, num_workers=args.num_worker)
 
     # initialize network
-    net = ResUNet().to(device)
-    net.load_state_dict(torch.load(net_path, map_location=device))
+    net = ResUNet().to(args.device)
+    net.load_state_dict(torch.load(net_path, map_location=args.device))
 
     # performance metrics
     pa = pa_total = 0
@@ -30,7 +30,7 @@ def test(net_path, args):
 
     with torch.no_grad():
         for data, mask in tqdm(test_loader, desc='testing progress', leave=False):
-            data, mask = data.to(device), mask.to(device)
+            data, mask = data.to(args.device), mask.to(args.device)
 
             # network predict
             out = net(data)
@@ -101,21 +101,11 @@ if __name__ == '__main__':
 
     # # test best supervised model
     # print('best supervised model')
-    # test('./model/supervised/net_132.pth', 128, 'cuda:4')
-    #
+    # test('model/net_sup_full.pth', args)
+
     # # test best semi-supervised model
     # print('best semi-supervised model')
-    # test('./model/semi/net_189.pth', 128, 'cuda:4')
+    # test('./model/net_189.pth', 128, 'cuda:4')
 
-    # visualization('./model/supervised/net_185.pth', 'log/sup.png', 8, torch.device('cuda'))
-    # visualization('./model/semi/net_277.pth', 'log/semi.png', 8, torch.device('cuda'))
-
-    best_i = 0
-    best_iou = 0
-    for i in range(100, 200):
-        _, _, iou = test('model/supervised/net_%d.pth' % i, args)
-        if iou > best_iou:
-            best_i = i
-            best_iou = iou
-
-    print(best_i, best_iou)
+    visualization('model/net_sup_noskip.pth', 'log/sup_noskip.png', 8, args)
+    # visualization('./model/net_277.pth', 'log/semi.png', 8, torch.device('cuda'))

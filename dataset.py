@@ -19,6 +19,8 @@ TYPE_SEMI = 2
 TYPE_TEST = 3
 TYPE_CLA = 4
 
+TO_MEMORY = False
+
 
 # get dataset for supervised learning
 def get_sup_dataset(root, train_ratio=0.9, labeled_ratio=0.2):
@@ -39,7 +41,7 @@ def get_sup_dataset(root, train_ratio=0.9, labeled_ratio=0.2):
 
 
 # get dataset for semi-supervised learning
-def get_semi_dataset(root, train_ratio=0.9, labeled_ratio=0.2):
+def get_semi_dataset(root, train_ratio=0.9, labeled_ratio=0.2, unlabeled_ratio=1.0):
     # load and shuffle the raw data
     data, mask, _ = _load_shuffle(root, True)
 
@@ -47,10 +49,10 @@ def get_semi_dataset(root, train_ratio=0.9, labeled_ratio=0.2):
     train_data, train_mask, _, val_data, val_mask, _ = _split_train_val(data, mask, None, train_ratio)
 
     # initialize the train set
-    train_set = OxfordIIITPetSeg(root, 2, labeled_ratio, data=train_data, mask=train_mask)
+    train_set = OxfordIIITPetSeg(root, 2, labeled_ratio, unlabeled_ratio, data=train_data, mask=train_mask)
 
     # initialize the validation set
-    val_set = OxfordIIITPetSeg(root, 3, data=val_data, mask=val_mask)
+    val_set = OxfordIIITPetSeg(root, 3, 1.0, unlabeled_ratio, data=val_data, mask=val_mask)
 
     return train_set, val_set
 
@@ -72,12 +74,10 @@ def get_seg_cla_dataset(root, train_ratio=0.9, labeled_ratio=0.2):
         _split_train_val(data, mask, label, train_ratio)
 
     # initialize the train set
-    train_set = OxfordIIITPetSeg(
-        root, 4, labeled_ratio, data=train_data, mask=train_mask, label=train_label)
+    train_set = OxfordIIITPetSeg(root, 4, labeled_ratio, data=train_data, mask=train_mask, label=train_label)
 
     # initialize the validation set
-    val_set = OxfordIIITPetSeg(
-        root, 4, labeled_ratio=1, data=val_data, mask=val_mask, label=val_label)
+    val_set = OxfordIIITPetSeg(root, 4, 1.0, data=val_data, mask=val_mask, label=val_label)
 
     return train_set, val_set
 
@@ -111,11 +111,16 @@ def _load_shuffle(root, train):
     data, mask, label = _load_data_path(root, train)
 
     # shuffle the dataset
-    idx_shuffle = np.arange(len(data))
-    np.random.shuffle(idx_shuffle)
-    data = data[idx_shuffle]
-    mask = mask[idx_shuffle]
-    label = label[idx_shuffle]
+    if TO_MEMORY:
+        paired_lists = list(zip(data, mask, label))
+        random.shuffle(paired_lists)
+        data, mask, label = zip(*paired_lists)
+    else:
+        idx_shuffle = np.arange(len(data))
+        np.random.shuffle(idx_shuffle)
+        data = data[idx_shuffle]
+        mask = mask[idx_shuffle]
+        label = label[idx_shuffle]
     return data, mask, label
 
 
@@ -133,22 +138,33 @@ def _load_data_path(root, train):
     with open(root + '/oxford-iiit-pet/annotations/' + file_name) as file:
         for line in file:
             image_filename, lab, *_ = line.strip().split()
-            mask.append(root + '/oxford-iiit-pet/annotations/trimaps/' + image_filename + '.png')
-            data.append(root + '/oxford-iiit-pet/images/' + image_filename + '.jpg')
+
+            if TO_MEMORY:
+                mask_path = root + '/oxford-iiit-pet/annotations/trimaps/' + image_filename + '.png'
+                data_path = root + '/oxford-iiit-pet/images/' + image_filename + '.jpg'
+                mask.append(Image.open(mask_path).convert("L"))
+                data.append(Image.open(data_path).convert("RGB"))
+
+            else:
+                mask.append(root + '/oxford-iiit-pet/annotations/trimaps/' + image_filename + '.png')
+                data.append(root + '/oxford-iiit-pet/images/' + image_filename + '.jpg')
+
             label.append(int(lab) - 1)
 
-    data = np.array(data, dtype=object)
-    mask = np.array(mask, dtype=object)
-    label = np.array(label, dtype=object)
+    if not TO_MEMORY:
+        data = np.array(data, dtype=object)
+        mask = np.array(mask, dtype=object)
+        label = np.array(label, dtype=object)
     return data, mask, label
 
 
 class OxfordIIITPetSeg(VisionDataset):
-    def __init__(self, root, split=1, labeled_ratio=0.2, **kwargs):
+    def __init__(self, root, split=1, labeled_ratio=1.0, unlabeled_ratio=1/3, **kwargs):
         super().__init__(root)
 
         self.split = split  # 1: supervised, 2: semi-supervised, 3: test, 4: with classification
         self.labeled_ratio = labeled_ratio
+        self.unlabeled_ratio = unlabeled_ratio
 
         self.data = kwargs['data']
         self.mask = kwargs['mask']
@@ -179,7 +195,10 @@ class OxfordIIITPetSeg(VisionDataset):
     def divide_dataset(self):
         # divide the dataset into labeled and unlabeled parts
         idx_labeled = int(len(self.data) * self.labeled_ratio)
-        self.data_unlabeled = self.data[idx_labeled:]
+        idx_unlabeled = idx_labeled + int((len(self.data) - idx_labeled) * self.unlabeled_ratio)
+        print('unlabeled data: used %d | total %d' % (idx_unlabeled - idx_labeled, len(self.data) - idx_labeled))
+
+        self.data_unlabeled = self.data[idx_labeled:idx_unlabeled]
         self.data = self.data[:idx_labeled]
         self.mask = self.mask[:idx_labeled]
 
@@ -198,8 +217,12 @@ class OxfordIIITPetSeg(VisionDataset):
     def getitem_with_unlabeled(self, idx):
         if idx < len(self.data):
             # sample labeled data
-            image = Image.open(self.data[idx]).convert("RGB")
-            mask = Image.open(self.mask[idx]).convert("L")
+            if TO_MEMORY:
+                image = self.data[idx]
+                mask = self.mask[idx]
+            else:
+                image = Image.open(self.data[idx]).convert("RGB")
+                mask = Image.open(self.mask[idx]).convert("L")
 
             if self.split == TYPE_CLA:
                 return *self.transform_data(image, mask), self.label[idx], 1
@@ -208,7 +231,10 @@ class OxfordIIITPetSeg(VisionDataset):
 
         else:
             # sample unlabeled data
-            unlabeled = Image.open(self.data_unlabeled[idx - len(self.data)]).convert("RGB")
+            if TO_MEMORY:
+                unlabeled = self.data_unlabeled[idx - len(self.data)]
+            else:
+                unlabeled = Image.open(self.data_unlabeled[idx - len(self.data)]).convert("RGB")
 
             if self.split == TYPE_CLA:
                 return *self.transform_data(unlabeled, None), self.label[idx], 0
@@ -217,8 +243,12 @@ class OxfordIIITPetSeg(VisionDataset):
 
     def getitem_without_unlabeled(self, idx):
         # read the image from file path
-        image = Image.open(self.data[idx]).convert("RGB")
-        mask = Image.open(self.mask[idx]).convert("L")
+        if TO_MEMORY:
+            image = self.data[idx]
+            mask = self.mask[idx]
+        else:
+            image = Image.open(self.data[idx]).convert("RGB")
+            mask = Image.open(self.mask[idx]).convert("L")
 
         # transform the data before return
         if self.split == TYPE_CLA:
@@ -283,27 +313,3 @@ class OxfordIIITPetSeg(VisionDataset):
 
         return torch.nn.functional.pad(img, pad, mode='constant', value=pad_value)
 
-
-# if __name__ == '__main__':
-#     from matplotlib import pyplot as plt
-#     from torch.utils.data import DataLoader
-#     from utils import parse_arg
-#
-#     args = parse_arg()
-#
-#     train_set, _ = get_seg_cla_dataset(args.data_path, args.train_val_ratio, args.labeled_ratio)
-#     train_loader = DataLoader(train_set, args.batch_size, True, num_workers=args.num_worker)
-#
-#     # for data, mask in train_loader:
-#     for data, mask, label, is_labeled in train_loader:
-#         break
-#
-#     for data, mask, label, is_labeled in zip(data, mask, label, is_labeled):
-#         if not is_labeled:
-#             continue
-#         plt.imshow(data.permute((1, 2, 0)))
-#         plt.show()
-#         plt.imshow(mask.permute((1, 2, 0)))
-#         plt.show()
-#
-#         print(label)

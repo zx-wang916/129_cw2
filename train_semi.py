@@ -1,5 +1,6 @@
 import numpy as np
 import torch
+import logging
 from torch.utils.data import DataLoader
 from tqdm import tqdm
 
@@ -13,7 +14,8 @@ create_dir()
 
 def train_semi(args):
     # prepare train and validation dataset
-    train_set, val_set = get_semi_dataset(args.data_path, args.train_val_ratio, args.labeled_ratio)
+    train_set, val_set = get_semi_dataset(
+        args.data_path, args.train_val_ratio, args.labeled_ratio, args.unlabeled_ratio)
 
     # prepare dataloader
     train_loader = DataLoader(train_set, args.batch_size, True, num_workers=args.num_worker)
@@ -32,7 +34,9 @@ def train_semi(args):
     # define optimizer
     optim = torch.optim.Adam(net_student.parameters(), lr=args.lr)
 
-    print('start training!')
+    logging.info('start training!')
+    best_dice = 0
+
     for epoch in range(args.epoch):
 
         # ####################################### train model #######################################
@@ -51,7 +55,7 @@ def train_semi(args):
 
             # compute segmentation loss
             loss_seg = 0
-            if len(idx_labeled) > 0:
+            if len(idx_labeled[0]) > 0:
                 # predict
                 out = net_student(data_labeled)
 
@@ -64,13 +68,16 @@ def train_semi(args):
                 loss_seg_history.append(loss_seg.cpu().data.numpy())
 
             # compute consistency loss
-            consistency_weight = get_consistency_weight(epoch)
+            consistency_weight = get_consistency_weight(epoch, args.consistency, args.rampup_len)
             loss_con = 0
-            if len(idx_unlabeled) > 0:
+            if len(idx_unlabeled[0]) > 0:
+                # compute prediction of student and teacher model
                 out_stu = net_student.noisy_forward(data_unlabeled)
                 out_tea = net_teacher.noisy_forward(data_unlabeled)
 
+                # consistency loss
                 loss_con = criterion_con(out_stu, out_tea)
+
                 loss_con_history.append(loss_con.cpu().data.numpy() * consistency_weight)
 
             # combine the segmentation loss and the consistency loss
@@ -91,10 +98,8 @@ def train_semi(args):
 
             net_teacher.load_state_dict(param_teacher)
 
-        print('epoch: %d/%d | train | dice loss: %.4f | consistency loss: %.4f' % (
+        logging.info('epoch: %d/%d | train | dice loss: %.4f | consistency loss: %.4f' % (
             epoch, args.epoch, float(np.mean(loss_seg_history)), float(np.mean(loss_con_history))))
-
-        torch.save(net_student.state_dict(), './model/semi/net_%d.pth' % epoch)
 
         # ####################################### validate model #######################################
 
@@ -120,10 +125,21 @@ def train_semi(args):
                 iou_total += len(mask)
                 dice_total += len(mask)
 
-        print('epoch: %d/%d | val | DICE: %.3f | PA: %.3f | IOU: %.3f' % (
+        logging.info('epoch: %d/%d | val | DICE: %.4f | PA: %.4f | IOU: %.4f' % (
             epoch, args.epoch, dice / dice_total, pa / pa_total, iou / iou_total))
+
+        if dice > best_dice:
+            best_dice = dice
+            torch.save(net_student.state_dict(), './model/net_semi_3_3.pth')
+            logging.info('best model | epoch: %d | DICE: %.4f | PA: %.4f | IOU: %.4f' % (
+                epoch, dice / dice_total, pa / pa_total, iou / iou_total))
 
 
 if __name__ == '__main__':
+    logging.basicConfig(filename="log/train_semi_3_3.txt", level=logging.INFO,
+                        format='[%(asctime)s.%(msecs)03d] %(message)s', datefmt='%H:%M:%S')
+
     args = parse_arg()
+    logging.info(args)
+
     train_semi(args)
